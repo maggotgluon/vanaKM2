@@ -26,6 +26,9 @@
                     <x-nav-link :href="route('regisOwn')" :active="request()->routeIs('regisOwn')">
                         {{ __('regisOwn') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('regisManage')" :active="request()->routeIs('regisManage')">
+                        {{ __('Manage Doc') }}
+                    </x-nav-link>
                     
                 </div>
             </div>

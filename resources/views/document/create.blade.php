@@ -122,7 +122,7 @@
     <div class="py-2">
         <p>Objective </p>
         <div class="flex flex-col md:flex-row justify-around flex-wrap">
-            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-1"><label for="objective-1">ขอเอกสารใหม่ </label></span>
+            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-1"><label for="objective-1" selected>ขอเอกสารใหม่ </label></span>
             <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-2"><label for="objective-2">เปลี่ยนแปลง </label></span>
             <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-3"><label for="objective-3">ขอนำเข้าเอกสารภายนอก </label></span>
             <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-4"><label for="objective-4">ขอเพิ่ม / เปลี่ยนแปลง / ยกเลิกผู้ถือครอง </label></span>
@@ -140,11 +140,12 @@
 
     <div class="flex flex-wrap items-center">
         <span class="px-4">
+            <span class="px-4">
+                
             <label for="dateUse">date-use :  </label>
-            <input type="date" name="usedate" id="dateUse" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  my-2 {{$errors->has('name') ? ' border-accent' : ''}}"></span>
-        <span class="px-4">
+            <input type="date" name="usedate" id="dateUse" value="{{Carbon\Carbon::now()->toDateString()}}" min="{{Carbon\Carbon::now()->toDateString()}}" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  my-2 {{$errors->has('name') ? ' border-accent' : ''}}"></span>
             <label for="dateKeep">Year Life :  </label>
-            <input type="number" name="Year" id="Year" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  my-2 {{$errors->has('name') ? ' border-accent' : ''}}"></span>
+            <input type="number" name="Year" id="Year" value="1" min="1" max="10" step="1" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  my-2 {{$errors->has('name') ? ' border-accent' : ''}}"></span>Year(s)
         <span class="px-4">
             <label>File</label>
             <input type="file" name="file">
@@ -164,4 +165,5 @@
     </form>
 </div>
     </div>
+
 </x-app-layout>

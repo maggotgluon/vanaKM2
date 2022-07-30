@@ -12,7 +12,7 @@
                     Regis
                     <!-- {{ Auth::user()->id }} -->
                     <hr>
-                    <!-- {{asset('img'.$documents->Doc_Location)}} -->
+                    {{asset($documents->Doc_Location)}}
                     <!-- <embed src="{{asset('img'.$documents->Doc_Location)}}" width="100%" height="400px" showPageControls=false showAnnotationTools=false dockPageControls=false showLeftHandPanel=false/> -->
                     <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
                     
@@ -46,7 +46,7 @@
         StandardFonts
     } = PDFLib
 
-    const file = "{{asset('img'.$documents->Doc_Location)}}"
+    const file = "{{asset($documents->Doc_Location)}}"
     // document.querySelector('#frame').src = url
     modifyPdf(file)
     async function modifyPdf(url) {
@@ -200,7 +200,7 @@
 </script>  
 
 <script type="text/javascript">
-    // const file = "{{asset('img'.$documents->Doc_Location)}}",
+    // const file = "{{asset($documents->Doc_Location)}}",
     //       canvasContainer = 'the-canvas'
     // showPDF(file,canvasContainer);
     

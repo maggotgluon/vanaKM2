@@ -4,6 +4,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentRequestController;
 use App\Models\document as ModelsDocument;
 use App\Models\document_request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use League\CommonMark\Node\Block\Document;
 
@@ -23,6 +24,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    // dd(Auth::user()->document_request);
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
@@ -44,14 +46,23 @@ Route::get('/regis_document', function () {
     return view('document.create');
 })->middleware(['auth'])->name('regisDoc');
 //post 
-Route::post('/document/regis_document',  [DocumentRequestController::class,'create'] ) ->middleware(['auth']) -> name('createRegis');
+Route::post('/regis_document',  [DocumentRequestController::class,'create'] ) ->middleware(['auth']) -> name('createRegis');
 
 //view my doc
-Route::get('/regis_document/view/', function(){
-    return view('document.regis',[
-        'documents'=>document_request::all(),
-    ]);
-})->middleware(['auth'])->name('regisOwn');
+Route::get('/regis_document/view/', [DocumentRequestController::class,'show',] ) ->middleware(['auth'])->name('regisOwn');
+
+Route::get('/regis_document/manage/', [DocumentRequestController::class,'manage',] ) ->middleware(['auth'])->name('regisManage');
+
+
+Route::post('/regis_document/manage/{id}',  [DocumentRequestController::class,'approve','$id'] ) ->middleware(['auth']) -> name('regisApprove');
+
+// Route::get('/regis_document/view/', function(){
+//     // Auth::user()->document_request
+    
+//     return view('document.regis',[
+//         'documents'=>Auth::user()->document_request,
+//     ]);
+// })->middleware(['auth'])->name('regisOwn');
 
 Route::get('/regis_document/view/{Doc_Code}', function($Doc_Code){
     return view('document.regisShow',[

@@ -34,7 +34,7 @@ return new class extends Migration
             // $table->date('created_at'); //create at
             $table->timestamps();
 
-            $table->foreignId('User_Code');
+            $table->foreignId('user_id');
 
         });
     }
