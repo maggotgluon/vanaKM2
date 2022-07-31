@@ -21,10 +21,17 @@ class DocumentRequestController extends Controller
         ]);
     }
 
-    public function show(){
+    public function showReg(){
         // dd (Auth::user()->document_request);
         return view('document.regis',[
             'documents'=>Auth::user()->document_request,
+        ]);
+    }
+
+    public function show(){
+        // ddd (document_request::where('Doc_Status','1')->get());
+        return view('document.index',[
+            'documents'=>document_request::where('Doc_Status','1')->get(),
         ]);
     }
     public function manage(){
@@ -79,7 +86,7 @@ class DocumentRequestController extends Controller
         $documents->Doc_ver = $docver;
         $documents->Doc_StartDate = $add->usedate;
         $documents->Doc_Location = $full_path;
-        $documents->Doc_Status ='1';
+        $documents->Doc_Status ='0';
         // $documents->Doc_Timestamp = $add->date;
         // document_request::count(Doc_Name);
         // //upload PDF
@@ -109,18 +116,31 @@ class DocumentRequestController extends Controller
     }
 
     public function approve(request $add){
-        // dd('approve',$id,$add->regID,$add->manage);
+        // dd($add->regID,$add->manage);
+        $id = $add->regID;
+        $approve = $add->manage;
+        $reg_doc = document_request::find($id);
+        if($approve === 'approved'){
+            $reg_doc->Doc_Status = '1';
+            echo 'approved';
+        }else{
+            $reg_doc->Doc_Status = '-1';
+            echo 'rejected';
+        }
+        $reg_doc->save();
         // echo $add->manage;
         // dd($add->id);
 
         // dd(document_request::find($add->id));
         
-        Mail::send(['text'=>'mail'], array('name'=>"Virat Gandhi"), function($message) {
-            $message->to('maggotgluon@gmail.com', 'Tutorials Point')->subject('Laravel Basic Testing Mail');
-            $message->from('ruttaphong.w@vananava.com','KM Service');
-            // $message->body('test');
-            // dd($message);
-         });
+
+        //disible mail service during test
+        // Mail::send(['text'=>'mail'], array('name'=>"Virat Gandhi"), function($message) {
+        //     $message->to('maggotgluon@gmail.com', 'Tutorials Point')->subject('Laravel Basic Testing Mail');
+        //     $message->from('ruttaphong.w@vananava.com','KM Service');
+        //     // $message->body('test');
+        //     // dd($message);
+        //  });
         
         // dd(route::class,'regisManage');
         // return view('document.regis',[

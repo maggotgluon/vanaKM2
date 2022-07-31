@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class document extends Model
 {
     use HasFactory;
+    public function document_request()
+    {
+        return $this->belongsTo(document_request::class);
+    }
 }

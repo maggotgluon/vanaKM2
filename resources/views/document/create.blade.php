@@ -1,14 +1,17 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create') }}
+            {{ __('Request Document') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-    <div class="p-6 bg-backdrop border-b border-backdrop">
 
-<h2>Create Document</h2>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 bg-white border-b border-gray-200">
+
+<h2>{{ __('Create Document') }}</h2>
 
 <hr>
 <form action="{{route('createRegis')}}" method="post" enctype="multipart/form-data" class="grid grid-cols-2 gap-2">
@@ -166,4 +169,8 @@
 </div>
     </div>
 
+    </div>
+            </div>
+        </div>
+    </div>
 </x-app-layout>

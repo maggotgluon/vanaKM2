@@ -29,9 +29,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 // //see all doc
-Route::get('/document', function () {
-    return view('document.index');
-})->middleware(['auth'])->name('document');
+Route::get('/document', [DocumentRequestController::class,'show',] ) ->middleware(['auth'])->name('document');
+
 
 
 // // view / download single doc
@@ -49,7 +48,7 @@ Route::get('/regis_document', function () {
 Route::post('/regis_document',  [DocumentRequestController::class,'create'] ) ->middleware(['auth']) -> name('createRegis');
 
 //view my doc
-Route::get('/regis_document/view/', [DocumentRequestController::class,'show',] ) ->middleware(['auth'])->name('regisOwn');
+Route::get('/regis_document/view/', [DocumentRequestController::class,'showReg',] ) ->middleware(['auth'])->name('regisOwn');
 
 Route::get('/regis_document/manage/', [DocumentRequestController::class,'manage',] ) ->middleware(['auth'])->name('regisManage');
 

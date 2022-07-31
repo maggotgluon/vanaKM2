@@ -12,4 +12,8 @@ class document_request extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function document()
+    {
+        return $this->hasOne(document::class);
+    }
 }
