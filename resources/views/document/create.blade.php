@@ -119,7 +119,15 @@
         <div class="py-2 col-span-2">
         Document Name :
         <input maxlength="10" class="bg-backdrop-dark rounded-md" type="text" name="Doc_Name">
+<<<<<<< Updated upstream
 
+=======
+        @error('Doc_Name')
+        
+                <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span>
+                
+        @enderror
+>>>>>>> Stashed changes
     </div>
                     
     <div class="py-2">
