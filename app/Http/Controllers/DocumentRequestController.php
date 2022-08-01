@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use League\CommonMark\Node\Block\Document;
 use Illuminate\Support\Facades\Mail;
-
 use Illuminate\Support\Facades\Storage;
 
 
@@ -129,6 +128,9 @@ class DocumentRequestController extends Controller
             $reg_doc->Doc_Status = '-1';
             echo 'rejected';
         }
+        
+        $reg_doc->Doc_DateApprove = now();
+        $reg_doc->User_Approve = Auth::user()->id;
         $reg_doc->save();
         // dd($reg_doc->Doc_Name);
         $message = $add->manage;
