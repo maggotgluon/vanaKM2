@@ -161,7 +161,7 @@
                 {{ __('Add More') }}
             </button> -->
 
-            <button  class='inline-flex items-center px-4 py-2 bg-backdrop-inv border border-transparent rounded-md font-semibold text-xs text-content-inv uppercase tracking-widest hover:bg-backdrop-light active:bg-backdrop-light focus:outline-none focus:border-backdrop-light focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150'>
+            <button  class='hover:scale-125 inline-flex items-center px-4 py-2 bg-backdrop-inv border border-transparent rounded-md font-semibold text-xs text-content-inv uppercase tracking-widest hover:bg-backdrop-light active:bg-backdrop-light focus:outline-none focus:border-backdrop-light focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150'>
                 {{ __('Create') }}
             </button>
         </div>
