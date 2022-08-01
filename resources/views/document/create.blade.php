@@ -80,27 +80,27 @@
             <label for="type">Type</label>
             <select class="bg-backdrop rounded-md"  name="type" id="type">
                 <optgroup label="Document">
-                    <option disabled>SM: System Manual</option>
+                    <option disabled value="Document-SM">SM: System Manual</option>
                     <option disabled>PR: Procedure</option>
                     <option disabled>WI: Work Instruction</option>
                     <option disabled>SD: Standard</option>
                     <option disabled>SP: Specification</option>
-                    <option >DS/MK: Document Support</option>
+                    <option value="Document-DS_KM">DS/KM: Document Support</option>
                     <option disabled>MN: Manual</option>
                 </optgroup>
                 <optgroup label="Form">
-                    <option disabled>ADS</option>
+                    <option disabled value="Form-ADM">ADM</option>
                     <option disabled>ENG</option>
                     <option disabled>HRM</option>
                     <option disabled>Other Dept. ...</option>
                 </optgroup>
 
                 <optgroup label="External">
-                    <option disabled>Report from external</option>
+                    <option disabled value="External-Report">Report from external</option>
                 </optgroup>
 
                 <optgroup label="Record">
-                    <option disabled>KPIs</option>
+                    <option disabled value="Record-KPIs">KPIs</option>
                     <option disabled>Risk ISO9001</option>
                     <option disabled>Rish ISO45001</option>
                     <option disabled>Chemical List</option>
@@ -125,14 +125,14 @@
     <div class="py-2">
         <p>Objective </p>
         <div class="flex flex-col md:flex-row justify-around flex-wrap">
-            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-1"><label for="objective-1" selected>ขอเอกสารใหม่ </label></span>
-            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-2"><label for="objective-2">เปลี่ยนแปลง </label></span>
-            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-3"><label for="objective-3">ขอนำเข้าเอกสารภายนอก </label></span>
-            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-4"><label for="objective-4">ขอเพิ่ม / เปลี่ยนแปลง / ยกเลิกผู้ถือครอง </label></span>
-            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-5"><label for="objective-5">ขอสำเนาเอกสาร </label></span>
-            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-6"><label for="objective-6">ขอยกเลิก </label></span>
-            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-7"><label for="objective-7">ขอทำลาย </label></span>
-            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-8"><label for="objective-8">อื่นๆ </label></span>
+            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-1" value="ขอเอกสารใหม่"><label for="objective-1" selected >ขอเอกสารใหม่ </label></span>
+            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-2" value="เปลี่ยนแปลง"><label for="objective-2">เปลี่ยนแปลง </label></span>
+            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-3" value="ขอนำเข้าเอกสารภายนอก"><label for="objective-3">ขอนำเข้าเอกสารภายนอก </label></span>
+            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-4" value="ขอเพิ่ม / เปลี่ยนแปลง / ยกเลิกผู้ถือครอง"><label for="objective-4">ขอเพิ่ม / เปลี่ยนแปลง / ยกเลิกผู้ถือครอง </label></span>
+            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-5" value="ขอสำเนาเอกสาร"><label for="objective-5">ขอสำเนาเอกสาร </label></span>
+            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-6" value="ขอยกเลิก"><label for="objective-6">ขอยกเลิก </label></span>
+            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-7" value="ขอทำลาย"><label for="objective-7">ขอทำลาย </label></span>
+            <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-8" value="อื่นๆ"><label for="objective-8">อื่นๆ </label></span>
         </div>
     </div>
 
