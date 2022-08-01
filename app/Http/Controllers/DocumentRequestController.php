@@ -21,10 +21,10 @@ class DocumentRequestController extends Controller
         ]);
     }
 
-    public function showReg(){
+    public function showReg(Request $request){
         // dd (Auth::user()->document_request);
         return view('document.regis',[
-            'documents'=>Auth::user()->document_request,
+            'documents'=>Auth::user()->document_request,'message'=>$request->query
         ]);
     }
 
@@ -34,10 +34,12 @@ class DocumentRequestController extends Controller
             'documents'=>document_request::where('Doc_Status','1')->get(),
         ]);
     }
-    public function manage(){
+    public function manage(Request $request ){
         // dd (Auth::user()->document_request);
+        // $message = $request;
+        // dd($request->query);
         return view('document.regis',[
-            'documents'=>document_request::all(),
+            'documents'=>document_request::all(),'message'=>$request ,
         ]);
     }
     
@@ -128,6 +130,8 @@ class DocumentRequestController extends Controller
             echo 'rejected';
         }
         $reg_doc->save();
+        // dd($reg_doc->Doc_Name);
+        $message = $add->manage;
         // echo $add->manage;
         // dd($add->id);
 
@@ -146,6 +150,7 @@ class DocumentRequestController extends Controller
         // return view('document.regis',[
         //     'documents'=>document_request::all(),
         // ]);
-        return redirect()->route('regisManage');
+        // dd($message);
+        return redirect()->route('regisManage',['id'=>$id,'result'=>$message,'name'=>$reg_doc->Doc_Name,'code'=>$reg_doc->Doc_Code] );
     }
 }

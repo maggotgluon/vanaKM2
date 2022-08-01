@@ -10,9 +10,17 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <!-- {{ Auth::user()->id }} -->
-                    <!-- {{gettype($documents)}} -->
+                    <!-- {{gettype($message)}} -->
 
-
+                    @isset($message->name)
+                        <div class="alert alert-success bg-green-300 p-4 flex justify-between align-center">
+                            <!-- {{$documents}} -->
+                            <div>
+                                <strong>{{$message->name}}</strong> : {{$message->result}}
+                            </div>
+                        <button class="rounded-full aspect-square block w-8 bg-red-400 grid place-content-center" onclick="document.querySelector('.alert').classList.add('hidden')"> x </button>
+                        </div>
+                    @endif
 
                     <h2 class="text-xl mt-10">Pending Approved</h2>
                     <ul class="border-2 border-top-none border-red-400 p-4">
@@ -68,12 +76,12 @@
                                 {{Auth::user()->name}}
                                 status : {{$doc->Doc_Status}} 
                                 <div class="flex">
-                                <form action="{{route('regisApprove',$doc->id,'approve=true')}}" method="post" enctype="multipart/form-data">
+                                <!-- <form action="{{route('regisApprove',$doc->id,'approve=true')}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                     <input type="hidden" name="regID" value="{{$doc->id}}">
                                     <input type="hidden" name="manage" value="approved">
                                     <button class="bg-pink-400 p-2 m-2">Approve</button>
-                                </form>
+                                </form> -->
 
                                 <form action="{{route('regisApprove',$doc->id,'approve=false')}}" method="post" enctype="multipart/form-data">
                                 @csrf
@@ -118,12 +126,12 @@
                                     <button class="bg-pink-400 p-2 m-2">Approve</button>
                                 </form>
 
-                                <form action="{{route('regisApprove',$doc->id,'approve=false')}}" method="post" enctype="multipart/form-data">
+                                <!-- <form action="{{route('regisApprove',$doc->id,'approve=false')}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                     <input type="hidden" name="regID" value="{{$doc->id}}">
                                     <input type="hidden" name="manage" value="rejected">
                                     <button class="bg-pink-400 p-2 m-2">Reject</button>
-                                </form>
+                                </form> -->
                             </div>
                             </span>
                             @endif
