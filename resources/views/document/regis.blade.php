@@ -12,14 +12,28 @@
                     <!-- {{ Auth::user()->id }} -->
                     <!-- {{gettype($message)}} -->
 
+                    <style>
+                        .approved{
+                            background: green;
+                        }
+                        .rejected{
+                            background: red;
+                        }
+                    </style>
+                        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
                     @isset($message->name)
-                        <div class="alert alert-success bg-green-300 p-4 flex justify-between align-center">
-                            <!-- {{$documents}} -->
-                            <div>
-                                <strong>{{$message->name}}</strong> : {{$message->result}}
-                            </div>
-                        <button class="rounded-full aspect-square block w-8 bg-red-400 grid place-content-center" onclick="document.querySelector('.alert').classList.add('hidden')"> x </button>
-                        </div>
+                        <script>
+                            console.log('tost')
+                            Toastify({
+                                text: "{{$message->name}} : {{$message->result}}",
+                                duration: 6000,
+                                close: true,
+                                gravity: "top", // `top` or `bottom`
+                                position: "center", // `left`, `center` or `right`
+                                className:"{{$message->result}}",
+                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                            }).showToast();
+                        </script>
                     @endif
 
                     <h2 class="text-xl mt-10">Pending Approved</h2>
