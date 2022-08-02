@@ -9,7 +9,7 @@ use Illuminate\Routing\Route;
 use League\CommonMark\Node\Block\Document;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Str;
 
 class DocumentRequestController extends Controller
 {
@@ -46,17 +46,28 @@ class DocumentRequestController extends Controller
         // dd($add);
         //ตรวจสอบข้อมูล
         $add->validate(
-            [
-                'file'=>'required'
+            [   
+                'Doc_Name'=>'required|max:10|unique:document_requests',
+                'objective'=>'required',
+                'info'=>'required',
+                // 'usedate'=>'required',
+                // 'Year'=>'required',
+                'file'=>'required|mimes:pdf',
+                
             ],
             [
 
-                'file'=>'กรุณาเลือกไฟล์ PDF',
-
+                
                 'Doc_Name.required' => "กรุณาป้อนชื่อเอกสาร",
                 'Doc_Name.max' => "กรุณาป้อนชื่อเอกสาร 10 ตัวอักษร",
-                'Doc_Name.unique' => "ชื่อเอกสารนี้ถูกใช้ไปแล้ว"
-                // 'file'=>'กรุณาเลือกไฟล์ PDF'
+                'Doc_Name.unique' => "ชื่อเอกสารนี้ถูกใช้ไปแล้ว",
+                'objective.required' => "กรุณาเลือกจุดประสงค์",
+                'info.required' => "กรุณาป้อนรายละเอียด",
+                // 'usedate.required' => "กรุณาป้อนรายละเอียด",
+                // 'Year.required' => "กรุณาป้อนรายละเอียด",
+                'file.required' => "กรุณาเลือกไฟล์",
+                'file.mimes' => "กรุณาเลือกไฟล์ PDF เท่านั้น",
+                // 'file'=>'',
 
             ]
         );
