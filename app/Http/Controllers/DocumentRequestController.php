@@ -50,14 +50,14 @@ class DocumentRequestController extends Controller
                 'file'=>'required'
             ],
             [
-<<<<<<< Updated upstream
-                'file'=>'กรุณาเลือกไฟล์ PDF'
-=======
+
+                'file'=>'กรุณาเลือกไฟล์ PDF',
+
                 'Doc_Name.required' => "กรุณาป้อนชื่อเอกสาร",
                 'Doc_Name.max' => "กรุณาป้อนชื่อเอกสาร 10 ตัวอักษร",
                 'Doc_Name.unique' => "ชื่อเอกสารนี้ถูกใช้ไปแล้ว"
                 // 'file'=>'กรุณาเลือกไฟล์ PDF'
->>>>>>> Stashed changes
+
             ]
         );
 
@@ -94,11 +94,11 @@ class DocumentRequestController extends Controller
         $documents->Doc_ver = $docver;
         $documents->Doc_StartDate = $add->usedate;
         $documents->Doc_Location = $full_path;
-<<<<<<< Updated upstream
+
         $documents->Doc_Status ='0';
-=======
+
         $documents->Doc_Status ='1';
->>>>>>> Stashed changes
+
         // $documents->Doc_Timestamp = $add->date;
         // document_request::count(Doc_Name);
         //upload PDF
@@ -150,11 +150,10 @@ class DocumentRequestController extends Controller
 
         // dd(document_request::find($add->id));
         
-<<<<<<< Updated upstream
+
 
         //disible mail service during test
-=======
->>>>>>> Stashed changes
+
         // Mail::send(['text'=>'mail'], array('name'=>"Virat Gandhi"), function($message) {
         //     $message->to('maggotgluon@gmail.com', 'Tutorials Point')->subject('Laravel Basic Testing Mail');
         //     $message->from('ruttaphong.w@vananava.com','KM Service');
