@@ -42,7 +42,16 @@ Route::get('/document', [DocumentRequestController::class,'show',] ) ->middlewar
 // regis
 //upload new doc
 Route::get('/regis_document', function () {
-    return view('document.create');
+    // dd(document_request::all());
+    $currentYear = date("Y");
+    $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
+    $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
+
+    $count = document_request::whereBetween('created_at',[$startYear,$endYear])->count();
+    // ddd($max);
+    return view('document.create',[
+        'count_doc_code'=>$count,
+    ]);
 })->middleware(['auth'])->name('regisDoc');
 //post 
 Route::post('/regis_document',  [DocumentRequestController::class,'create'] ) ->middleware(['auth']) -> name('createRegis');
