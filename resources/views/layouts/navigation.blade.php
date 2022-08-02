@@ -103,6 +103,10 @@
                             {{ __('Training') }}
                         </x-nav-link>
                     @endif
+
+                    <x-nav-link :href="route('userManage')" :active="request()->routeIs('userManage')">
+                        {{ __('Manage User') }}
+                    </x-nav-link>
             
 
                     
@@ -126,6 +130,9 @@
 
                     <x-slot name="content">
                         <!-- Authentication -->
+                        <x-responsive-nav-link :href="route('userProfile')">
+                            {{ __('Profile') }}
+                        </x-responsive-nav-link>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -194,6 +201,9 @@
 
             <div class="mt-3 space-y-1">
                 <!-- Authentication -->
+                <x-responsive-nav-link :href="route('userProfile')">
+                    {{ __('Profile') }}
+                </x-responsive-nav-link>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 

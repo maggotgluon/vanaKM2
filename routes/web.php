@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentRequestController;
+use App\Http\Controllers\UserController;
 use App\Models\document as ModelsDocument;
 use App\Models\document_request;
 use Illuminate\Support\Facades\Auth;
@@ -79,6 +80,10 @@ Route::get('/document/{Doc_Code}', function ($Doc_Code) {
 })->middleware(['auth'])->name('documentView');
 //manage all doc <- admin onlydesde
 //approved doc by md <- md only
+
+
+Route::get('/user/profile/', [UserController::class,'profile',] ) ->middleware(['auth'])->name('userProfile');
+Route::get('/user/manage/', [UserController::class,'manage',] ) ->middleware(['auth'])->name('userManage');
 
 
 
