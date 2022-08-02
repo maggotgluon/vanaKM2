@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+
+use App\Models\users_permission;
+use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,34 +28,101 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // // Should return TRUE or FALSE
-        // Gate::define('edit_document', function(User $user) {
-        //     // can upload KM request
-        //     return $user->is_admin == 1;
-        // });
-        // Gate::define('edit_trainDocument', function(User $user) {
-        //     // can upload Training request
-        //     return $user->is_admin == 1;
-        // });
+        Gate::define('edit_document', function(User $user) {
+            // can upload KM request
+            boo:$can=false;
+            foreach($user->users_permission as $permission){
+                if($permission->parmission_name=='edit_document'&$permission->allowance==1){
+                    $can=true;
+                    return $can;
+                }
 
-        // // management level 
-        // Gate::define('manage_document', function(User $user) {
-        //     // can manage KM request
-        //     return $user->is_admin == 1;
-        // });
-        // Gate::define('manage_trainDocument', function(User $user) {
-        //     // can manage Training request
-        //     return $user->is_admin == 1;
-        // });
-        // Gate::define('manage_users', function(User $user) {
-        //     // can manage user row/permission
-        //     return $user->is_admin == 1;
-        // });
+                if($permission->parmission_name=='admin'&$permission->allowance==1){
+                    $can=true;
+                    return $can;
+                }
+            }
+            return $user->is_admin == 1 | $can;
+        });
+        Gate::define('edit_trainDocument', function(User $user) {
+            // can upload Training request
+            boo:$can=false;
+            foreach($user->users_permission as $permission){
+                if($permission->parmission_name=='edit_trainDocument'&$permission->allowance==1){
+                    $can=true;
+                    return $can;
+                }
+                if($permission->parmission_name=='admin'&$permission->allowance==1){
+                    $can=true;
+                    return $can;
+                }
+            }
+            return $user->is_admin == 1 | $can;
+        });
 
-        // // MD level
-        // Gate::define('publish_document', function(User $user) {
-        //     // can Approved KM request (MD)
-        //     return $user->is_admin == 1;
-        // });
+        // management level 
+        Gate::define('manage_document', function(User $user) {
+            // can manage KM request
+            boo:$can=false;
+            foreach($user->users_permission as $permission){
+                if($permission->parmission_name=='manage_document'&$permission->allowance==1){
+                    $can=true;
+                    return $can;
+                }
+                if($permission->parmission_name=='admin'&$permission->allowance==1){
+                    $can=true;
+                    return $can;
+                }
+            }
+            return $user->is_admin == 1 | $can;
+        });
+        Gate::define('manage_trainDocument', function(User $user) {
+            // can manage Training request
+            boo:$can=false;
+            foreach($user->users_permission as $permission){
+                if($permission->parmission_name=='manage_trainDocument'&$permission->allowance==1){
+                    $can=true;
+                    return $can;
+                }
+                if($permission->parmission_name=='admin'&$permission->allowance==1){
+                    $can=true;
+                    return $can;
+                }
+            }
+            return $user->is_admin == 1 | $can;
+        });
+        Gate::define('manage_users', function(User $user) {
+            // can manage user row/permission
+            boo:$can=false;
+            foreach($user->users_permission as $permission){
+                if($permission->parmission_name=='manage_users'&$permission->allowance==1){
+                    $can=true;
+                    return $can;
+                }
+                if($permission->parmission_name=='admin'&$permission->allowance==1){
+                    $can=true;
+                    return $can;
+                }
+            }
+            return $user->is_admin == 1 | $can;
+        });
+
+        // MD level
+        Gate::define('publish_document', function(User $user) {
+            // can Approved KM request (MD)
+            boo:$can=false;
+            foreach($user->users_permission as $permission){
+                if($permission->parmission_name=='publish_document'&$permission->allowance==1){
+                    $can=true;
+                    return $can;
+                }
+                if($permission->parmission_name=='admin'&$permission->allowance==1){
+                    $can=true;
+                    return $can;
+                }
+            }
+            return $user->is_admin == 1 | $can;
+        });
 
     }
 }

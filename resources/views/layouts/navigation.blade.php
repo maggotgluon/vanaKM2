@@ -15,7 +15,12 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @if(Auth::user()->id==1)
+
+
+                    @can('edit_document', Auth::user())
+                    
+
+                    
                     <x-dropdown-nav align="top" width="48">
                         <x-slot name="trigger">
                             <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
@@ -38,14 +43,17 @@
                             <x-dropdown-link :href="route('regisDoc')">
                                     {{ __('Register new Document') }}
                             </x-dropdown-link>
-
+                            @if(Auth::user()->document_request->count()>0)
                             <x-dropdown-link :href="route('regisOwn')">
                                     {{ __('My Registed Document') }}
                             </x-dropdown-link>
-
-                            <x-dropdown-link :href="route('regisManage')">
-                                    {{ __('Registed Document Management') }}
-                            </x-dropdown-link>
+                            @endif
+                            
+                            @can('manage_document', Auth::user())
+                                <x-dropdown-link :href="route('regisManage')">
+                                        {{ __('Registed Document Management') }}
+                                </x-dropdown-link>
+                            @endcan
                         </x-slot>
 
                     </x-dropdown-nav>
@@ -53,7 +61,9 @@
                         <x-nav-link :href="route('document')" :active="request()->routeIs('document')">
                             {{ __('Document') }}
                         </x-nav-link>
-                    @endif
+                    
+
+                    @endcan
 
                     @if(Auth::user()->id==1)
                     <x-dropdown-nav align="top" width="48">
