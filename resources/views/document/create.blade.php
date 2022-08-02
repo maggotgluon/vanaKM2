@@ -71,8 +71,8 @@
     <hr class="col-span-2">
     <div class="py-2">
         Dar Number :
-
-        <input class="bg-backdrop rounded-md"  name="DocCode" type="text"  value="{{'DAR'.date('Y').str_pad(random_int( 0, 9000 ) ,4,'0')}}">
+        {{$count_doc_code}}
+        <input class="bg-backdrop rounded-md"  name="DocCode" type="text"  value="{{'DAR'.date('Y').str_pad( $count_doc_code+1 ,4,'0',STR_PAD_LEFT)}}">
     </div>
 
     
@@ -81,18 +81,18 @@
             <select class="bg-backdrop rounded-md"  name="type" id="type">
                 <optgroup label="Document">
                     <option disabled value="Document-SM">SM: System Manual</option>
-                    <option disabled>PR: Procedure</option>
-                    <option disabled>WI: Work Instruction</option>
-                    <option disabled>SD: Standard</option>
-                    <option disabled>SP: Specification</option>
+                    <option disabled value="Document-PR">PR: Procedure</option>
+                    <option disabled value="Document-WI">WI: Work Instruction</option>
+                    <option disabled value="Document-SD">SD: Standard</option>
+                    <option disabled value="Document-SP">SP: Specification</option>
                     <option value="Document-DS_KM">DS/KM: Document Support</option>
                     <option disabled>MN: Manual</option>
                 </optgroup>
                 <optgroup label="Form">
                     <option disabled value="Form-ADM">ADM</option>
-                    <option disabled>ENG</option>
-                    <option disabled>HRM</option>
-                    <option disabled>Other Dept. ...</option>
+                    <option disabled value="Form-ENG" >ENG</option>
+                    <option disabled value="Form-HRM" >HRM</option>
+                    <option disabled value="Form-Other" >Other Dept. ...</option>
                 </optgroup>
 
                 <optgroup label="External">
@@ -100,14 +100,14 @@
                 </optgroup>
 
                 <optgroup label="Record">
-                    <option disabled value="Record-KPIs">KPIs</option>
-                    <option disabled>Risk ISO9001</option>
-                    <option disabled>Rish ISO45001</option>
-                    <option disabled>Chemical List</option>
-                    <option disabled>Legal & Compliance</option>
-                    <option disabled>Communication Plan</option>
-                    <option disabled>Review DCC&REC</option>
-                    <option disabled>Other</option>
+                    <option  value="Record-KPIs">KPIs</option>
+                    <option  value="Record-ISO9001" >Risk ISO9001</option>
+                    <option  value="Record-ISO45001" >Rish ISO45001</option>
+                    <option  value="Record-Chemical" >Chemical List</option>
+                    <option  value="Record-Legal" >Legal & Compliance</option>
+                    <option  value="Record-Plan" >Communication Plan</option>
+                    <option  value="Record-Review" >Review DCC&REC</option>
+                    <option  value="Record-Other" >Other</option>
                 </optgroup>
                 {{-- <optgroup label="Training system">
                     <option>diamond</option>
@@ -119,15 +119,9 @@
         <div class="py-2 col-span-2">
         Document Name :
         <input maxlength="10" class="bg-backdrop-dark rounded-md" type="text" name="Doc_Name">
-<<<<<<< Updated upstream
-
-=======
         @error('Doc_Name')
-        
-                <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span>
-                
+            <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
         @enderror
->>>>>>> Stashed changes
     </div>
                     
     <div class="py-2">
@@ -142,25 +136,45 @@
             <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-7" value="ขอทำลาย"><label for="objective-7">ขอทำลาย </label></span>
             <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-8" value="อื่นๆ"><label for="objective-8">อื่นๆ </label></span>
         </div>
+        <br>
+                 <div >
+                    @error('objective')
+                        <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full items-center " >{{$message}}</span> 
+                    @enderror
+                </div>
     </div>
 
     <span class="flex flex-col">
         <label for="info">รายละเอียดการแก้ไข </label>
         <textarea name="info" id="info" cols="30" rows="5" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full{{$errors->has('name') ? ' border-accent' : ''}}"></textarea>
+                    @error('info')
+                        <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
+                    @enderror
     </span>
-
+                   
+    
     <div class="flex flex-wrap items-center">
         <span class="px-4">
             <span class="px-4">
                 
             <label for="dateUse">date-use :  </label>
             <input type="date" name="usedate" id="dateUse" value="{{Carbon\Carbon::now()->toDateString()}}" min="{{Carbon\Carbon::now()->toDateString()}}" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  my-2 {{$errors->has('name') ? ' border-accent' : ''}}"></span>
+                    <!-- @error('usedate')
+                        <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
+                    @enderror -->
             <label for="dateKeep">Year Life :  </label>
             <input type="number" name="Year" id="Year" value="1" min="1" max="10" step="1" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  my-2 {{$errors->has('name') ? ' border-accent' : ''}}"></span>Year(s)
-        <span class="px-4">
+                    <!-- @error('Year')
+                        <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
+                    @enderror -->
+            <span class="px-4">
             <label>File</label>
             <input type="file" name="file">
+                    
         </span>
+                    @error('file')
+                        <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
+                    @enderror
     </div>
 
 
