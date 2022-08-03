@@ -30,7 +30,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     // dd(Auth::user()->document_request);
-    return view('dashboard');
+    return view('dashboard',['documents'=>document_request::where('Doc_Status','1')->get()]);
 })->middleware(['auth'])->name('dashboard');
 
 // //see all doc
