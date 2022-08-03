@@ -47,8 +47,8 @@
                         </script>
                     @endif
 
-                    <h2 class="text-xl mt-10">Pending Approved</h2>
-
+                    
+                    <h2 class="text-xl mt-10">Document</h2>
                     <table id="table_id" class="display">
                         <thead>
                             <tr>
@@ -109,7 +109,9 @@
 
                         </tbody>
                     </table>
-                    <ul class="border-2 border-top-none border-red-400 p-4">
+                    <h2 class="text-xl mt-10">Pending Approved</h2>
+
+                    <ul class="border-2 border-top-none  p-4">
                         @foreach($documents as $doc)
                         @if ($doc->Doc_Status == 0)
                         <li class="clear-both">
@@ -152,7 +154,7 @@
                     </ul>
                     <hr>
                     <h2 class="text-xl mt-10">Approved</h2>
-                    <ul class="border-2 border-top-none border-red-400 p-4">
+                    <ul class="border-2 border-top-none  p-4">
                         @foreach($documents as $doc)
                         @if ($doc->Doc_Status == 1)
                         <li class="clear-both">
@@ -195,7 +197,7 @@
                     </ul>
                     <hr>
                     <h2 class="text-xl mt-10">Reject</h2>
-                    <ul class="border-2 border-top-none border-red-400 p-4">
+                    <ul class="border-2 border-top-none  p-4">
                         @foreach($documents as $doc)
                         @if ($doc->Doc_Status == -1)
                         <li class="clear-both">

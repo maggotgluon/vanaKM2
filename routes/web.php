@@ -5,10 +5,14 @@ use App\Http\Controllers\DocumentRequestController;
 use App\Http\Controllers\UserController;
 use App\Models\document as ModelsDocument;
 use App\Models\document_request;
+use App\Models\User;
+use App\Models\users_permission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use League\CommonMark\Node\Block\Document;
+use Illuminate\Foundation\Auth\User as AuthUser;
 
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -91,10 +95,42 @@ Route::get('/document/{Doc_Code}', function ($Doc_Code) {
 //approved doc by md <- md only
 
 
-Route::get('/user/profile/', [UserController::class,'profile',] ) ->middleware(['auth'])->name('userProfile');
+Route::get('/user/profile/{id}', [UserController::class,'profile'] ) ->middleware(['auth'])->name('userProfile');
 Route::get('/user/manage/', [UserController::class,'manage',] ) ->middleware(['auth'])->name('userManage');
 
+Route::get('/user/update/{id}/add/{permission}', function ($user,$permission) {
+    // dd($user,$permission);
+    // dd($permission, Auth::user()->users_permission);
+    // users_permission->create([
+    //     'user_id' => $user,
+    //     'permissions_type' => 'permission',
+    //     'parmission_name'=>$permission,
+    //     'allowance'=>true
+    // ]);
+    DB::table('users_permissions')->updateOrInsert([
+        'user_id' =>$user,
+        'permissions_type' => 'permission',
+        'parmission_name'=>$permission,
+    ],['allowance'=>true]);
+    return view('user.profile',['user'=>User::find($user)]) ;
+}) ->middleware(['auth'])->name('addPermission');
 
+Route::get('/user/update/{id}/remove/{permission}', function ($user,$permission) {
+    // dd($user,$permission);
+    // dd($permission, Auth::user()->users_permission);
+    // users_permission->create([
+    //     'user_id' =>$user,
+    //     'permissions_type' => 'permission',
+    //     'parmission_name'=>$permission,
+    //     'allowance'=>true
+    // ]);
+    DB::table('users_permissions')->updateOrInsert([
+        'user_id' =>$user,
+        'permissions_type' => 'permission',
+        'parmission_name'=>$permission,
+    ],['allowance'=>false]);
+    return view('user.profile',['user'=>User::find($user)]);
+}) ->middleware(['auth'])->name('removePermission');
 
 require __DIR__.'/auth.php';
 
