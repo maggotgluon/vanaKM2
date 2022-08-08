@@ -47,26 +47,27 @@ class DocumentRequestController extends Controller
         //ตรวจสอบข้อมูล
         $add->validate(
             [   
-                'Doc_Name'=>'required|max:10|unique:document_requests',
+                'Doc_Name'=>'required',
                 'objective'=>'required',
                 'info'=>'required',
                 // 'usedate'=>'required',
                 // 'Year'=>'required',
-                'file'=>'required|mimes:pdf',
+                'file'=>'required|mimes:pdf|size:10mb',
                 
             ],
             [
 
                 
                 'Doc_Name.required' => "กรุณาป้อนชื่อเอกสาร",
-                'Doc_Name.max' => "กรุณาป้อนชื่อเอกสาร 10 ตัวอักษร",
-                'Doc_Name.unique' => "ชื่อเอกสารนี้ถูกใช้ไปแล้ว",
+                // 'Doc_Name.max' => "กรุณาป้อนชื่อเอกสาร 10 ตัวอักษร",
+                // 'Doc_Name.unique' => "ชื่อเอกสารนี้ถูกใช้ไปแล้ว",
                 'objective.required' => "กรุณาเลือกจุดประสงค์",
                 'info.required' => "กรุณาป้อนรายละเอียด",
                 // 'usedate.required' => "กรุณาป้อนรายละเอียด",
                 // 'Year.required' => "กรุณาป้อนรายละเอียด",
                 'file.required' => "กรุณาเลือกไฟล์",
                 'file.mimes' => "กรุณาเลือกไฟล์ PDF เท่านั้น",
+                'file.size' => "กรุณาเลือกไฟล์ PDF ขนาดไม่เกิน 10 MB",
                 // 'file'=>'',
 
             ]
