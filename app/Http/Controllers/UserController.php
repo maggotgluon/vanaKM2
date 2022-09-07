@@ -10,8 +10,8 @@ class UserController extends Controller
     //
     // Profile
     public function profile($uid){
-        
-        return view('user.profile',['user'=>User::find($uid)]);
+        // dd(User::where('department',User::find($uid)->department)->get());
+        return view('user.profile',['user'=>User::find($uid),'dp'=>User::where('department',User::find($uid)->department)->get()]);
     }
     // manage permission
     public function manage(){

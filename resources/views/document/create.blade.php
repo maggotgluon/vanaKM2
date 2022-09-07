@@ -21,20 +21,20 @@
         <input class="bg-backdrop rounded-md" type="date" disabled name="date" value="{{date('Y-m-d')}}" id="">
 
     </div>
-    <div class="py-2">
+        <div class="py-2">
 
-        <input id="name" value="{{ Auth::user()->name }}"
-        class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full{{$errors->has('name') ? ' border-accent' : ''}}"
-        type="text"
-        name="name"
-        value="{{ old('name') }}"
-        readonly
-        />
-        <label for="name"
-        class="block font-medium text-sm text-content{{$errors->has('name') ? ' text-accent' : ''}}">
-        {{ __('Name') }}
-        </label>
-    </div>
+            <input id="name" value="{{ Auth::user()->name }}"
+            class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full{{$errors->has('name') ? ' border-accent' : ''}}"
+            type="text"
+            name="name"
+            value="{{ old('name') }}"
+            readonly
+            />
+            <label for="name"
+            class="block font-medium text-sm text-content{{$errors->has('name') ? ' text-accent' : ''}}">
+            {{ __('Name') }}
+            </label>
+        </div>
     <div class="py-2">
 
         <input id="name" value="{{ Auth::user()->email }}"
@@ -71,7 +71,6 @@
     <hr class="col-span-2">
     <div class="py-2">
         Dar Number :
-        {{$count_doc_code}}
         <input class="bg-backdrop rounded-md"  name="DocCode" type="text"  value="{{'DAR'.date('Y').str_pad( $count_doc_code+1 ,4,'0',STR_PAD_LEFT)}}">
     </div>
 

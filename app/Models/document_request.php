@@ -14,6 +14,6 @@ class document_request extends Model
     }
     public function document()
     {
-        return $this->hasOne(document::class);
+        return $this->hasOne(document::class ,'Doc_Code');
     }
 }

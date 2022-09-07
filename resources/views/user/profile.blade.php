@@ -14,10 +14,28 @@
                         email : {{$user->email}}<br>
                         ID : {{$user->staff_id}}<br>
                         Department : {{$user->department}}<br>
+                        Department : {{$user->position}}<br>
                         Department Head : {{$user->department_head}}<br>
-                        <!-- {{$user->user_level}}<br> -->
+                        {{$user->user_level}}<br>
                         <hr>
-                        <!-- {{$user}} -->
+                        {{$user}}
+                        <form action="{{route('updateUser',$user)}}" method="post" >
+                        @csrf
+                            <label for="suser">Department Head : </label>
+                            {{$user->department_head}} 
+                            <div class="update">
+                            Change to 
+                                <select class="bg-backdrop rounded-md"  name="suser" id="suser">
+                                    @foreach ($dp as $suser)
+                                        <option value="{{$suser->staff_id}}">{{$suser->staff_id}}:{{$suser->name}}</option>
+                                    @endforeach
+                                </select>
+                                <button type="submit">Save</button>
+                                
+                            </div>
+                        </form>
+                       
+
                         <hr>
                         @can('manage_users', Auth::user())
                         <div>

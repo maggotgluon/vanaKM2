@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\document as ModelsDocument;
 use App\Models\document_request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -28,7 +29,11 @@ class DocumentRequestController extends Controller
     }
 
     public function show(){
+        // dd(ModelsDocument::all());
         // ddd (document_request::where('Doc_Status','1')->get());
+        return view('document.index',[
+            'documents'=>ModelsDocument::all(),
+        ]);
         return view('document.index',[
             'documents'=>document_request::where('Doc_Status','1')->get(),
         ]);
@@ -47,7 +52,7 @@ class DocumentRequestController extends Controller
         //ตรวจสอบข้อมูล
         $add->validate(
             [   
-                'Doc_Name'=>'required|max:10|unique:document_requests',
+                // 'Doc_Name'=>'required|max:10|unique:document_requests',
                 'objective'=>'required',
                 'info'=>'required',
                 // 'usedate'=>'required',
@@ -108,7 +113,7 @@ class DocumentRequestController extends Controller
 
         $documents->Doc_Status ='0';
 
-        $documents->Doc_Status ='1';
+        // $documents->Doc_Status ='1';
 
         // $documents->Doc_Timestamp = $add->date;
         // document_request::count(Doc_Name);
@@ -139,12 +144,34 @@ class DocumentRequestController extends Controller
     }
 
     public function approve(request $add){
-        // dd($add->regID,$add->manage);
         $id = $add->regID;
         $approve = $add->manage;
         $reg_doc = document_request::find($id);
         if($approve === 'approved'){
             $reg_doc->Doc_Status = '1';
+            // dd($reg_doc);
+            $documents = ModelsDocument::updateOrCreate(
+                [
+                    'Doc_Name' => $reg_doc->Doc_Name
+                ],
+                [
+                    'Doc_Name' => $reg_doc->Doc_Name,
+                    'Doc_Code' => $reg_doc->Doc_Code,
+                    'Doc_Type' => $reg_doc->Doc_Type,
+                    'Doc_Life' => $reg_doc->Doc_Life,
+                    'Doc_ver' => $reg_doc->Doc_ver,
+                    'Doc_DateApprove' => now()
+                ]
+            );
+
+            // DB::table('users')
+            // ->updateOrInsert(
+            //     ['email' => 'john@example.com', 'name' => 'John'],
+            //     ['votes' => '2']
+            // );
+            
+            // dd($documents);
+            $documents->save();
             echo 'approved';
         }else{
             $reg_doc->Doc_Status = '-1';

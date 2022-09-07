@@ -67,7 +67,7 @@
 
                     @endcan
 
-                    @if(Auth::user()->id==1)
+                    @can('edit_document', Auth::user())
                     <x-dropdown-nav align="top" width="48">
                         <x-slot name="trigger">
                             <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
@@ -82,19 +82,19 @@
                         </x-slot>
 
                         <x-slot name="content">                        
-                            <x-dropdown-link>
+                            <x-dropdown-link :href="route('training')">
                                     {{ __('Training') }}
                             </x-dropdown-link>
 
-                            <x-dropdown-link>
+                            <x-dropdown-link :href="route('regisTrain')">
                                     {{ __('Add new Training Presentation') }}
                             </x-dropdown-link>
 
-                            <x-dropdown-link>
+                            <x-dropdown-link :href="route('regisTrainOwn')">
                                     {{ __('My Presentation') }}
                             </x-dropdown-link>
 
-                            <x-dropdown-link>
+                            <x-dropdown-link :href="route('regisTrainManage')">
                                     {{ __('Training Management') }}
                             </x-dropdown-link>
                         </x-slot>
@@ -104,7 +104,7 @@
                         <x-nav-link>
                             {{ __('Training') }}
                         </x-nav-link>
-                    @endif
+                    @endcan
 
                     @can('manage_users', Auth::user())
                     <x-nav-link :href="route('userManage')" :active="request()->routeIs('userManage')">

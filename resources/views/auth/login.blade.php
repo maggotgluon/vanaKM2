@@ -1,17 +1,18 @@
 <x-guest-layout>
+<div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <x-application-logo class="w-64 fill-current text-gray-500" />
             </a>
         </x-slot>
-        <div class="flex justify-center gap-2 flex-wrap" id="debug">
+        <div class="flex justify-center gap-2 flex-wrap mb-4 debug-box" id="debug">
             <button class="bg-pink-400 p-2 hover:bg-pink-200" id="btn_user">user</button>
             <button class="bg-pink-400 p-2 hover:bg-pink-200" id="btn_superuser">super user</button>
-            <button class="bg-pink-400 p-2 hover:bg-pink-200" id="btn_adminKM">admin KM</button>
+            <!-- <button class="bg-pink-400 p-2 hover:bg-pink-200" id="btn_adminKM">admin KM</button>
             <button class="bg-pink-400 p-2 hover:bg-pink-200" id="btn_adminTraining">admin Training</button>
             <button class="bg-pink-400 p-2 hover:bg-pink-200" id="btn_MD">MD</button>
-            <button class="bg-pink-400 p-2 hover:bg-pink-200" id="btn_supperAdmin">supper Admin</button>
+            <button class="bg-pink-400 p-2 hover:bg-pink-200" id="btn_supperAdmin">supper Admin</button> -->
             <hr>
             <script>
                 console.log('debug');
@@ -72,7 +73,7 @@
 
             <!-- Email Address -->
             <div>
-                <x-label for="email" :value="__('Email')" />
+                <x-label for="email" :value="__('Email or Staff ID')" />
 
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
             </div>
@@ -110,5 +111,5 @@
 
 
     </x-auth-card>
-    
+</div>    
 </x-guest-layout>

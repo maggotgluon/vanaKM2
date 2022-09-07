@@ -47,7 +47,7 @@
                         </script>
                     @endif
 
-                    
+<!--                     
                     <h2 class="text-xl mt-10">Document</h2>
                     <table id="table_id" class="display">
                         <thead>
@@ -108,52 +108,79 @@
                             @endforeach
 
                         </tbody>
-                    </table>
-                    <h2 class="text-xl mt-10">Pending Approved</h2>
+                    </table> -->
+                    @php 
+                         $pending = 0;
+                         $approved = 0;
+                         $reject = 0;
+                         
+                        foreach($documents as $doc){
+                            if ($doc->Doc_Status == 0){
 
-                    <ul class="border-2 border-top-none  p-4">
-                        @foreach($documents as $doc)
-                        @if ($doc->Doc_Status == 0)
-                        <li class="clear-both">
-                            @if (Auth::user()->id ==99 || 1)
-                            <span class="float-right">
-                                upload by :
-                                {{Auth::user()->name}}
-                                status : {{$doc->Doc_Status}} 
-                                <div class="flex">
-                                <form action="{{route('regisApprove',$doc->id,'approve=true')}}" method="post" enctype="multipart/form-data">
-                                @csrf
-                                    <input type="hidden" name="regID" value="{{$doc->id}}">
-                                    <input type="hidden" name="manage" value="approved">
-                                    <button class="bg-pink-400 p-2 m-2">Approve</button>
-                                </form>
+                                $pending++;
+                            }
+                            elseif ($doc->Doc_Status == 1){
 
-                                <form action="{{route('regisApprove',$doc->id,'approve=false')}}" method="post" enctype="multipart/form-data">
-                                @csrf
-                                    <input type="hidden" name="regID" value="{{$doc->id}}">
-                                    <input type="hidden" name="manage" value="rejected">
-                                    <button class="bg-pink-400 p-2 m-2">Reject</button>
-                                </form>
-                            </div>
-                            </span>
+                                $approved++;
+                            }
+                            elseif ($doc->Doc_Status == -1){
+
+                                $reject++;
+                            }
+                        } 
+                    @endphp
+                    @if($pending==0)
+                        <h2 class="text-xl mt-10 text-center">😀 No Pending Approved</h2>
+                    @else
+                        <h2 class="text-xl mt-10">Pending Approved ({{$pending}})</h2>
+                        <ul class="border-2 border-top-none  p-4">
+                            @foreach($documents as $doc)
+                            @if ($doc->Doc_Status == 0)
+                            <li class="clear-both">
+                                @if (Auth::user()->id ==99 || 1)
+                                <span class="float-right">
+                                    upload by :
+                                    {{Auth::user()->name}}
+                                    status : {{$doc->Doc_Status}} 
+                                    <div class="flex">
+                                    <form action="{{route('regisApprove',$doc->id,'approve=true')}}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                        <input type="hidden" name="regID" value="{{$doc->id}}">
+                                        <input type="hidden" name="manage" value="approved">
+                                        <button class="bg-pink-400 p-2 m-2">Approve</button>
+                                    </form>
+
+                                    <form action="{{route('regisApprove',$doc->id,'approve=false')}}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                        <input type="hidden" name="regID" value="{{$doc->id}}">
+                                        <input type="hidden" name="manage" value="rejected">
+                                        <button class="bg-pink-400 p-2 m-2">Reject</button>
+                                    </form>
+                                </div>
+                                </span>
+                                @endif
+                                {{$doc->id}} {{$doc->Doc_Code}} : {{$doc->Doc_Name}} 
+                                @unless ($doc->Doc_ver===0)
+                                Rev {{$doc->Doc_ver}}
+                                @endunless
+                                <br>
+                                <span class="text-sm ">update {{$doc->updated_at}}</span> <hr>
+                                <a href="{{route('regisView',$doc->Doc_Code)}}" class="color-blue-400">
+                                    view
+                                </a>
+                            <!-- {{$doc}} -->
+                            </li>
                             @endif
-                            {{$doc->id}} {{$doc->Doc_Code}} : {{$doc->Doc_Name}} 
-                            @unless ($doc->Doc_ver===0)
-                            Rev {{$doc->Doc_ver}}
-                            @endunless
-                            <br>
-                            <span class="text-sm ">update {{$doc->updated_at}}</span> <hr>
-                            <a href="{{route('regisView',$doc->Doc_Code)}}" class="color-blue-400">
-                                view
-                            </a>
-                        <!-- {{$doc}} -->
-                        </li>
-                        @endif
-                            
-                        @endforeach
-                    </ul>
-                    <hr>
-                    <h2 class="text-xl mt-10">Approved</h2>
+                                
+                            @endforeach
+                        </ul>
+                    @endif
+                        <hr>
+                        
+                    @if($approved==0)
+                        <h2 class="text-xl mt-10 text-center">😀 No Approved</h2>
+                    @else
+                    <h2 class="text-xl mt-10">Approved ({{$approved}})</h2>
                     <ul class="border-2 border-top-none  p-4">
                         @foreach($documents as $doc)
                         @if ($doc->Doc_Status == 1)
@@ -194,51 +221,58 @@
                         @endif
                             
                         @endforeach
-                    </ul>
-                    <hr>
-                    <h2 class="text-xl mt-10">Reject</h2>
+                        </ul>
+                    @endif
+                        <hr>
+
+                        
+                    @if($reject==0)
+                        <h2 class="text-xl mt-10 text-center">😀 No Reject</h2>
+                    @else
+                    <h2 class="text-xl mt-10">Reject ({{$reject}})</h2>
                     <ul class="border-2 border-top-none  p-4">
                         @foreach($documents as $doc)
                         @if ($doc->Doc_Status == -1)
-                        <li class="clear-both">
-                            @if (Auth::user()->id ==99 || 1)
-                            <span class="float-right">
-                                upload by :
-                                {{Auth::user()->name}}
-                                status : {{$doc->Doc_Status}} 
-                                <div class="flex">
-                                <form action="{{route('regisApprove',$doc->id,'approve=true')}}" method="post" enctype="multipart/form-data">
-                                @csrf
-                                    <input type="hidden" name="regID" value="{{$doc->id}}">
-                                    <input type="hidden" name="manage" value="approved">
-                                    <button class="bg-pink-400 p-2 m-2">Approve</button>
-                                </form>
+                            <li class="clear-both">
+                                @if (Auth::user()->id ==99 || 1)
+                                <span class="float-right">
+                                    upload by :
+                                    {{Auth::user()->name}}
+                                    status : {{$doc->Doc_Status}} 
+                                    <div class="flex">
+                                    <form action="{{route('regisApprove',$doc->id,'approve=true')}}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                        <input type="hidden" name="regID" value="{{$doc->id}}">
+                                        <input type="hidden" name="manage" value="approved">
+                                        <button class="bg-pink-400 p-2 m-2">Approve</button>
+                                    </form>
 
-                                <!-- <form action="{{route('regisApprove',$doc->id,'approve=false')}}" method="post" enctype="multipart/form-data">
-                                @csrf
-                                    <input type="hidden" name="regID" value="{{$doc->id}}">
-                                    <input type="hidden" name="manage" value="rejected">
-                                    <button class="bg-pink-400 p-2 m-2">Reject</button>
-                                </form> -->
-                            </div>
-                            </span>
-                            @endif
-                            {{$doc->id}} {{$doc->Doc_Code}} : {{$doc->Doc_Name}} 
-                            @unless ($doc->Doc_ver===0)
-                            Rev {{$doc->Doc_ver}}
-                            @endunless
-                            <br>
-                            <span class="text-sm ">update {{$doc->updated_at}}</span> <hr>
-                            <a href="{{route('regisView',$doc->Doc_Code)}}" class="color-blue-400">
-                                view
-                            </a>
-                        <!-- {{$doc}} -->
-                        </li>
+                                    <!-- <form action="{{route('regisApprove',$doc->id,'approve=false')}}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                        <input type="hidden" name="regID" value="{{$doc->id}}">
+                                        <input type="hidden" name="manage" value="rejected">
+                                        <button class="bg-pink-400 p-2 m-2">Reject</button>
+                                    </form> -->
+                                </div>
+                                </span>
+                                @endif
+                                {{$doc->id}} {{$doc->Doc_Code}} : {{$doc->Doc_Name}} 
+                                @unless ($doc->Doc_ver===0)
+                                Rev {{$doc->Doc_ver}}
+                                @endunless
+                                <br>
+                                <span class="text-sm ">update {{$doc->updated_at}}</span> <hr>
+                                <a href="{{route('regisView',$doc->Doc_Code)}}" class="color-blue-400">
+                                    view
+                                </a>
+                            <!-- {{$doc}} -->
+                            </li>
                         @endif
-                            
+                         
                         @endforeach
-                    </ul>
-                    <hr>
+                        </ul>
+                    @endif
+                        <hr>
                 </div>
             </div>
         </div>

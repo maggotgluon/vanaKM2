@@ -16,7 +16,12 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('ref'); // Dar number
+            $table->string('Doc_Code'); // Dar number
+            $table->string('Doc_Name'); // file name and document run number
+            $table->string('Doc_Type'); // type of document
+            $table->integer('Doc_Life'); // document life  time 
+            $table->integer('Doc_ver'); // document version
+            $table->date('Doc_DateApprove')->nullable(); //approved date
         });
     }
 

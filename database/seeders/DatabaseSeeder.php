@@ -18,8 +18,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Test',
             'email' => 'test@example.com',
-            'staff_id'=>'VN433',
+            'staff_id'=>'test',
             'department'=>'IT',
+            'position'=>'test',
             'department_head'=>'Suwat',
             'user_level'=>'1',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
@@ -31,6 +32,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'user@test.com',
             'staff_id'=>'user',
             'department'=>'test',
+            'position'=>'test',
             'department_head'=>'VN433',
             'user_level'=>'staff',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
@@ -41,6 +43,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'useradv@test.com',
             'staff_id'=>'useradv',
             'department'=>'test',
+            'position'=>'test',
             'department_head'=>'VN433',
             'user_level'=>'staff',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
@@ -51,6 +54,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'managerkm@test.com',
             'staff_id'=>'managerkm',
             'department'=>'test',
+            'position'=>'test',
             'department_head'=>'VN433',
             'user_level'=>'staff',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
@@ -61,6 +65,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'managertr@test.com',
             'staff_id'=>'managertr',
             'department'=>'test',
+            'position'=>'test',
             'department_head'=>'VN433',
             'user_level'=>'staff',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
@@ -71,6 +76,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'md@test.com',
             'staff_id'=>'md',
             'department'=>'test',
+            'position'=>'test',
             'department_head'=>'VN433',
             'user_level'=>'staff',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
@@ -81,6 +87,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@test.com',
             'staff_id'=>'admin',
             'department'=>'test',
+            'position'=>'test',
             'department_head'=>'VN433',
             'user_level'=>'staff',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
@@ -91,7 +98,7 @@ class DatabaseSeeder extends Seeder
 
         //
         \App\Models\users_permission::factory()->create([
-            'user_id' => 7,
+            'user_id' => 3,
             'permissions_type' => 'role',
             'parmission_name'=>'admin',
             'allowance'=>1,
@@ -129,6 +136,26 @@ class DatabaseSeeder extends Seeder
             'allowance'=>1,
         ]);
 
+        // seed from file
+        $csvFile = fopen(base_path("database/data/user.csv"), "r");
         
+        $firstline = true;
+        while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
+            if (!$firstline) {
+                \App\Models\User::factory()->create([
+                    'name' => $data['1'],
+                    'email' => $data['2'],
+                    'staff_id'=> $data['3'],
+                    'department'=> $data['4'],
+                    'position'=> $data['5'],
+                    'department_head'=> $data['6'],
+                    'user_level'=> $data['7'],
+                    'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                ]);    
+            }
+            $firstline = false;
+        }
+   
+        fclose($csvFile);
     }
 }

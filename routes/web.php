@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 use League\CommonMark\Node\Block\Document;
 use Illuminate\Foundation\Auth\User as AuthUser;
 
+use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +45,6 @@ Route::get('/document', [DocumentRequestController::class,'show',] ) ->middlewar
 //     // return view('dashboard');
 // })->middleware(['auth'])->name('documentCreate');
 
-
 // regis
 //upload new doc
 Route::get('/regis_document', function () {
@@ -65,7 +66,6 @@ Route::post('/regis_document',  [DocumentRequestController::class,'create'] ) ->
 Route::get('/regis_document/view/', [DocumentRequestController::class,'showReg',] ) ->middleware(['auth'])->name('regisOwn');
 
 Route::get('/regis_document/manage/', [DocumentRequestController::class,'manage',] ) ->middleware(['auth'])->name('regisManage');
-
 
 Route::post('/regis_document/manage/{id}',  [DocumentRequestController::class,'approve','$id'] ) ->middleware(['auth']) -> name('regisApprove');
 
@@ -131,6 +131,52 @@ Route::get('/user/update/{id}/remove/{permission}', function ($user,$permission)
     ],['allowance'=>false]);
     return view('user.profile',['user'=>User::find($user)]);
 }) ->middleware(['auth'])->name('removePermission');
+
+Route::post('/user/update/{user}', function (request $data,User $user) {
+
+    // dd($user->id);
+    $newDP = user::where('staff_id',$data->suser)->first();
+    // dd($newDP->name);
+    $user->department_head = $newDP->name;
+    $user->save();
+    return redirect(route('userProfile',$user->id));
+}) ->middleware(['auth'])->name('updateUser');
+
+
+
+// //see all doc
+Route::get('/training', [DocumentRequestController::class,'show',] ) ->middleware(['auth'])->name('training');
+
+// // view / download single doc
+// Route::get('/document/{doc_id}', function (Document $doc_id) {
+//     // return view('dashboard');
+// })->middleware(['auth'])->name('documentCreate');
+
+// regis
+//upload new doc
+Route::get('/regis_training', function () {
+    // dd(document_request::all());
+    $currentYear = date("Y");
+    $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
+    $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
+
+    $count = document_request::whereBetween('created_at',[$startYear,$endYear])->count();
+    // ddd($max);
+    return view('traning.create',[
+        'count_doc_code'=>$count,
+    ]);
+})->middleware(['auth'])->name('regisTrain');
+//post 
+Route::post('/regis_training',  [DocumentRequestController::class,'create'] ) ->middleware(['auth']) -> name('createTrain');
+
+//view my doc
+Route::get('/regis_training/view/', [DocumentRequestController::class,'showReg',] ) ->middleware(['auth'])->name('regisTrainOwn');
+
+Route::get('/regis_training/manage/', [DocumentRequestController::class,'manage',] ) ->middleware(['auth'])->name('regisTrainManage');
+
+Route::post('/regis_training/manage/{id}',  [DocumentRequestController::class,'approve','$id'] ) ->middleware(['auth']) -> name('regisTrainApprove');
+
+
 
 require __DIR__.'/auth.php';
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoredocumentRequest;
 use App\Http\Requests\UpdatedocumentRequest;
 use App\Models\document;
+use App\Models\document_request;
 
 class DocumentController extends Controller
 {
@@ -23,9 +24,10 @@ class DocumentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(document_request $doc)
     {
         //
+        dd($doc);
     }
 
     /**

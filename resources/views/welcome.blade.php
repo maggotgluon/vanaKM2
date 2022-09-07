@@ -14,21 +14,21 @@
                 </div>
             @endif
 
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-6xl  mx-auto sm:px-6 lg:px-8">
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
                     
                         <x-application-logo class="w-64 fill-current text-gray-500" />
                     
                 </div>
-                <div class="flex justify-center gap-4">
+                <div class="flex justify-center gap-4 mt-16">
                 @if (Route::has('login'))
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="bg-white text-sm text-gray-700 dark:text-gray-500 hover:scale-110 px-8 py-4 rounded hover:bg-gray-400 hover:text-white transition-all duration-500">Dashboard</a>
+                            <a href="{{ url('/dashboard') }}" class="bg-bblue text-sm text-byellow hover:text-borange hover:scale-110 px-8 py-4 rounded-lg hover:bg-bgreen transition-all duration-500 shadow hover:shadow-xl uppercase font-bold shadow-byellow">Dashboard</a>
                         @else
-                            <a href="{{ route('login') }}" class="bg-white text-sm text-gray-700 dark:text-gray-500 hover:scale-110 px-8 py-4 rounded hover:bg-gray-400 hover:text-white transition-all duration-500">Log in</a>
+                            <a href="{{ route('login') }}" class="bg-bblue text-sm text-byellow hover:text-borange hover:scale-110 px-8 py-4 rounded-lg hover:bg-bgreen transition-all duration-500 shadow hover:shadow-xl uppercase font-bold shadow-byellow">Log in</a>
 
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="bg-white ml-4 text-sm text-gray-700 dark:text-gray-500 hover:scale-110 px-8 py-4 rounded hover:bg-gray-400 hover:text-white transition-all duration-500">Register</a>
+                                <a href="{{ route('register') }}" class="bg-bblue ml-4 text-sm text-byellow hover:text-borange hover:scale-110 px-8 py-4 rounded-lg hover:bg-bgreen transition-all duration-500 shadow hover:shadow-xl uppercase font-bold shadow-byellow">Register</a>
                             @endif
                         @endauth
                 @endif
