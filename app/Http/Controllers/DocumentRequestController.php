@@ -57,7 +57,7 @@ class DocumentRequestController extends Controller
                 'info'=>'required',
                 // 'usedate'=>'required',
                 // 'Year'=>'required',
-                'file'=>'required|mimes:pdf',
+                'file'=>'required|mimes:pdf|size:10mb',
                 
             ],
             [
@@ -72,6 +72,7 @@ class DocumentRequestController extends Controller
                 // 'Year.required' => "กรุณาป้อนรายละเอียด",
                 'file.required' => "กรุณาเลือกไฟล์",
                 'file.mimes' => "กรุณาเลือกไฟล์ PDF เท่านั้น",
+                'file.size' => "กรุณาเลือกไฟล์ PDF ขนาดไม่เกิน 10 MB",
                 // 'file'=>'',
 
             ]
