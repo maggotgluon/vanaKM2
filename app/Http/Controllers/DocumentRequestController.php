@@ -62,7 +62,7 @@ class DocumentRequestController extends Controller
             ],
             [
 
-                
+            
                 'Doc_Name.required' => "กรุณาป้อนชื่อเอกสาร",
                 'Doc_Name.max' => "กรุณาป้อนชื่อเอกสาร 10 ตัวอักษร",
                 'Doc_Name.unique' => "ชื่อเอกสารนี้ถูกใช้ไปแล้ว",
@@ -91,6 +91,17 @@ class DocumentRequestController extends Controller
         $docver = document_request::where('Doc_Name',$add->Doc_Name)->count();
         $docname = $add->Doc_Name;
         $NameFile = $docname.'-'.$docver;
+
+        // docname : asd
+        // fialname : asdas.asd
+        // //008(0)    
+        // {   
+        //     Objective :,
+        //     Subject :
+
+        //     }
+
+
         // dd($NameFile);
 
         $upload_location = '/FilePDF/';

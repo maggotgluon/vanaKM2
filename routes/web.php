@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentRequestController;
+use App\Http\Controllers\TrainRequesrController;
 use App\Http\Controllers\UserController;
 use App\Models\document as ModelsDocument;
 use App\Models\document_request;
@@ -156,6 +157,9 @@ Route::get('/training', [DocumentRequestController::class,'show',] ) ->middlewar
 //upload new doc
 Route::get('/regis_training', function () {
     // dd(document_request::all());
+    
+
+
     $currentYear = date("Y");
     $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
     $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
@@ -166,8 +170,11 @@ Route::get('/regis_training', function () {
         'count_doc_code'=>$count,
     ]);
 })->middleware(['auth'])->name('regisTrain');
+
+
+
 //post 
-Route::post('/regis_training',  [DocumentRequestController::class,'create'] ) ->middleware(['auth']) -> name('createTrain');
+Route::post('/regis_training_post',  [TrainRequesrController::class,'create'] ) ->middleware(['auth']) -> name('createTrain');
 
 //view my doc
 Route::get('/regis_training/view/', [DocumentRequestController::class,'showReg',] ) ->middleware(['auth'])->name('regisTrainOwn');
