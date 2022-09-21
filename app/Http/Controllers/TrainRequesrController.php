@@ -9,8 +9,34 @@ use function Ramsey\Uuid\v1;
 class TrainRequesrController extends Controller
 {
     public function create(request $add){
-        // ddd($add);
+        //  dd($add);
         //ตรวจสอบข้อมูล
+
+
+        
+        $d008=array(
+            'SUBJECT'=>$add->SUBJECT,
+            'traindate'=>$add->traindate,
+            'traindate'=>$add->traindate,
+            'traindate'=>$add->traindate,
+            'traindate'=>$add->traindate,
+            'traindate'=>$add->traindate,
+            'traindate'=>$add->traindate,
+            'traindate'=>$add->traindate,
+            'traindate'=>$add->traindate,
+            'traindate'=>$add->traindate,
+            'traindate'=>$add->traindate,
+            'traindate'=>$add->traindate,
+            'traindate'=>$add->traindate,
+            'traindate'=>$add->traindate,
+            'traindate'=>$add->traindate,
+            'traindate'=>$add->traindate,
+            'traindate'=>$add->traindate,
+
+        );
+
+     
+        // dd(json_encode($d008));
         $add->validate(
             [   
                  'SUBJECT'=>'required',
@@ -27,9 +53,12 @@ class TrainRequesrController extends Controller
                 'AssessmentTime'=>'required',
                 'AssessmentMaterial'=>'required',
                 '009Testing'=>'required',
-                'file'=>'required',
-               
+                'checkbox'=> 'required',
+                
 
+                
+
+                'file'=>'required',
                 
                 // 'info'=>'required',
                 // // 'usedate'=>'required',
@@ -55,6 +84,7 @@ class TrainRequesrController extends Controller
                 'AssessmentMaterial.required'=>"กรุณาป้อนข้อมูล",
                 '009Testing.required'=>"กรุณาป้อนข้อมูล",
                 'file.required'=>"กรุณาป้อนข้อมูล",
+                'checkbox.required'=>"กรุณาเลือกอย่างน้อยหนึ่งข้อ",
                 // 'Doc_Name.max' => "กรุณาป้อนชื่อเอกสาร 10 ตัวอักษร",
                 // 'Doc_Name.unique' => "ชื่อเอกสารนี้ถูกใช้ไปแล้ว",
                 // 'objective.required' => "กรุณาเลือกจุดประสงค์",
@@ -68,6 +98,7 @@ class TrainRequesrController extends Controller
 
             ]
         );
+        
         return view('traning.create');
 }
 

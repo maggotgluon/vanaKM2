@@ -18,7 +18,7 @@
                         <hr>
                         <!-- SUBJECT หัวข้อเรื่อง: ________________________________ -->
                         <label for="SUBJECT">SUBJECT หัวข้อเรื่อง:</label>
-                        <input class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="SUBJECT" name="SUBJECT" >
+                        <input class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" type="text" id="SUBJECT" name="SUBJECT" >
                         @error('SUBJECT')
                              <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                         @enderror
@@ -162,18 +162,25 @@
                         <label for="time">รูปแบบการประเมิน:</label>
                         <div class="flex w-full justify-around">
                             <span>
-                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                                <label for="vehicle1"> ถาม-ตอบ</label>
+                                <input type="checkbox" id="Q&A" name="checkbox[]" value="Q&A">
+                                <label for="Q&A"> ถาม-ตอบ</label>
                             </span>
                             <span>
-                                <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-                                <label for="vehicle2"> แบบทดสอบ</label>
+                                <input type="checkbox" id="Quiz" name="checkbox[]" value="Quiz">
+                                <label for="Quiz"> แบบทดสอบ</label>
                             </span>
                             <span>
-                                <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-                                <label for="vehicle3"> ทดลองปฏิบัติงานจริง</label>
+                                <input type="checkbox" id="practice" name="checkbox[]" value="practice">
+                                <label for="practice"> ทดลองปฏิบัติงานจริง</label>
                             </span>
+                            
                         </div>
+                        <br>
+                        <div class=" ">
+                               @error('checkbox')
+                                         <span class=" center  text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
+                                 @enderror
+                                 </div>
                         <hr class="w-1/2 m-auto mt-10 mb-2 border-2">
                         <!-- "Subject Details รายละเอียดการอบรม"
                         "Description รายละเอียด"
