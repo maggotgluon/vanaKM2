@@ -14,6 +14,11 @@
                     <form action="{{route('createTrain')}}" method="post">
                     @csrf
                         <h2 class="text-lg font-bold">FM-LDS-008</h2>
+                        <hr class="col-span-2">
+                        <div class="py-2">
+                        TRAINCODE :
+                        <input class="bg-backdrop rounded-md"  name="DocCode" type="text"  value="{{'TRAIN'.date('Y').str_pad( $count_train_code+1 ,4,'0',STR_PAD_LEFT)}}" >
+                        </div>
                         <span>TRAINING OUTLINE เค้าโครงการฝึกอบรมรายหัวข้อ</span>
                         <hr>
                         <!-- SUBJECT หัวข้อเรื่อง: ________________________________ -->
@@ -201,10 +206,10 @@
                         </ol>
 
                         <label for="time">คำถาม/แบบทดสอบ/หัวข้อการปฏิบัติงาน :</label> 
-                         @error('009Testing')
+                         @error('Testing009')
                                          <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                         @enderror
-                        <textarea rows="10" cols="30" class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="009Testing" name="009Testing" ></textarea>
+                        <textarea rows="10" cols="30" class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="Testing009" name="Testing009" ></textarea>
                       
                        
                         <!-- คำถาม/แบบทดสอบ/หัวข้อการปฏิบัติงาน :  -->

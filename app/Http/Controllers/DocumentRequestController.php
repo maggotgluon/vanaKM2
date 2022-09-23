@@ -79,27 +79,14 @@ class DocumentRequestController extends Controller
         );
 
         //อัพโหลดไฟล์
-        // $name = $add->file('file');
-        // $path = $add->file('file')->create('public/files');
+   
         
-        // $save = new File;
-        // $save->name = $name;
-        // $save->path = $path;
-        
-        
+        //Version File
         $file = $add->file('file');
         $docver = document_request::where('Doc_Name',$add->Doc_Name)->count();
         $docname = $add->Doc_Name;
         $NameFile = $docname.'-'.$docver;
 
-        // docname : asd
-        // fialname : asdas.asd
-        // //008(0)    
-        // {   
-        //     Objective :,
-        //     Subject :
-
-        //     }
 
 
         // dd($NameFile);
@@ -107,6 +94,7 @@ class DocumentRequestController extends Controller
         $upload_location = '/FilePDF/';
         $full_path = $upload_location.$NameFile;
         // dd($full_path);
+
 
         
         // //บันทึกข้อมูล 
