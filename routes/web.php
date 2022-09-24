@@ -32,13 +32,44 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    // dd(Auth::user()->document_request);
-    return view('dashboard',['documents'=>document_request::where('Doc_Status','1')->get()]);
-})->middleware(['auth'])->name('dashboard');
+// route group auth
+Route::middleware(['auth'])->group(function(){
+
+    Route::get('/dashboard', function () {
+        return view('dashboard',['documents'=>document_request::where('Doc_Status','1')->get()]);
+    })->name('dashboard');
+
+    // group document
+    // show all document
+    // uri/document
+    Route::get('/document', [DocumentRequestController::class,'show',] )->name('document');
+    // show single document
+    // uri/document/{id}
+
+    // group document regis
+
+    // single_regis document (my/manage)
+    // uri/reg_document/{id}
+    
+    // gorup document admin
+    // manage document (my/manage/mr)
+    // uri/manage_document/
+
+    
+    // group training
+
+    // group user
+    // show all user
+    // uri/users/
+    // show id
+    // uri/users/{id}
+
+
+});
+
 
 // //see all doc
-Route::get('/document', [DocumentRequestController::class,'show',] ) ->middleware(['auth'])->name('document');
+// Route::get('/document', [DocumentRequestController::class,'show',] ) ->middleware(['auth'])->name('document');
 
 
 
