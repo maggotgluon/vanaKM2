@@ -48,15 +48,15 @@ class TrainRequesrController extends Controller
 
 //Version File
         $file = $add->file('file');
-        $docver = train_request::where('Doc_Code',$add->Doc_Code)->count();
-        $docname = $add->Doc_Code;
+        $docver = train_request::where('Doc_Code',$add->DocCode)->count();
+        $docname = $add->DocCode;
         $NameFile = $docname.'-'.$docver;
-
+// dd($file);
 //Location File
         $upload_location = '/TrainPDF/';
         $full_path = $upload_location.$NameFile;
 
-    //  dd( $NameFile);
+    //  dd( $full_path);
         // dd(json_encode($d008));
 
         //   //ตรวจสอบข้อมูล
@@ -120,10 +120,11 @@ class TrainRequesrController extends Controller
         // );
 
    // // loc / upload file / rename to
-        // Storage::putFileAs($upload_location,$file,$docname.'-'.$docver);
-        // // Storage::putFileAs($upload_location,$file,doc_name.'-'.ver);
-        // $visibility = Storage::getVisibility($upload_location);
-
+            // dd($upload_location,$file,$docname,$docver);
+        Storage::putFileAs($upload_location,$file,$docname.'-'.$docver);
+        // Storage::putFileAs($upload_location,$file,doc_name.'-'.ver);
+        $visibility = Storage::getVisibility($upload_location);
+        // dd($visibility);
 
     
 
@@ -133,16 +134,16 @@ class TrainRequesrController extends Controller
         $doc_train->Doc_008 =  $d008;
         $doc_train->Doc_009 =  $d009;
         $doc_train-> user_id = Auth::user()->id;
-        $doc_train->Doc_Location = '0';
-        // $doc_train->Doc_Location = '$add->full_path';
+        // $doc_train->Doc_Location = '0';
+        $doc_train->Doc_Location = $full_path;
         $doc_train->Doc_Status = '0';
 
 // dd( $doc_train);
      
 
 
-        // $doc_train->save();
-        return view('traning.create');
+        $doc_train->save();
+        return view('traning.create',['count_train_code'=>0]);
 }
 
 }

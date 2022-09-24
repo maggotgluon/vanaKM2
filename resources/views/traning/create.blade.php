@@ -11,7 +11,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     
 
-                    <form action="{{route('createTrain')}}" method="post">
+                    <form action="{{route('createTrain')}}" method="post" enctype="multipart/form-data">
                     @csrf
                         <h2 class="text-lg font-bold">FM-LDS-008</h2>
                         <hr class="col-span-2">
