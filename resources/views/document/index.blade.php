@@ -16,7 +16,7 @@
                         @foreach($documents as $doc)
                         <li class="clear-both">
                             
-                            <a href="{{route('regisView',$doc->Doc_Code)}}">
+                            <a href="{{route('documentView',$doc->Doc_Code)}}">
                                 {{$doc->id}} {{$doc->Doc_Code}} : {{$doc->Doc_Name}} 
                                 @unless ($doc->Doc_ver===0)
                                 Rev {{$doc->Doc_ver}}

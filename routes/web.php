@@ -42,18 +42,87 @@ Route::middleware(['auth'])->group(function(){
     // group document
     // show all document
     // uri/document
-    Route::get('/document', [DocumentRequestController::class,'show',] )->name('document');
+    // Route::get('/document', [DocumentRequestController::class,'show',] )->name('document');
     // show single document
     // uri/document/{id}
 
     // group document regis
+    Route::prefix('document')->group(function (){
+        Route::get('', [DocumentRequestController::class,'show',] )->name('document');
 
+        Route::get('/{Doc_Code}', function ($Doc_Code) {
+            // dd($Doc_Code);
+            return view('document.regisShow',[
+                'documents'=>ModelsDocument::where('id',$Doc_Code)->firstOrFail(),
+            ]);
+        })->name('documentView');
+
+        Route::prefix('request')->group(function (){
+            Route::get('', function () {
+                // dd(document_request::all());
+                $currentYear = date("Y");
+                $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
+                $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
+        
+                $count = document_request::whereBetween('created_at',[$startYear,$endYear])->count();
+                // dd($count);
+                return view('document.create',[
+                    'count_doc_code'=>$count,
+                ]);
+            })->name('regisDoc');
+
+            Route::post('',  [DocumentRequestController::class,'create'] ) 
+            -> name('createRegis');
+            
+            Route::get('/management', [DocumentRequestController::class,'manage',] ) 
+            ->name('regisManage');
+
+            Route::post('/regis_document/manage/{id}',  [DocumentRequestController::class,'approve','$id'] ) 
+            -> name('regisApprove');
+
+            Route::get('/{Doc_Code}', function($Doc_Code){
+                return view('document.regisShow',[
+                    'documents'=>document_request::where('Doc_Code',$Doc_Code)->firstOrFail(),
+                ]);
+            })->name('regisView');
+        });
+    });
     // single_regis document (my/manage)
     // uri/reg_document/{id}
     
     // gorup document admin
     // manage document (my/manage/mr)
     // uri/manage_document/
+
+    // regis
+    
+    //upload new doc
+   
+        //post 
+        // Route::post('/regis_document',  [DocumentRequestController::class,'create'] ) -> name('createRegis');
+
+        //view my doc
+        // Route::get('/regis_document/view/', [DocumentRequestController::class,'showReg',] ) ->name('regisOwn');
+
+        // Route::get('/regis_document/manage/', [DocumentRequestController::class,'manage',] ) ->name('regisManage');
+
+
+        // Route::get('/regis_document/view/', function(){
+        //     // Auth::user()->document_request
+            
+        //     return view('document.regis',[
+        //         'documents'=>Auth::user()->document_request,
+        //     ]);
+        // })->name('regisOwn');
+
+
+
+
+
+        //manage all doc <- admin onlydesde
+        //approved doc by md <- md only
+
+
 
     // group training
     // show all training
@@ -123,56 +192,6 @@ Route::middleware(['auth'])->group(function(){
 // Route::get('/document/{doc_id}', function (Document $doc_id) {
 //     // return view('dashboard');
 // })->middleware(['auth'])->name('documentCreate');
-
-// regis
-//upload new doc
-Route::get('/regis_document', function () {
-    // dd(document_request::all());
-    $currentYear = date("Y");
-    $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
-    $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
-
-    $count = document_request::whereBetween('created_at',[$startYear,$endYear])->count();
-    // dd($count);
-    return view('document.create',[
-        'count_doc_code'=>$count,
-    ]);
-})->middleware(['auth'])->name('regisDoc');
-//post 
-Route::post('/regis_document',  [DocumentRequestController::class,'create'] ) ->middleware(['auth']) -> name('createRegis');
-
-//view my doc
-Route::get('/regis_document/view/', [DocumentRequestController::class,'showReg',] ) ->middleware(['auth'])->name('regisOwn');
-
-Route::get('/regis_document/manage/', [DocumentRequestController::class,'manage',] ) ->middleware(['auth'])->name('regisManage');
-
-Route::post('/regis_document/manage/{id}',  [DocumentRequestController::class,'approve','$id'] ) ->middleware(['auth']) -> name('regisApprove');
-
-// Route::get('/regis_document/view/', function(){
-//     // Auth::user()->document_request
-    
-//     return view('document.regis',[
-//         'documents'=>Auth::user()->document_request,
-//     ]);
-// })->middleware(['auth'])->name('regisOwn');
-
-Route::get('/regis_document/view/{Doc_Code}', function($Doc_Code){
-    return view('document.regisShow',[
-        'documents'=>document_request::where('Doc_Code',$Doc_Code)->firstOrFail(),
-    ]);
-})->middleware(['auth'])->name('regisView');
-
-
-
-
-Route::get('/document/{Doc_Code}', function ($Doc_Code) {
-    return view('document.Show',[
-        'documents'=>ModelsDocument::where('id',$Doc_Code)->firstOrFail(),
-    ]);
-})->middleware(['auth'])->name('documentView');
-//manage all doc <- admin onlydesde
-//approved doc by md <- md only
-
 
 
 // //see all doc
