@@ -56,7 +56,7 @@ Route::get('/regis_document', function () {
     $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
 
     $count = document_request::whereBetween('created_at',[$startYear,$endYear])->count();
-    // ddd($max);
+    // dd($count);
     return view('document.create',[
         'count_doc_code'=>$count,
     ]);
@@ -164,7 +164,9 @@ Route::get('/regis_training', function () {
     $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
 
     $count = train_request::whereBetween('created_at',[$startYear,$endYear])->count();
-//  dd( $count);
+
+    // dd(train_request::all()->count());
+//  ddd($startYear, $endYear, $count);
     return view('traning.create',[
         'count_train_code'=>$count,
     ]);

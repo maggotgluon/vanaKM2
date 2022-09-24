@@ -17,7 +17,11 @@
                         <hr class="col-span-2">
                         <div class="py-2">
                         TRAINCODE :
-                        <input class="bg-backdrop rounded-md"  name="DocCode" type="text"  value="{{'TRAIN'.date('Y').str_pad( $count_train_code+1 ,4,'0',STR_PAD_LEFT)}}" >
+                        <!-- {{'TRAIN'.date('Y').str_pad( $count_train_code+1 ,4,'0',STR_PAD_LEFT)}} -->
+
+                        
+
+                        <input class="bg-backdrop rounded-md"  name="DocCode" type="text"  value="{{'TRAIN'. date('Y').str_pad($count_train_code+1,4,'0',STR_PAD_LEFT)}}"> 
                         </div>
                         <span>TRAINING OUTLINE เค้าโครงการฝึกอบรมรายหัวข้อ</span>
                         <hr>

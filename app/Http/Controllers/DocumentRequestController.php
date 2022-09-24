@@ -137,7 +137,7 @@ class DocumentRequestController extends Controller
         // dd( Storage::disk('local') );
         // $add->file($NameFile)->store($upload_location);
 
-        //  dd($documents);
+         dd($documents);
         $documents->save();
         return view('document.create');
        
