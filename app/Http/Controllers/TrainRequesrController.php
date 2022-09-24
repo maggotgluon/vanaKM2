@@ -147,4 +147,25 @@ class TrainRequesrController extends Controller
         return view('traning.create',['count_train_code'=>'1']);
 }
 
+
+public function show(){
+        // dd(ModelsDocument::all());
+        // ddd (document_request::where('Doc_Status','1')->get());
+        return view('training.index',[
+            'training'=>train_request::all(),
+        ]);
+        return view('document.index',[
+            'training'=>train_request::where('Doc_Status','1')->get(),
+        ]);
+    }
+
+
+
+
+
+
+
+
+
 }
+

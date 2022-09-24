@@ -147,7 +147,7 @@ Route::post('/user/update/{user}', function (request $data,User $user) {
 
 
 // //see all doc
-Route::get('/training', [DocumentRequestController::class,'show',] ) ->middleware(['auth'])->name('training');
+Route::get('/training', [TrainRequesrController::class,'show',] ) ->middleware(['auth'])->name('training');
 
 // // view / download single doc
 // Route::get('/document/{doc_id}', function (Document $doc_id) {
@@ -178,11 +178,11 @@ Route::get('/regis_training', function () {
 Route::post('/regis_training',  [TrainRequesrController::class,'create'] ) ->middleware(['auth']) -> name('createTrain');
 
 //view my doc
-Route::get('/regis_training/view/', [DocumentRequestController::class,'showReg',] ) ->middleware(['auth'])->name('regisTrainOwn');
+Route::get('/regis_training/view/', [TrainRequesrController::class,'showReg',] ) ->middleware(['auth'])->name('regisTrainOwn');
 
-Route::get('/regis_training/manage/', [DocumentRequestController::class,'manage',] ) ->middleware(['auth'])->name('regisTrainManage');
+Route::get('/regis_training/manage/', [TrainRequesrController::class,'manage',] ) ->middleware(['auth'])->name('regisTrainManage');
 
-Route::post('/regis_training/manage/{id}',  [DocumentRequestController::class,'approve','$id'] ) ->middleware(['auth']) -> name('regisTrainApprove');
+Route::post('/regis_training/manage/{id}',  [TrainRequesrController::class,'approve','$id'] ) ->middleware(['auth']) -> name('regisTrainApprove');
 
 
 
