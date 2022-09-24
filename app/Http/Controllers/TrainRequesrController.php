@@ -127,6 +127,8 @@ class TrainRequesrController extends Controller
         // dd($visibility);
 
     
+// dd($add->DocCode);
+// dd($d008,$d009,Auth::user()->id);
 
         // //บันทึกข้อมูล 
         $doc_train = new train_request;
@@ -143,7 +145,11 @@ class TrainRequesrController extends Controller
 
 
         $doc_train->save();
+<<<<<<< HEAD
         return view('traning.create',['count_train_code'=>0]);
+=======
+        return view('traning.create',['count_train_code'=>'1']);
+>>>>>>> d9dc67429763340e386df18ae8d35b1c2cbaeae4
 }
 
 }
