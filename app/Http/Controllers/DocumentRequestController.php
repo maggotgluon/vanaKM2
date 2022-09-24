@@ -55,9 +55,9 @@ class DocumentRequestController extends Controller
                 // 'Doc_Name'=>'required|max:10|unique:document_requests',
                 'objective'=>'required',
                 'info'=>'required',
-                // 'usedate'=>'required',
-                // 'Year'=>'required',
-                'file'=>'required|mimes:pdf|size:10mb',
+                'usedate'=>'required',
+                'Year'=>'required',
+                // 'file'=>'required|mimes:pdf', //|size:10mb',
                 
             ],
             [
@@ -139,7 +139,7 @@ class DocumentRequestController extends Controller
 
         //  dd($documents);
         $documents->save();
-        return view('document.create');
+        return view('document.create',['count_doc_code'=>0]);
        
     }
 
