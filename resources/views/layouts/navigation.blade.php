@@ -107,7 +107,7 @@
                     @endcan
 
                     @can('manage_users', Auth::user())
-                    <x-nav-link :href="route('userManage')" :active="request()->routeIs('userManage')">
+                    <x-nav-link :href="route('user.manage')" :active="request()->routeIs('userManage')">
                         {{ __('Manage User') }}
                     </x-nav-link>
                     @endcan
@@ -134,7 +134,7 @@
 
                     <x-slot name="content">
                         <!-- Authentication -->
-                        <x-responsive-nav-link :href="route('userProfile',Auth::user())">
+                        <x-responsive-nav-link :href="route('user.profile',Auth::user())">
                             {{ __('Profile') }}
                         </x-responsive-nav-link>
                         <form method="POST" action="{{ route('logout') }}">
@@ -214,7 +214,7 @@
             @endcan
 
             @can('manage_users', Auth::user())
-            <x-responsive-nav-link :href="route('userManage')" :active="request()->routeIs('userManage')">
+            <x-responsive-nav-link :href="route('user.manage')" :active="request()->routeIs('userManage')">
                 {{ __('Manage User') }}
             </x-responsive-nav-link>
             @endcan
@@ -229,7 +229,7 @@
 
             <div class="mt-3 space-y-1">
                 <!-- Authentication -->
-                <x-responsive-nav-link :href="route('userProfile',Auth::user())">
+                <x-responsive-nav-link :href="route('user.profile',Auth::user())">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
                 <form method="POST" action="{{ route('logout') }}">

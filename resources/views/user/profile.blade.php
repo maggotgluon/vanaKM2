@@ -19,7 +19,7 @@
                         {{$user->user_level}}<br>
                         <hr>
                         {{$user}}
-                        <form action="{{route('updateUser',$user)}}" method="post" >
+                        <form action="{{route('user.update',$user)}}" method="post" >
                         @csrf
                             <label for="suser">Department Head : </label>
                             {{$user->department_head}} 
@@ -42,22 +42,22 @@
                                 <h2>Add permission</h2>
                                 <!-- {{$user}} -->
                                 @can('edit_document', $user)
-                                <a href="{{route('addPermission',[$user,'edit_document'])}}"><button id="edit_document" class="bg-green-400 py-2 px-4 m-2">can edit document</button></a>
+                                <a href="{{route('user.addPri',[$user,'edit_document','TRUE'])}}"><button id="edit_document" class="bg-green-400 py-2 px-4 m-2">can edit document</button></a>
                                 @endcan
                                 @can('edit_trainDocument', $user)
-                                <a href="{{route('addPermission',[$user,'edit_trainDocument'])}}"><button id="edit_trainDocument" class="bg-green-400 py-2 px-4 m-2">can edit train Document</button></a>
+                                <a href="{{route('user.addPri',[$user,'edit_trainDocument'])}}"><button id="edit_trainDocument" class="bg-green-400 py-2 px-4 m-2">can edit train Document</button></a>
                                 @endcan
                                 @can('manage_document', $user)
-                                <a href="{{route('addPermission',[$user,'manage_document'])}}"><button id="manage_document" class="bg-green-400 py-2 px-4 m-2">can manage document</button></a>
+                                <a href="{{route('user.addPri',[$user,'manage_document'])}}"><button id="manage_document" class="bg-green-400 py-2 px-4 m-2">can manage document</button></a>
                                 @endcan
                                 @can('manage_trainDocument', $user)
-                                <a href="{{route('addPermission',[$user,'manage_trainDocument'])}}"><button id="manage_trainDocument" class="bg-green-400 py-2 px-4 m-2">can manage train Document</button></a>
+                                <a href="{{route('user.addPri',[$user,'manage_trainDocument'])}}"><button id="manage_trainDocument" class="bg-green-400 py-2 px-4 m-2">can manage train Document</button></a>
                                 @endcan
                                 @can('manage_users', $user)
-                                <a href="{{route('addPermission',[$user,'manage_users'])}}"><button id="manage_users" class="bg-green-400 py-2 px-4 m-2">can manage users</button></a>
+                                <a href="{{route('user.addPri',[$user,'manage_users'])}}"><button id="manage_users" class="bg-green-400 py-2 px-4 m-2">can manage users</button></a>
                                 @endcan
                                 @can('publish_document', $user)
-                                <a href="{{route('addPermission',[$user,'publish_document'])}}"><button id="publish_document" class="bg-green-400 py-2 px-4 m-2">can publish document</button></a>
+                                <a href="{{route('user.addPri',[$user,'publish_document'])}}"><button id="publish_document" class="bg-green-400 py-2 px-4 m-2">can publish document</button></a>
                                 @endcan
                             </div>
                             
@@ -69,7 +69,7 @@
                                     {{$permission->permissions_type}} :
                                     {{$permission->parmission_name}} 
                                     </span>
-                                    <a href="{{route('removePermission',[$user, $permission->parmission_name])}}">
+                                    <a href="{{route('user.remPri',[$user, $permission->parmission_name])}}">
                                         <button class="bg-red-400 px-4 py-2">removed</button>
                                     </a>
                                 </div>

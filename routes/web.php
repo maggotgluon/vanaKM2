@@ -32,13 +32,90 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    // dd(Auth::user()->document_request);
-    return view('dashboard',['documents'=>document_request::where('Doc_Status','1')->get()]);
-})->middleware(['auth'])->name('dashboard');
+// route group auth
+Route::middleware(['auth'])->group(function(){
+
+    Route::get('/dashboard', function () {
+        return view('dashboard',['documents'=>document_request::where('Doc_Status','1')->get()]);
+    })->name('dashboard');
+
+    // group document
+    // show all document
+    // uri/document
+    Route::get('/document', [DocumentRequestController::class,'show',] )->name('document');
+    // show single document
+    // uri/document/{id}
+
+    // group document regis
+
+    // single_regis document (my/manage)
+    // uri/reg_document/{id}
+    
+    // gorup document admin
+    // manage document (my/manage/mr)
+    // uri/manage_document/
+
+    // group training
+    // show all training
+    // uri/train
+    // show single training
+    // uri/train/{id}
+
+    // group training regis
+    // single_regis training (my/manage)
+    // uri/reg_train/{id}
+
+    // manage document (my/manage/mr)
+    // uri/manage_document/
+
+
+    // group user
+    // show all user
+    // uri/users/
+    // show id
+    // uri/users/{id}
+
+    Route::name('user.')->group(function () {
+        // all route assign user. as prefix
+        Route::get('/user/{id}', [UserController::class,'profile'] )
+        ->name('profile'); //userProfile
+
+        Route::get('/user', [UserController::class,'all'] )
+        ->name('manage'); //userManage
+
+        Route::get('/user/{id}/add/{permission}', function ($user,$permission) {
+            DB::table('users_permissions')->updateOrInsert([
+                'user_id' =>$user,
+                'permissions_type' => 'permission',
+                'parmission_name'=>$permission,
+            ],['allowance'=>true]);
+            return redirect(route('user.profile',$user));
+        })->name('addPri'); //addPermission
+
+        Route::get('/user/{id}/remove/{permission}', function ($user,$permission) {
+            DB::table('users_permissions')->updateOrInsert([
+                'user_id' =>$user,
+                'permissions_type' => 'permission',
+                'parmission_name'=>$permission,
+            ],['allowance'=>false]);
+            return redirect(route('user.profile',$user));
+        })->name('remPri'); //removePermission
+        
+        Route::post('/user/update/{user}', function (request $data,User $user) {
+            // dd($user->id);
+            $newDP = user::where('staff_id',$data->suser)->first();
+            // dd($newDP->name);
+            $user->department_head = $newDP->name;
+            $user->save();
+            return redirect(route('user.profile',$user->id));
+        })->name('update'); //updateUser
+    });
+
+});
+
 
 // //see all doc
-Route::get('/document', [DocumentRequestController::class,'show',] ) ->middleware(['auth'])->name('document');
+// Route::get('/document', [DocumentRequestController::class,'show',] ) ->middleware(['auth'])->name('document');
 
 
 
@@ -97,57 +174,9 @@ Route::get('/document/{Doc_Code}', function ($Doc_Code) {
 //approved doc by md <- md only
 
 
-Route::get('/user/profile/{id}', [UserController::class,'profile'] ) ->middleware(['auth'])->name('userProfile');
-Route::get('/user/manage/', [UserController::class,'manage',] ) ->middleware(['auth'])->name('userManage');
-
-Route::get('/user/update/{id}/add/{permission}', function ($user,$permission) {
-    // dd($user,$permission);
-    // dd($permission, Auth::user()->users_permission);
-    // users_permission->create([
-    //     'user_id' => $user,
-    //     'permissions_type' => 'permission',
-    //     'parmission_name'=>$permission,
-    //     'allowance'=>true
-    // ]);
-    DB::table('users_permissions')->updateOrInsert([
-        'user_id' =>$user,
-        'permissions_type' => 'permission',
-        'parmission_name'=>$permission,
-    ],['allowance'=>true]);
-    return view('user.profile',['user'=>User::find($user)]) ;
-}) ->middleware(['auth'])->name('addPermission');
-
-Route::get('/user/update/{id}/remove/{permission}', function ($user,$permission) {
-    // dd($user,$permission);
-    // dd($permission, Auth::user()->users_permission);
-    // users_permission->create([
-    //     'user_id' =>$user,
-    //     'permissions_type' => 'permission',
-    //     'parmission_name'=>$permission,
-    //     'allowance'=>true
-    // ]);
-    DB::table('users_permissions')->updateOrInsert([
-        'user_id' =>$user,
-        'permissions_type' => 'permission',
-        'parmission_name'=>$permission,
-    ],['allowance'=>false]);
-    return view('user.profile',['user'=>User::find($user)]);
-}) ->middleware(['auth'])->name('removePermission');
-
-Route::post('/user/update/{user}', function (request $data,User $user) {
-
-    // dd($user->id);
-    $newDP = user::where('staff_id',$data->suser)->first();
-    // dd($newDP->name);
-    $user->department_head = $newDP->name;
-    $user->save();
-    return redirect(route('userProfile',$user->id));
-}) ->middleware(['auth'])->name('updateUser');
-
-
 
 // //see all doc
-Route::get('/training', [DocumentRequestController::class,'show',] ) ->middleware(['auth'])->name('training');
+Route::get('/training', [TrainRequesrController::class,'show',] ) ->middleware(['auth'])->name('training');
 
 // // view / download single doc
 // Route::get('/document/{doc_id}', function (Document $doc_id) {
@@ -178,11 +207,11 @@ Route::get('/regis_training', function () {
 Route::post('/regis_training',  [TrainRequesrController::class,'create'] ) ->middleware(['auth']) -> name('createTrain');
 
 //view my doc
-Route::get('/regis_training/view/', [DocumentRequestController::class,'showReg',] ) ->middleware(['auth'])->name('regisTrainOwn');
+Route::get('/regis_training/view/', [TrainRequesrController::class,'showReg',] ) ->middleware(['auth'])->name('regisTrainOwn');
 
-Route::get('/regis_training/manage/', [DocumentRequestController::class,'manage',] ) ->middleware(['auth'])->name('regisTrainManage');
+Route::get('/regis_training/manage/', [TrainRequesrController::class,'manage',] ) ->middleware(['auth'])->name('regisTrainManage');
 
-Route::post('/regis_training/manage/{id}',  [DocumentRequestController::class,'approve','$id'] ) ->middleware(['auth']) -> name('regisTrainApprove');
+Route::post('/regis_training/manage/{id}',  [TrainRequesrController::class,'approve','$id'] ) ->middleware(['auth']) -> name('regisTrainApprove');
 
 
 

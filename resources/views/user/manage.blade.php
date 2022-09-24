@@ -36,7 +36,7 @@
                         <td>{{$user->staff_id}}</td>
                         <td>{{$user->name}} <br> <span calss="text-sm">{{$user->email}}</span></td>
                         <td>{{$user->department}}</td>
-                        <td><a href="{{route('userProfile',$user->id)}}" class="bg-green-400 py-2 px-8 hover:bg-green-700 hover:text-white transition-all duration-500">Edit</a></td>
+                        <td><a href="{{route('user.profile',$user->id)}}" class="bg-green-400 py-2 px-8 hover:bg-green-700 hover:text-white transition-all duration-500">Edit</a></td>
                     </tr>
                     @endforeach
                     </table>
