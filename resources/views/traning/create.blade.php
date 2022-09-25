@@ -82,7 +82,7 @@
                             <div class="w-1/6">
                                 <textarea class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="SubjectMaterial" name="SubjectMaterial"></textarea>
                                 <label for="time">Material อุปกรณ์:</label>
-                                <br><br>
+                                <br>
                                 @error('SubjectMaterial')
                                          <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                                  @enderror
@@ -118,7 +118,7 @@
                             <div class="w-1/6" >
                                 <textarea class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="ActivityMaterial" name="ActivityMaterial"  ></textarea>
                                 <label for="time">Material อุปกรณ์:</label>
-                                <br><br>
+                                <br>
                                 @error('ActivityMaterial')
                                          <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                                  @enderror
@@ -153,7 +153,7 @@
                             <div class="w-1/6">
                                 <textarea class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="AssessmentMaterial"   name="AssessmentMaterial"  ></textarea>
                                 <label for="time">Material อุปกรณ์:</label>
-                                <br><br>
+                                <br>
                                 @error('AssessmentMaterial')
                                          <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                                  @enderror
@@ -171,15 +171,15 @@
                         <label for="time">รูปแบบการประเมิน:</label>
                         <div class="flex w-full justify-around">
                             <span>
-                                <input type="checkbox" id="Q&A" name="checkbox[]" value="Q&A">
+                                <input type="checkbox" id="Q&A" name="checkbox[]" value="ถาม-ตอบ">
                                 <label for="Q&A"> ถาม-ตอบ</label>
                             </span>
                             <span>
-                                <input type="checkbox" id="Quiz" name="checkbox[]" value="Quiz">
+                                <input type="checkbox" id="Quiz" name="checkbox[]" value="แบบทดสอบ">
                                 <label for="Quiz"> แบบทดสอบ</label>
                             </span>
                             <span>
-                                <input type="checkbox" id="practice" name="checkbox[]" value="practice">
+                                <input type="checkbox" id="practice" name="checkbox[]" value="ทดลองปฏิบัติงานจริง">
                                 <label for="practice"> ทดลองปฏิบัติงานจริง</label>
                             </span>
                             
@@ -208,14 +208,28 @@
                             <li>กรณีที่เป็นการทดสอบ กรุณาแนบแบบทดสอบพร้อมระบุเกณฑ์การผ่านประเมิน</li>
                             <li>กรณีที่เป็นการทดลองปฏิบัติงานจริง กรุณาระบุกิจกรรมพร้อมเกณฑ์การผ่านประเมิน</li>
                         </ol>
+                        
 
                         <label for="time">คำถาม/แบบทดสอบ/หัวข้อการปฏิบัติงาน :</label> 
                          @error('Testing009')
                                          <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                         @enderror
-                        <textarea rows="10" cols="30" class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="Testing009" name="Testing009" ></textarea>
+                        <textarea rows="5" cols="30" class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="Testing009" name="Testing009" ></textarea>
+                        <hr class="w-1/2 m-auto mt-10 mb-2 border-2">
+                        
+
+                        <h3 class="text-lg">เกณฑ์การประเมิน </h3>
+                        <label for="time">ผ่าน :</label> 
+                         @error('pass')
+                                         <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
+                        @enderror
+                        <textarea rows="2" cols="30" class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="pass" name="pass" ></textarea>
+                        <label for="time">ไม่ผ่าน :</label> 
+                         @error('nopass')
+                                         <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
+                        @enderror
+                        <textarea rows="2" cols="30" class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="nopass" name="nopass" ></textarea>
                       
-                       
                         <!-- คำถาม/แบบทดสอบ/หัวข้อการปฏิบัติงาน :  -->
 
                         <input class="m-2" type="file" name="file" id="">

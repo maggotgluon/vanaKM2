@@ -35,6 +35,8 @@ class TrainRequesrController extends Controller{
             'SUBJECT' => $add->SUBJECT,
             'checkbox' => $add->checkbox,
             '009Testing' => $add->Testing009,
+            'pass' => $add->pass,
+            'nopass' => $add->nopass,
         );
 
         //json_encode
@@ -70,9 +72,11 @@ class TrainRequesrController extends Controller{
         //         'AssessmentDetail'=>'required',
         //         'AssessmentTime'=>'required',
         //         'AssessmentMaterial'=>'required',
-        //         'Testing009'=>'required',
         //         'checkbox'=> 'required',
-        //         'file'=>'required|mimes:pdf|size:10mb',
+        //         'Testing009'=>'required',
+        //         'pass'=>'required',
+        //         'nopass'=>'required',
+        //         'file'=>'required',
 
         //         // 'info'=>'required',
         //         // // 'usedate'=>'required',
@@ -96,20 +100,12 @@ class TrainRequesrController extends Controller{
         //         'AssessmentTime.required'=>"กรุณาป้อนข้อมูล",
         //         'AssessmentMaterial.required'=>"กรุณาป้อนข้อมูล",
         //         'Testing009.required'=>"กรุณาป้อนข้อมูล",
+        //         'pass.required'=>"กรุณาป้อนข้อมูล",
+        //         'nopass.required'=>"กรุณาป้อนข้อมูล",
         //         'file.required'=>"กรุณาป้อนข้อมูล",
-        //         'file.mimes' => "กรุณาเลือกไฟล์ PDF เท่านั้น",
-        //         'file.size' => "กรุณาเลือกไฟล์ PDF ขนาดไม่เกิน 10 MB",
+        //         // 'file.mimes' => "กรุณาเลือกไฟล์ PDF เท่านั้น",
+        //         // 'file.size' => "กรุณาเลือกไฟล์ PDF ขนาดไม่เกิน 10 MB",
         //         'checkbox.required'=>"กรุณาเลือกอย่างน้อยหนึ่งข้อ",
-        //         // 'Doc_Name.max' => "กรุณาป้อนชื่อเอกสาร 10 ตัวอักษร",
-        //         // 'Doc_Name.unique' => "ชื่อเอกสารนี้ถูกใช้ไปแล้ว",
-        //         // 'objective.required' => "กรุณาเลือกจุดประสงค์",
-        //         // 'info.required' => "กรุณาป้อนรายละเอียด",
-        //         // // 'usedate.required' => "กรุณาป้อนรายละเอียด",
-        // // 'Year.required' => "กรุณาป้อนรายละเอียด",
-        // 'file.required' => "กรุณาเลือกไฟล์",
-        // 'file.mimes' => "กรุณาเลือกไฟล์ PDF เท่านั้น",
-        // 'file.size' => "กรุณาเลือกไฟล์ PDF ขนาดไม่เกิน 10 MB",
-        // 'file'=>'',
 
         //     ]
         // );
@@ -149,12 +145,18 @@ class TrainRequesrController extends Controller{
         ]);
     }
 
-    public function form008($id){
-        return view('traning.form008',);
+    public function form008($Doc_Code){
+        $d008 =train_request::where('Doc_Code',$Doc_Code)->firstOrFail() ;
+        $d008 = json_decode($d008->Doc_008, TRUE);
+     
+        return view('traning.form008', ['f008'=>$d008]);
 
     }
-    public function form009($id){ 
-        return view('traning.form009',);
+    public function form009($Doc_Code){ 
+        $d009 =train_request::where('Doc_Code',$Doc_Code)->firstOrFail() ;
+        $d009 = json_decode($d009->Doc_009, TRUE);
+    //  dd($d009);
+        return view('traning.form009', ['f009'=>$d009]);
     }
 
 }
