@@ -1,67 +1,62 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Auth;
+
 use App\Models\train_request;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-use function Ramsey\Uuid\v1;
-
-class TrainRequesrController extends Controller
-{
+class TrainRequesrController extends Controller{
     public function create(request $add){
         //  dd($add);
         // INPUT DATA IN OBJECT
 
-        $d008=array(
-            'SUBJECT'=>$add->SUBJECT,
-            'traindate'=>$add->traindate,
-            'traintime'=>$add->traintime,
-            'Objective'=>$add->Objective,
-            'SubjectDetails'=>$add->SubjectDetails,
-            'SubjectTime'=>$add->SubjectTime,
-            'SubjectMaterial'=>$add->SubjectMaterial,
-            'SubjectRemark'=>$add->SubjectRemark,
-            'ActivityDetail'=>$add->ActivityDetail,
-            'ActivityTime'=>$add->ActivityTime,
-            'ActivityMaterial'=>$add->ActivityMaterial,
-            'ActivityRemark'=>$add->ActivityRemark,
-            'AssessmentDetail'=>$add->AssessmentDetail,
-            'AssessmentTime'=>$add->AssessmentTime,
-            'AssessmentMaterial'=>$add->AssessmentMaterial,
-            'AssessmentRemark'=>$add->AssessmentRemark,
+        $d008 = array(
+            'SUBJECT' => $add->SUBJECT,
+            'traindate' => $add->traindate,
+            'traintime' => $add->traintime,
+            'Objective' => $add->Objective,
+            'SubjectDetails' => $add->SubjectDetails,
+            'SubjectTime' => $add->SubjectTime,
+            'SubjectMaterial' => $add->SubjectMaterial,
+            'SubjectRemark' => $add->SubjectRemark,
+            'ActivityDetail' => $add->ActivityDetail,
+            'ActivityTime' => $add->ActivityTime,
+            'ActivityMaterial' => $add->ActivityMaterial,
+            'ActivityRemark' => $add->ActivityRemark,
+            'AssessmentDetail' => $add->AssessmentDetail,
+            'AssessmentTime' => $add->AssessmentTime,
+            'AssessmentMaterial' => $add->AssessmentMaterial,
+            'AssessmentRemark' => $add->AssessmentRemark,
         );
 
-        $d009=array(
-            'SUBJECT'=>$add->SUBJECT,
-            'checkbox'=>$add->checkbox,
-            '009Testing'=>$add->Testing009
+        $d009 = array(
+            'SUBJECT' => $add->SUBJECT,
+            'checkbox' => $add->checkbox,
+            '009Testing' => $add->Testing009,
         );
-       
-       //json_encode
-       $d008=json_encode($d008);
-       $d009=json_encode($d009);
 
+        //json_encode
+        $d008 = json_encode($d008);
+        $d009 = json_encode($d009);
 
-
-
-//Version File
+        //Version File
         $file = $add->file('file');
-        $docver = train_request::where('Doc_Code',$add->DocCode)->count();
+        $docver = train_request::where('Doc_Code', $add->DocCode)->count();
         $docname = $add->DocCode;
-        $NameFile = $docname.'-'.$docver;
-// dd($file);
-//Location File
+        $NameFile = $docname . '-' . $docver;
+        // dd($file);
+        //Location File
         $upload_location = '/TrainPDF/';
-        $full_path = $upload_location.$NameFile;
+        $full_path = $upload_location . $NameFile;
 
-    //  dd( $full_path);
+        //  dd( $full_path);
         // dd(json_encode($d008));
 
         //   //ตรวจสอบข้อมูล
         // $add->validate(
-        //     [   
+        //     [
         //          'SUBJECT'=>'required',
         //          'traindate'=>'required',
         //          'traintime'=>'required',
@@ -78,12 +73,12 @@ class TrainRequesrController extends Controller
         //         'Testing009'=>'required',
         //         'checkbox'=> 'required',
         //         'file'=>'required|mimes:pdf|size:10mb',
-                
+
         //         // 'info'=>'required',
         //         // // 'usedate'=>'required',
         //         // // 'Year'=>'required',
         //         // 'file'=>'required|mimes:pdf|size:10mb',
-                
+
         //     ],
         //     [
 
@@ -110,46 +105,56 @@ class TrainRequesrController extends Controller
         //         // 'objective.required' => "กรุณาเลือกจุดประสงค์",
         //         // 'info.required' => "กรุณาป้อนรายละเอียด",
         //         // // 'usedate.required' => "กรุณาป้อนรายละเอียด",
-                // // 'Year.required' => "กรุณาป้อนรายละเอียด",
-                // 'file.required' => "กรุณาเลือกไฟล์",
-                // 'file.mimes' => "กรุณาเลือกไฟล์ PDF เท่านั้น",
-                // 'file.size' => "กรุณาเลือกไฟล์ PDF ขนาดไม่เกิน 10 MB",
-                // 'file'=>'',
+        // // 'Year.required' => "กรุณาป้อนรายละเอียด",
+        // 'file.required' => "กรุณาเลือกไฟล์",
+        // 'file.mimes' => "กรุณาเลือกไฟล์ PDF เท่านั้น",
+        // 'file.size' => "กรุณาเลือกไฟล์ PDF ขนาดไม่เกิน 10 MB",
+        // 'file'=>'',
 
         //     ]
         // );
 
-   // // loc / upload file / rename to
-            // dd($upload_location,$file,$docname,$docver);
-        Storage::putFileAs($upload_location,$file,$docname.'-'.$docver);
+        // // loc / upload file / rename to
+        // dd($upload_location,$file,$docname,$docver);
+        Storage::putFileAs($upload_location, $file, $docname . '-' . $docver);
         // Storage::putFileAs($upload_location,$file,doc_name.'-'.ver);
         $visibility = Storage::getVisibility($upload_location);
         // dd($visibility);
 
-    
-// dd($add->DocCode);
-// dd($d008,$d009,Auth::user()->id);
+        // dd($add->DocCode);
+        // dd($d008,$d009,Auth::user()->id);
 
-        // //บันทึกข้อมูล 
+        // //บันทึกข้อมูล
         $doc_train = new train_request;
         $doc_train->Doc_Code = $add->DocCode;
-        $doc_train->Doc_008 =  $d008;
-        $doc_train->Doc_009 =  $d009;
-        $doc_train-> user_id = Auth::user()->id;
+        $doc_train->Doc_008 = $d008;
+        $doc_train->Doc_009 = $d009;
+        $doc_train->user_id = Auth::user()->id;
         // $doc_train->Doc_Location = '0';
         $doc_train->Doc_Location = $full_path;
         $doc_train->Doc_Status = '0';
 
-// dd( $doc_train);
-     
-
+        // dd( $doc_train);
 
         $doc_train->save();
 
-        return view('traning.create',['count_train_code'=>0]);
+        return view('traning.create', ['count_train_code' => 0]);
 
-        return view('traning.create',['count_train_code'=>'1']);
+        return view('traning.create', ['count_train_code' => '1']);
+    }
 
-}
+    public function show(){
+        return view('traning.index', [
+            'documents' => train_request::all(),
+        ]);
+    }
+
+    public function form008($id){
+        return view('traning.form008',);
+
+    }
+    public function form009($id){ 
+        return view('traning.form009',);
+    }
 
 }

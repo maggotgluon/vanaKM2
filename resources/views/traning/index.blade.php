@@ -12,6 +12,24 @@
                     You're logged in!
                     show single doc
                     {{ Auth::user()->id }}
+
+                    @foreach($documents as $doc)
+                        <li class="clear-both">
+                            
+                            <a href="{{route('documentView',$doc->Doc_Code)}}">
+                                {{$doc->id}} {{$doc->Doc_Code}} : {{$doc->Doc_Name}} 
+                                @unless ($doc->Doc_ver===0)
+                                Rev {{$doc->Doc_ver}}
+                                @endunless
+                                <br>
+                            </a>
+                            <a href="{{route('regForm008',$doc->Doc_Code)}}" class="bg-green-300 px-2 hover:bg-blue-200">view 008</a>
+                            <a href="{{route('regForm009',$doc->Doc_Code)}}" class="bg-green-300 px-2 hover:bg-blue-200">view 009</a>
+                        <span class="text-sm ">update {{$doc->updated_at}}</span> <hr>
+                        <!-- {{$doc}} -->
+                        </li>
+                            
+                    @endforeach
                 </div>
             </div>
         </div>

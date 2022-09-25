@@ -34,9 +34,9 @@ class DocumentRequestController extends Controller
         return view('document.index',[
             'documents'=>ModelsDocument::all(),
         ]);
-        return view('document.index',[
-            'documents'=>document_request::where('Doc_Status','1')->get(),
-        ]);
+        // return view('document.index',[
+        //     'documents'=>document_request::where('Doc_Status','1')->get(),
+        // ]);
     }
     public function manage(Request $request ){
         // dd (Auth::user()->document_request);
