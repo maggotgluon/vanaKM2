@@ -17,7 +17,7 @@
         
       
         <div class="font-bold text-center">
-            <h3 >SUBJECT หัวข้อเรื่อง :   {{ $f008['SUBJECT'] }} </h3>
+            <h3 >SUBJECT หัวข้อเรื่อง :   {{ $f008['SUBJECT'] }}  </h3>
         </div>
       
         <div class="font-bold text-center">
@@ -34,58 +34,84 @@
                 <span> {{ $f008['Objective'] }} </span>
             </div>
         </div>
-        <table class="border-separate border-spacing-2  border border-slate-500 ">
+
+      
+        <table class="border-separate border-spacing-2    w-full ">
             <thead>
-                <tr class="border-separate border border-slate-500 " >
-                    <td class="border-separate border border-slate-500 " >"Topic รายการ"</td>
-                    <td class="border-separate border border-slate-500 ">"Description รายละเอียด"</td>
-                    <td class="border-separate border border-slate-500 " >Duration เวลา(นาที)</td>
-                    <td class="border-separate border border-slate-500 " >"Material อุปกรณ์"</td>
-                    <td class="border-separate border border-slate-500 ">"Remark หมายเหตุ"</td>
+                <tr class="" >
+                    <td class="" >"Topic รายการ"</td>
+                    <td >"Description รายละเอียด"</td>
+                    <td class=" " >Duration เวลา(นาที)</td>
+                    <td class=" " >"Material อุปกรณ์"</td>
+                    <td class=" ">"Remark หมายเหตุ"</td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="border-separate border border-slate-500 ">"Subject Details รายละเอียดการอบรม"</td>
-                    <td class="border-separate border border-slate-500 "><span> {{ $f008['SubjectDetails'] }}</span></td>
-                    <td class="border-separate border border-slate-500 "><span> {{ $f008['SubjectTime'] }}</span></td>
-                    <td class="border-separate border border-slate-500 "><span> {{ $f008['SubjectMaterial'] }}</span></td>
-                    <td class="border-separate border border-slate-500 "><span> {{ $f008['SubjectRemark'] }}</span></td>
+                    <td class="">"Subject Details รายละเอียดการอบรม"</td>
+                    <td class=""><span> {{ $f008['SubjectDetails'] }}</span></td>
+                    <td class=""><span> {{ $f008['SubjectTime'] }}</span></td>
+                    <td class=""><span> {{ $f008['SubjectMaterial'] }}</span></td>
+                    <td class=""><span> {{ $f008['SubjectRemark'] }}</span></td>
                 </tr>
                 <tr>
              
-                    <td class="border-separate border border-slate-500 ">"Activity กิจกรรม ในการอบรม"</td>
-                    <td class="border-separate border border-slate-500 "><span> {{ $f008['ActivityDetail'] }}</span></td>
-                    <td class="border-separate border border-slate-500 "><span> {{ $f008['ActivityTime'] }}</span></td>
-                    <td class="border-separate border border-slate-500 "><span> {{ $f008['ActivityMaterial'] }}</span></td>
-                    <td class="border-separate border border-slate-500 "><span> {{ $f008['ActivityRemark'] }}</span></td>
+                    <td class="">"Activity กิจกรรม ในการอบรม"</td>
+                    <td class=""><span> {{ $f008['ActivityDetail'] }}</span></td>
+                    <td class=""><span> {{ $f008['ActivityTime'] }}</span></td>
+                    <td class=""><span> {{ $f008['ActivityMaterial'] }}</span></td>
+                    <td class=""><span> {{ $f008['ActivityRemark'] }}</span></td>
                 </tr>
                 <tr>
                   
-                    <td class="border-separate border border-slate-500 ">"Assessment การประเมินผล"</td>
-                    <td class="border-separate border border-slate-500 "><span> {{ $f008['AssessmentDetail'] }}</span></td>
-                    <td class="border-separate border border-slate-500 "><span> {{ $f008['AssessmentTime'] }}</span></td>
-                    <td class="border-separate border border-slate-500 "><span> {{ $f008['AssessmentMaterial'] }}</span></td>
-                    <td class="border-separate border border-slate-500 "><span> {{ $f008['AssessmentRemark'] }}</span></td>
+                    <td class="">"Assessment การประเมินผล"</td>
+                    <td class=""><span> {{ $f008['AssessmentDetail'] }}</span></td>
+                    <td class=""><span> {{ $f008['AssessmentTime'] }}</span></td>
+                    <td class=""><span> {{ $f008['AssessmentMaterial'] }}</span></td>
+                    <td class=""><span> {{ $f008['AssessmentRemark'] }}</span></td>
                 </tr>
             </tbody>
         </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        @php
+            $date = date_format($D008['created_at'],"d F Y");
+            $dateApp = $D008['Doc_DateApprove']?date_format($D008['Doc_DateApprove'],"d F Y"):"N/A";
+      
+            
+        @endphp
         <div class="flex justify-between">
             <span>Trained by: <br>สอนโดย</span><span> {{ Auth::user()->name }}</span>
             <span>Position:<br>ตำแหน่ง</span><span>{{ Auth::user()->position }}</span>
-            <span>Date:<br>วันที่</span><span> {{date("d-m-Y")}}</span>
+            <span>Date:<br>วันที่</span><span> {{ $date }}</span>
         </div>
 
         <div class="flex justify-between">
             <span>Acknowledge by: <br>รับทราบโดย </span><span> test text</span>
             <span>Position:<br>ตำแหน่ง</span><span>{{ Auth::user()->position }}</span>
-            <span>Date:<br>วันที่</span><span> {{date("d-m-Y")}}</span>
+            <span>Date:<br>วันที่</span><span> {{$date}} </span>
         </div>
 
-        <div class="flex justify-between">
+        <div class="flex justify-between">  
+               
             <span>Reviewed by: <br>ตรวจสอบโดย </span><span> test text</span>
             <span>Position:<br>ตำแหน่ง</span><span> {{ Auth::user()->position }}</span>
-            <span>Date:<br>วันที่</span><span>{{date("d-m-Y")}}</span>
+            <span>Date:<br>วันที่</span><span>{{ $dateApp }}</span>
         </div>
     </div>
     </div></div></div></div>

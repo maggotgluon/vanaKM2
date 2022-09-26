@@ -232,6 +232,8 @@
                       
                         <!-- คำถาม/แบบทดสอบ/หัวข้อการปฏิบัติงาน :  -->
 
+
+ <h3 class="text-lg">เอกสารแนบการอบรม </h3>
                         <input class="m-2" type="file" name="file" id="">
                         @error('file')
                                          <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 

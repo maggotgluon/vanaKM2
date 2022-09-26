@@ -147,9 +147,8 @@ class TrainRequesrController extends Controller{
 
     public function form008($Doc_Code){
         $d008 =train_request::where('Doc_Code',$Doc_Code)->firstOrFail() ;
-        $d008 = json_decode($d008->Doc_008, TRUE);
-     
-        return view('traning.form008', ['f008'=>$d008]);
+        $sub_d008 = json_decode($d008->Doc_008, TRUE);
+        return view('traning.form008', ['f008'=>$sub_d008],['D008'=>$d008]);
 
     }
     public function form009($Doc_Code){ 
