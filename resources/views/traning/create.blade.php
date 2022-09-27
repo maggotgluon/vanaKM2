@@ -31,17 +31,34 @@
                         @error('SUBJECT')
                              <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                         @enderror
-                       
+                       <br>
                        
                         <div class="flex">
-                            <label for="date">วันที่อบรม:</label>
-                            <input type="date" class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-1/4" id="date" name="traindate">
-                            @error('traindate')
+                            <label for="date">วันที่เริ่มการอบรม:</label>
+                            <input type="date" class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-1/4" id="starttraindate" name="starttraindate">
+                            @error('starttraindate')
                                  <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                             @enderror
-                            <label for="time">เวลา:</label>
-                            <input type="time" class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-1/4" id="time" name="traintime">
-                            @error('traintime')
+                           
+                            <label for="date">วันสิ้นสุดการอบรม:</label>
+                            <input type="date" class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-1/4" id="endtraindate" name="endtraindate">
+                            @error('endtraindate')
+                                 <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
+                            @enderror
+
+                        </div>
+                        <br>
+                        <div class="flex">
+                            
+                            <label for="time">เริ่มเวลา:</label>
+                            <input type="time" class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-1/4" id="starttraintime" name="starttraintime">
+                            @error('starttraintime')
+                                <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
+                            @enderror
+
+                            <label for="time">เวลาสิ้นสุด:</label>
+                            <input type="time" class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-1/4" id="endtraintime" name="endtraintime">
+                            @error('endtraintime')
                                 <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                             @enderror
                         </div>
@@ -234,6 +251,7 @@
 
 
  <h3 class="text-lg">เอกสารแนบการอบรม </h3>
+                    <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >*** กรูณารวมเป็นไฟล์เดียว เฉพาะ PDF</span> 
                         <input class="m-2" type="file" name="file" id="">
                         @error('file')
                                          <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 

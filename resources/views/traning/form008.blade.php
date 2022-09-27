@@ -4,7 +4,7 @@
             {{ __('training') }} 008
         </h2>
     </x-slot>
-
+  
 
         <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -19,9 +19,10 @@
         <div class="font-bold text-center">
             <h3 >SUBJECT หัวข้อเรื่อง :   {{ $f008['SUBJECT'] }}  </h3>
         </div>
-      
+   
         <div class="font-bold text-center">
-                <h3>วันที่อบรม : {{ $f008['traindate'] }}  เวลา : {{ $f008['traintime'] }} </h3>
+                <h3>วันที่เริ่มอบรม : {{ $f008['starttraindate'] }}  วันที่สิ้นสุด : {{ $f008['endtraindate'] }} </h3>
+                <h3>   เวลาเริ่ม : {{ $f008['starttraintime'] }}  เวลาสิ้นสุด : {{ $f008['endtraintime'] }} </h3>
             </div>
             
     

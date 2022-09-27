@@ -7,15 +7,34 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+use Carbon\Carbon;
+
 class TrainRequesrController extends Controller{
+
+    private function InputToDate($Input)
+    {
+        $Date = new Carbon($Input);
+        return date_format($Date,"d F Y");
+
+    }
+
+
     public function create(request $add){
         //  dd($add);
-        // INPUT DATA IN OBJECT
 
+        //  Cover Dte formate
+        // $dd =$this->InputToDate($add->starttraindate);
+        // dd($dd);
+
+
+
+        // INPUT DATA IN OBJECT
         $d008 = array(
             'SUBJECT' => $add->SUBJECT,
-            'traindate' => $add->traindate,
-            'traintime' => $add->traintime,
+            'starttraindate' => $this->InputToDate($add->starttraindate),
+            'endtraindate' => $this->InputToDate($add->endtraindate),
+            'starttraintime' => $add->starttraintime,
+            'endtraintime' => $add->endtraintime,
             'Objective' => $add->Objective,
             'SubjectDetails' => $add->SubjectDetails,
             'SubjectTime' => $add->SubjectTime,
@@ -59,18 +78,20 @@ class TrainRequesrController extends Controller{
         //   //ตรวจสอบข้อมูล
         // $add->validate(
         //     [
-        //          'SUBJECT'=>'required',
-        //          'traindate'=>'required',
-        //          'traintime'=>'required',
+        //         'SUBJECT'=>'required',
+        //         'starttraindate'=>'required',
+        //         'endtraindate'=>'required',
+        //         'starttraintime'=>'required',
+        //         'endtraintime'=>'required',
         //         'Objective'=>'required',
-        //         'SubjectDetails'=>'required',
-        //         'SubjectTime'=>'required',
+        //   *     'SubjectDetails'=>'required',
+        //   *     'SubjectTime'=>'required',
         //         'SubjectMaterial'=>'required',
         //         'ActivityDetail'=>'required',
         //         'ActivityTime'=>'required',
         //         'ActivityMaterial'=>'required',
-        //         'AssessmentDetail'=>'required',
-        //         'AssessmentTime'=>'required',
+        //   *     'AssessmentDetail'=>'required',
+        //   *     'AssessmentTime'=>'required',
         //         'AssessmentMaterial'=>'required',
         //         'checkbox'=> 'required',
         //         'Testing009'=>'required',
@@ -87,8 +108,10 @@ class TrainRequesrController extends Controller{
         //     [
 
         //         'SUBJECT.required' => "กรุณาป้อนชื่อเอกสาร",
-        //         'traindate.required' => "กรุณาป้อนข้อมูล",
-        //         'traintime.required' => "กรุณาป้อนข้อมูล",
+        //         'starttraindate.required' => "กรุณาป้อนข้อมูล",
+        //         'endtraindate.required' => "กรุณาป้อนข้อมูล",
+        //         'starttraintime.required' => "กรุณาป้อนข้อมูล",
+        //         'endtraintime.required' => "กรุณาป้อนข้อมูล",
         //         'Objective.required' => "กรุณาป้อนข้อมูล",
         //         'SubjectDetails.required' => "กรุณาป้อนข้อมูล",
         //         'SubjectTime.required'=>"กรุณาป้อนข้อมูล",
@@ -148,6 +171,7 @@ class TrainRequesrController extends Controller{
     public function form008($Doc_Code){
         $d008 =train_request::where('Doc_Code',$Doc_Code)->firstOrFail() ;
         $sub_d008 = json_decode($d008->Doc_008, TRUE);
+        // dd($sub_d008);
         return view('traning.form008', ['f008'=>$sub_d008],['D008'=>$d008]);
 
     }
