@@ -5,12 +5,18 @@
         </h2>
     </x-slot>
   
+  
+    <span class="print:block print:absolute print:bottom-0  hidden">FM-LDS-008</span>
+    <span class="print:block print:absolute print:bottom-0  print:right-0 hidden">Rev. 01 : 15.03.2019</span>
 
-        <div class="py-12">
+    <div class="py-12 ">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg ">
                 <div class="p-6 bg-white border-b border-gray-200">
-           <div id="FM-LDS-008">
+                    <button  onclick="window.print();" class=" rounded-full ring-offset-4 ring   hover:rounded-lg ring-blue-500 bg-blue-300 font-bold  print:hidden  "> PRINT </button>
+                    <div id="FM-LDS-008">
+               <img class="h-16 w-full object-contain hidden print:block" src="{{ asset('/img/logo.jpeg') }}">
               <h2 class="text-2xl mb-4 font-bold text-center">
               <span>TRAINING OUTLINE เค้าโครงการฝึกอบรมรายหัวข้อ</span>
               </h2>
