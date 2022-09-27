@@ -11,8 +11,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                <button  onclick="window.print();" class=" rounded-full ring-offset-4 ring   hover:rounded-lg ring-blue-500 bg-blue-300 font-bold  print:hidden  "> PRINT </button>
-    <div id="FM-LDS-009">
+                <button  onclick="window.print();" class=" rounded-lg  ring  p-1 ring-blue-900 bg-blue-500 font-bold text-white  print:hidden  "> PRINT </button>
+    <div id="FM-LDS-009"class="">
     <img class="h-16 w-full object-contain hidden print:block" src="{{ asset('/img/logo.jpeg') }}">
     <!-- <span class="text-sm text-gray-300">FM-LDS-009-rev.00-แนวทางการประเมินผลการอบรมในการปฏิบัติงาน</span> -->
     <h2 class="text-2xl mb-4 font-bold text-center">
