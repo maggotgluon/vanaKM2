@@ -148,8 +148,8 @@ class DatabaseSeeder extends Seeder
                     'staff_id'=> $data['3'],
                     'department'=> $data['4'],
                     'position'=> $data['5'],
-                    'department_head'=> $data['6'],
-                    'user_level'=> $data['7'],
+                    'department_head'=> $data['7'],
+                    'user_level'=> $data['6'],
                     'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
                 ]);    
             }
