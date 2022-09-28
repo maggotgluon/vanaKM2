@@ -25,7 +25,7 @@
 
                 
                 document.querySelector("#debug").addEventListener('click',(e)=>{
-                    let inpuser = document.querySelector('input#email')
+                    let inpuser = document.querySelector('input#staff_id')
                     let inppass = document.querySelector('input#password')
                     // console.log(e.target);
                     // console.log(btnuser);
@@ -33,11 +33,11 @@
                     switch(e.target) {
                         case btnuser:
                             // code block
-                            inpuser.value='user@test.com'
+                            inpuser.value='user'
                             break;
                         case btnsuperuser:
                             // code block
-                            inpuser.value='useradv@test.com'
+                            inpuser.value='useradv'
                             break;
                         case btnadminTraining:
                             // code block
@@ -73,9 +73,9 @@
 
             <!-- Email Address -->
             <div>
-                <x-label for="email" :value="__('Email or Staff ID')" />
+                <x-label for="staff_id" :value="__('Staff ID')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-input id="staff_id" class="block mt-1 w-full" type="text" name="staff_id" :value="old('staff_id')" required autofocus />
             </div>
 
             <!-- Password -->
@@ -97,11 +97,11 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
+                <!-- @if (Route::has('password.request'))
                     <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
-                @endif
+                @endif -->
 
                 <x-button class="ml-3">
                     {{ __('Log in') }}
