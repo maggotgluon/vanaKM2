@@ -31,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('edit_document', function(User $user) {
             // can upload KM request
             boo:$can=false;
+            
             foreach($user->users_permission as $permission){
                 if($permission->parmission_name=='edit_document'&$permission->allowance==1){
                     $can=true;
@@ -41,6 +42,11 @@ class AppServiceProvider extends ServiceProvider
                     $can=true;
                     return $can;
                 }
+            }
+            
+            if($user->user_level=='Supervisor'||$user->user_level=='Assistant Manager'||$user->user_level=='Manager'||$user->user_level=='Director'||$user->user_level=='MR'){
+                $can=true;
+                return $can;
             }
             return $user->is_admin == 1 | $can;
         });
@@ -56,6 +62,11 @@ class AppServiceProvider extends ServiceProvider
                     $can=true;
                     return $can;
                 }
+            }
+
+            if($user->user_level=='Supervisor'||$user->user_level=='Assistant Manager'||$user->user_level=='Manager'||$user->user_level=='Director'||$user->user_level=='MR'){
+                $can=true;
+                return $can;
             }
             return $user->is_admin == 1 | $can;
         });
@@ -120,6 +131,10 @@ class AppServiceProvider extends ServiceProvider
                     $can=true;
                     return $can;
                 }
+            }
+            if($user->user_level=='MR'){
+                $can=true;
+                return $can;
             }
             return $user->is_admin == 1 | $can;
         });

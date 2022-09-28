@@ -39,13 +39,6 @@ Route::middleware(['auth'])->group(function(){
         return view('dashboard',['documents'=>document_request::where('Doc_Status','1')->get()]);
     })->name('dashboard');
 
-    // group document
-    // show all document
-    // uri/document
-    // Route::get('/document', [DocumentRequestController::class,'show',] )->name('document');
-    // show single document
-    // uri/document/{id}
-
     // group document regis
     Route::prefix('document')->group(function (){
         Route::get('', [DocumentRequestController::class,'show',] )->name('document');
@@ -85,63 +78,23 @@ Route::middleware(['auth'])->group(function(){
                     'documents'=>document_request::where('Doc_Code',$Doc_Code)->firstOrFail(),
                 ]);
             })->name('regisView');
+
+            Route::get('/regis_document/view/', function(){
+                // Auth::user()->document_request
+                
+                return view('document.regis',[
+                    'documents'=>Auth::user()->document_request,
+                ]);
+            })->name('regisOwn');
         });
     });
-
-
-    // single_regis document (my/manage)
-    // uri/reg_document/{id}
-    
-    // gorup document admin
-    // manage document (my/manage/mr)
-    // uri/manage_document/
-
-    // regis
-    
-    //upload new doc
-   
-        //post 
-        // Route::post('/regis_document',  [DocumentRequestController::class,'create'] ) -> name('createRegis');
-
-        //view my doc
-        // Route::get('/regis_document/view/', [DocumentRequestController::class,'showReg',] ) ->name('regisOwn');
-
-        // Route::get('/regis_document/manage/', [DocumentRequestController::class,'manage',] ) ->name('regisManage');
-
-
-        Route::get('/regis_document/view/', function(){
-            // Auth::user()->document_request
-            
-            return view('document.regis',[
-                'documents'=>Auth::user()->document_request,
-            ]);
-        })->name('regisOwn');
-
-
-
-
-
-        //manage all doc <- admin onlydesde
-        //approved doc by md <- md only
-
-
-
-    // group training
-    // show all training
-    // uri/train
-    // show single training
-    // uri/train/{id}
-
-    // group training regis
-    // single_regis training (my/manage)
-    // uri/reg_train/{id}
 
     Route::prefix('training')->group(function (){
         Route::get('', [TrainRequesrController::class,'show',] ) ->middleware(['auth'])->name('training');
         //view single  training
         // Route::get('/view/{id}', [TrainRequesrController::class,'show',] ) ->middleware(['auth'])->name('training');
 
-        Route::get('/view/{id}', [TrainRequesrController::class,'showReg',] ) ->middleware(['auth'])->name('regisTrainOwn');
+        // Route::get('/view/{id}', [TrainRequesrController::class,'showReg',] ) ->middleware(['auth'])->name('regisTrainOwn');
         Route::prefix('regis')->group(function (){
             Route::get('', function () {
                 // dd(document_request::all());
@@ -160,13 +113,14 @@ Route::middleware(['auth'])->group(function(){
             })->middleware(['auth'])->name('regisTrain');
 
             //view regis training
-            Route::get('/view', [TrainRequesrController::class,'showReg',] ) ->middleware(['auth'])->name('regisTrainOwn');
+            Route::get('/view/', [TrainRequesrController::class,'showReg',] ) ->middleware(['auth'])->name('regisTrainOwn');
             //view regis training 008
             Route::get('/f008/{id}', [TrainRequesrController::class,'form008',] ) ->middleware(['auth'])->name('regForm008');
             //view regis training 009
             Route::get('/f009/{id}', [TrainRequesrController::class,'form009',] ) ->middleware(['auth'])->name('regForm009');
             //view regis training
-            Route::get('/manage', [TrainRequesrController::class,'manage',] ) ->middleware(['auth'])->name('regisTrainManage');
+            Route::get('/manage', [TrainRequesrController::class,'manage',] ) ->middleware(['auth'])->name('regisTrainManage');//view regis training
+            Route::get('/own', [TrainRequesrController::class,'manage',] ) ->middleware(['auth'])->name('regisTrainOwn');
             //view single regis training
             Route::post('/manage/{id}',  [TrainRequesrController::class,'approve','$id'] ) ->middleware(['auth']) -> name('regisTrainApprove');
             //update single regis training
@@ -212,18 +166,42 @@ Route::middleware(['auth'])->group(function(){
 
 });
 
+// route
 
-// //see all doc
-// Route::get('/document', [DocumentRequestController::class,'show',] ) ->middleware(['auth'])->name('document');
+// auth route
+// dashboard uri/dashboard
 
+// document all
+// uri/document
 
+// document single
+// uri/document/view/{id}
 
-// // view / download single doc
-// Route::get('/document/{doc_id}', function (Document $doc_id) {
-//     // return view('dashboard');
-// })->middleware(['auth'])->name('documentCreate');
+// document type
+// uri/document/{type}
 
+// document reg all (own/manage/mr)
+// uri/document/regis
+// uri/document/regis >post
+// document reg single
+// uri/document/regis/view/{id}
+// uri/document/regis/update/{id} >post
 
+// training all
+// uri/training
+
+// training single
+// uri/training/view/{id}
+
+// training department
+// uri/training/{department}
+
+// training reg all (own/manage/mr)
+// uri/training/regis
+// uri/training/regis >post
+// training reg single
+// uri/training/regis/view/{id}
+// uri/training/regis/update/{id} >post
 
 
 require __DIR__.'/auth.php';

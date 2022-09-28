@@ -8,6 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                {{ Auth::user()->user_level  }}
                 <div class="p-6 bg-white border-b border-gray-200 md:flex w-full">
                     <section class="flex-1 min-w-max">
                     <h2>Documents</h2>

@@ -15,9 +15,7 @@ class TrainRequesrController extends Controller{
     {
         $Date = new Carbon($Input);
         return date_format($Date,"d F Y");
-
     }
-
 
     public function create(request $add){
         //  dd($add);
@@ -163,11 +161,27 @@ class TrainRequesrController extends Controller{
     }
 
     public function show(){
+        // dd('show all');
         return view('traning.index', [
             'documents' => train_request::all(),
         ]);
     }
+    public function showReg($id){
+        dd('show id');
+        return view('traning.index', [
+            'documents' => train_request::all(),
+        ]);
+    }
+    public function viewReg(){
 
+    }
+    public function manage(){
+        // all
+        // own
+        return view('traning.manage', [
+            'documents' => train_request::all(),
+        ]);
+    }
     public function form008($Doc_Code){
         $d008 =train_request::where('Doc_Code',$Doc_Code)->firstOrFail() ;
         $sub_d008 = json_decode($d008->Doc_008, TRUE);

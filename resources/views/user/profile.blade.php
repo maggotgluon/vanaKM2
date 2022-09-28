@@ -18,7 +18,7 @@
                         Department Head : {{$user->department_head}}<br>
                         {{$user->user_level}}<br>
                         <hr>
-                        {{$user}}
+                        <!-- {{$user}} -->
                         <form action="{{route('user.update',$user)}}" method="post" >
                         @csrf
                             <label for="suser">Department Head : </label>

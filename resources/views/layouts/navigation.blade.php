@@ -44,8 +44,8 @@
                                     {{ __('Register new Document') }}
                             </x-dropdown-link>
 
-
-                            @cannot('manage_document', Auth::user())
+                            <!-- cannot -->
+                            @can('manage_document', Auth::user())
                                 @if(Auth::user()->document_request->count()>0)
                                 <x-dropdown-link :href="route('regisOwn')">
                                         {{ __('My Registed Document') }}
