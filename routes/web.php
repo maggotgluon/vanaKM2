@@ -92,7 +92,7 @@ Route::middleware(['auth'])->group(function(){
     Route::prefix('training')->group(function (){
         Route::get('', [TrainRequesrController::class,'show',] ) ->middleware(['auth'])->name('training');
         //view single  training
-        // Route::get('/view/{id}', [TrainRequesrController::class,'show',] ) ->middleware(['auth'])->name('training');
+        Route::get('/view/{id}', [TrainRequesrController::class,'showTrain','$id',] ) ->middleware(['auth'])->name('trainingID');
 
         // Route::get('/view/{id}', [TrainRequesrController::class,'showReg',] ) ->middleware(['auth'])->name('regisTrainOwn');
         Route::prefix('regis')->group(function (){

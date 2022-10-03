@@ -166,10 +166,10 @@ class TrainRequesrController extends Controller{
             'documents' => train_request::all(),
         ]);
     }
-    public function showReg($id){
-        dd('show id');
-        return view('traning.index', [
-            'documents' => train_request::all(),
+    public function showTrain($id){
+        // dd('show id',$id);
+        return view('traning.show', [
+            'documents' => train_request::where('Doc_Code',$id)->firstOrFail(),
         ]);
     }
     public function viewReg(){

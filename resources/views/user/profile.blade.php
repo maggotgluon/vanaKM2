@@ -21,11 +21,11 @@
                         <!-- {{$user}} -->
                         <form action="{{route('user.update',$user)}}" method="post" >
                         @csrf
-                            <label for="suser">Department Head : </label>
-                            {{$user->department_head}} 
+                            <label for="suser">Department Head : </label>  {{$user->department_head}} 
                             <div class="update">
                             Change to 
                                 <select class="bg-backdrop rounded-md"  name="suser" id="suser">
+                                    <option value="">{{$user->department_head}}</option>
                                     @foreach ($dp as $suser)
                                         <option value="{{$suser->staff_id}}">{{$suser->staff_id}}:{{$suser->name}}</option>
                                     @endforeach
