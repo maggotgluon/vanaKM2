@@ -19,16 +19,16 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            
+
             $table->uuid('staff_id')->unique(); //VNxxx 
-            $table->string('department'); //department name
-            $table->string('department_head')->nullable(); //hod name list
-            $table->string('position'); //department name
-            $table->string('user_level')->nullable(); // staff,super,assi,manager,director,MD
             
+            $table->string('department')->nullable(); //department name
+            $table->string('department_head')->nullable(); //hod name list
+            $table->string('position')->nullable(); //department name
+            $table->string('user_level')->nullable(); // staff,super,assi,manager,director,MD
+
             $table->rememberToken();
             $table->timestamps();
-
         });
     }
 

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class document extends Model
+class Document extends Model
 {
     use HasFactory;
 
@@ -17,8 +17,8 @@ class document extends Model
         'Doc_ver',
         'Doc_DateApprove',
     ];
-    public function document_request()
+    public function DocumentRequest()
     {
-        return $this->belongsTo(document_request::class, 'Doc_Code');
+        return $this->belongsTo(DocumentRequest::class, 'Doc_Code');
     }
 }

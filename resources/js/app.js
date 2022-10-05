@@ -5,6 +5,4 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 
 Alpine.start();
-
-
-document.querySelector('.debug-box')
+console.log('js loaded')

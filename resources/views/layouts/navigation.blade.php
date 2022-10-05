@@ -1,6 +1,6 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 print:hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
@@ -16,16 +16,12 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-
                     @can('edit_document', Auth::user())
-                    
-
-                    
                     <x-dropdown-nav align="top" width="48">
                         <x-slot name="trigger">
                             <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                
-                                <div>Document</div>
+
+                                <div>{{ __('Document') }}</div>
 
                                 <div class="ml-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -35,45 +31,39 @@
                             </button>
                         </x-slot>
 
-                        <x-slot name="content">                        
-                            <x-dropdown-link :href="route('document')">
+                        <x-slot name="content">
+                            <x-responsive-nav-link :href="route('document.all')"  :active="request()->routeIs('document.all')">
                                     {{ __('Document') }}
-                            </x-dropdown-link>
+                            </x-responsive-nav-link>
 
-                            <x-dropdown-link :href="route('regisDoc')">
+                            <x-responsive-nav-link :href="route('regDoc.create')"  :active="request()->routeIs('regDoc.create')">
                                     {{ __('Register new Document') }}
-                            </x-dropdown-link>
+                            </x-responsive-nav-link>
 
-                            <!-- cannot -->
-                            @can('manage_document', Auth::user())
-                                @if(Auth::user()->document_request->count()>0)
-                                <x-dropdown-link :href="route('regisOwn')">
-                                        {{ __('My Registed Document') }}
-                                </x-dropdown-link>
-                                @endif
-                            @endcan
-                            
-                            @can('manage_document', Auth::user())
-                                <x-dropdown-link :href="route('regisManage')">
-                                        {{ __('Registed Document Management') }}
-                                </x-dropdown-link>
-                            @endcan
+                            <x-responsive-nav-link :href="route('regDoc.allUser',Auth::User())"  :active="request()->routeIs('regDoc.allUser')">
+                                    {{ __('My Registed Document') }}
+                            </x-responsive-nav-link>
+
+                            <x-responsive-nav-link :href="route('regDoc.all')"  :active="request()->routeIs('regDoc.all')">
+                                    {{ __('Registed Document Management') }}
+                            </x-responsive-nav-link>
+
                         </x-slot>
 
                     </x-dropdown-nav>
                     @else
-                        <x-nav-link :href="route('document')" :active="request()->routeIs('document')">
-                            {{ __('Document') }}
-                        </x-nav-link>
-                    
-
+                    <x-nav-link :href="route('document.all')">
+                        {{ __('Document') }}
+                    </x-nav-link>
                     @endcan
 
-                    @can('edit_document', Auth::user())
+                    @can('edit_trainDocument', Auth::user())
                     <x-dropdown-nav align="top" width="48">
                         <x-slot name="trigger">
                             <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                <div>Training</div>
+                                <div>
+                                    {{ __('Training') }}
+                                </div>
 
                                 <div class="ml-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -83,39 +73,41 @@
                             </button>
                         </x-slot>
 
-                        <x-slot name="content">                        
-                            <x-dropdown-link :href="route('training')">
+                        <x-slot name="content">
+                            <x-responsive-nav-link :href="route('training.all')" :active="request()->routeIs('training.all')">
                                     {{ __('Training') }}
-                            </x-dropdown-link>
+                            </x-responsive-nav-link>
 
-                            <x-dropdown-link :href="route('regisTrain')">
+                            <x-responsive-nav-link :href="route('regTraining.create')" :active="request()->routeIs('regTraining.create')">
                                     {{ __('Add new Training Presentation') }}
-                            </x-dropdown-link>
+                            </x-responsive-nav-link>
 
-                            <x-dropdown-link :href="route('regisTrainOwn')">
+                            <x-responsive-nav-link :href="route('regTraining.allUser',Auth::User())" :active="request()->routeIs('regTraining.allUser')">
                                     {{ __('My Presentation') }}
-                            </x-dropdown-link>
+                            </x-responsive-nav-link>
 
-                            <x-dropdown-link :href="route('regisTrainManage')">
+                            <x-responsive-nav-link :href="route('regTraining.all')" :active="request()->routeIs('regTraining.all')">
                                     {{ __('Training Management') }}
-                            </x-dropdown-link>
+                            </x-responsive-nav-link>
                         </x-slot>
 
                     </x-dropdown-nav>
                     @else
-                        <x-nav-link>
+                        <x-nav-link :href="route('training.all')">
                             {{ __('Training') }}
                         </x-nav-link>
                     @endcan
 
+
+
                     @can('manage_users', Auth::user())
-                    <x-nav-link :href="route('user.manage')" :active="request()->routeIs('userManage')">
+                    <x-nav-link :href="route('user.manage')" :active="request()->routeIs('user.manage')">
                         {{ __('Manage User') }}
                     </x-nav-link>
                     @endcan
-            
 
-                    
+
+
                 </div>
             </div>
 
@@ -136,17 +128,23 @@
 
                     <x-slot name="content">
                         <!-- Authentication -->
-                        <x-responsive-nav-link :href="route('user.profile',Auth::user())">
+                        <x-responsive-nav-link :href="route('user.profile',Auth::user())" :active="request()->routeIs('user.profile')">
                             {{ __('Profile') }}
                         </x-responsive-nav-link>
+
+                        @can('view_log', Auth::user())
+                        <x-responsive-nav-link :href="url('log-viewer')">
+                            {{ __('View Log') }}
+                        </x-responsive-nav-link>
+                        @endcan
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
+                            <x-responsive-nav-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
-                            </x-dropdown-link>
+                            </x-responsive-nav-link>
                         </form>
                     </x-slot>
                 </x-dropdown>
@@ -171,69 +169,55 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('document')" :active="request()->routeIs('document')">
+            <x-responsive-nav-link>
                 {{ __('document') }}
             </x-responsive-nav-link>
 
-            @can('edit_document', Auth::user())
-                <x-responsive-nav-link :href="route('regisDoc')" :active="request()->routeIs('regisDoc')">
+                <x-responsive-nav-link>
                     {{ __('regisDoc') }}
                 </x-responsive-nav-link>
-                @cannot('manage_document', Auth::user())
-                    @if(Auth::user()->document_request->count()>0)
-                        <x-responsive-nav-link :href="route('regisOwn')" :active="request()->routeIs('regisOwn')">
+                        <x-responsive-nav-link>
                             {{ __('regisOwn') }}
                         </x-responsive-nav-link>
-                    @endif
-                @endcan
-                
-                @can('manage_document', Auth::user())
-                    <x-responsive-nav-link :href="route('regisManage')" :active="request()->routeIs('regisManage')">
+
+                    <x-responsive-nav-link>
                         {{ __('regisManage') }}
                     </x-responsive-nav-link>
-                @endcan
-            @endcan
 
             <x-responsive-nav-link>
                 {{ __('training') }}
             </x-responsive-nav-link>
-            @can('edit_document', Auth::user())
                 <x-responsive-nav-link>
                     {{ __('add training') }}
                 </x-responsive-nav-link>
-                @cannot('manage_document', Auth::user())
-                    @if(Auth::user()->document_request->count()>0)
                         <x-responsive-nav-link>
                             {{ __('my training') }}
                         </x-responsive-nav-link>
-                    @endif
-                @endcan
-                @can('manage_document', Auth::user())
                     <x-responsive-nav-link>
                         {{ __('manage training') }}
                     </x-responsive-nav-link>
-                @endcan
-            @endcan
 
-            @can('manage_users', Auth::user())
-            <x-responsive-nav-link :href="route('user.manage')" :active="request()->routeIs('userManage')">
+            <x-responsive-nav-link :href="route('user.manage')">
                 {{ __('Manage User') }}
             </x-responsive-nav-link>
-            @endcan
+
+
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
+            
+            <x-responsive-nav-link :href="route('user.profile',Auth::user())" :active="request()->routeIs('user.profile')">
+                {{ Auth::user()->name }}
+            </x-responsive-nav-link>
+
+
+            <x-responsive-nav-link :href="route('user.profile',Auth::user())" :active="request()->routeIs('user.profile')">
+                {{ __('View Log') }}
+            </x-responsive-nav-link>
 
             <div class="mt-3 space-y-1">
                 <!-- Authentication -->
-                <x-responsive-nav-link :href="route('user.profile',Auth::user())">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 

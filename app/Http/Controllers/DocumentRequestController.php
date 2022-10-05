@@ -2,55 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\document as ModelsDocument;
-use App\Models\document_request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
-use League\CommonMark\Node\Block\Document;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
+use App\Models\DocumentRequest;
+
+use App\Models\Document;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class DocumentRequestController extends Controller
 {
     //
-    public function index(){
-        return view('documents.index',[
-            'documents'=>document_request::all(),
-        ]);
+    public function all($user=null){
+        if($user==null){
+            $regDoc = DocumentRequest::paginate(15);
+        }else{
+            $regDoc = Auth::user()->DocumentRequest;
+        }
+        return view('document.reg.index',['documents'=>$regDoc]);
     }
+    public function view($Doc_Code){
+        // dd('reg view');
+        $regDoc = DocumentRequest::where('Doc_Code',$Doc_Code)->firstOrFail();   
+        return view('document.reg.show',['documents'=>$regDoc]);
+    }
+    public function createView(){
+        // dd('create');
+        $currentYear = date("Y");
+        $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
+        $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
+        
+        $count = DocumentRequest::whereBetween('created_at',[$startYear,$endYear])->count();
 
-    public function showReg(Request $request){
-        // dd (Auth::user()->document_request);
-        return view('document.regis',[
-            'documents'=>Auth::user()->document_request,'message'=>$request->query
-        ]);
+        return view('document.reg.create',['count_doc_code'=>$count,]);
     }
-
-    public function show(){
-        // dd(ModelsDocument::all());
-        // ddd (document_request::where('Doc_Status','1')->get());
-        return view('document.index',[
-            'documents'=>ModelsDocument::all(),
-        ]);
-        // return view('document.index',[
-        //     'documents'=>document_request::where('Doc_Status','1')->get(),
-        // ]);
-    }
-    public function manage(Request $request ){
-        // dd (Auth::user()->document_request);
-        // $message = $request;
-        // dd($request->query);
-        return view('document.regis',[
-            'documents'=>document_request::all(),'message'=>$request ,
-        ]);
-    }
-    
-    public function create(request $add){
-        // dd($add);
+    public function create(request $request){
+        // dd('create');
         //ตรวจสอบข้อมูล
-        $add->validate(
+        $request->validate(
             [   
                 // 'Doc_Name'=>'required|max:10|unique:document_requests',
                 'objective'=>'required',
@@ -61,8 +50,6 @@ class DocumentRequestController extends Controller
                 
             ],
             [
-
-            
                 'Doc_Name.required' => "กรุณาป้อนชื่อเอกสาร",
                 'Doc_Name.max' => "กรุณาป้อนชื่อเอกสาร 10 ตัวอักษร",
                 'Doc_Name.unique' => "ชื่อเอกสารนี้ถูกใช้ไปแล้ว",
@@ -74,20 +61,15 @@ class DocumentRequestController extends Controller
                 'file.mimes' => "กรุณาเลือกไฟล์ PDF เท่านั้น",
                 'file.size' => "กรุณาเลือกไฟล์ PDF ขนาดไม่เกิน 10 MB",
                 // 'file'=>'',
-
             ]
         );
 
-        //อัพโหลดไฟล์
-   
-        
+
         //Version File
-        $file = $add->file('file');
-        $docver = document_request::where('Doc_Name',$add->Doc_Name)->count();
-        $docname = $add->Doc_Name;
+        $file = $request->file('file');
+        $docver = DocumentRequest::where('Doc_Name',$request->Doc_Name)->count();
+        $docname = $request->Doc_Name;
         $NameFile = $docname.'-'.$docver;
-
-
 
         // dd($NameFile);
 
@@ -98,33 +80,22 @@ class DocumentRequestController extends Controller
 
         
         // //บันทึกข้อมูล 
-        $documents = new document_request;
-        $documents->Doc_Code = $add->DocCode;
-        $documents->Doc_Name = $add->Doc_Name;
+        $documents = new DocumentRequest;
+        $documents->Doc_Code = $request->DocCode;
+        $documents->Doc_Name = $request->Doc_Name;
         $documents->User_id = Auth::user()->id;
-        $documents->Doc_Type = $add->type;
-        $documents->Doc_Obj = $add->objective;
-        $documents->Doc_Description = $add->info;
-        $documents->Doc_Life = $add->Year;
-        // dd($add->Doc_Name);
+        $documents->Doc_Type = $request->type;
+        $documents->Doc_Obj = $request->objective;
+        $documents->Doc_Description = $request->info;
+        $documents->Doc_Life = $request->Year;
+        // dd($request->Doc_Name);
         $documents->Doc_ver = $docver;
-        $documents->Doc_StartDate = $add->usedate;
+        $documents->Doc_StartDate = $request->usedate;
         $documents->Doc_Location = $full_path;
 
         $documents->Doc_Status ='0';
 
-        // $documents->Doc_Status ='1';
-
-        // $documents->Doc_Timestamp = $add->date;
-        // document_request::count(Doc_Name);
-        //upload PDF
-        // dd($documents);
-        // dd( $add->file('file') );
-        // dd($file->getClientOriginalName());
-        // Storage:: move( $upload_location, $file);
-
-
-                            // loc / upload file / rename to
+        // loc / upload file / rename to
         Storage::putFileAs($upload_location,$file,$docname.'-'.$docver);
         // Storage::putFileAs($upload_location,$file,doc_name.'-'.ver);
 
@@ -132,25 +103,31 @@ class DocumentRequestController extends Controller
         // dd($visibility);
 
 
-        // gettype($add);
+        // gettype($request);
         
         // dd( Storage::disk('local') );
-        // $add->file($NameFile)->store($upload_location);
+        // $request->file($NameFile)->store($upload_location);
 
-        //  dd($documents);
+        // dd($documents);
         $documents->save();
-        return view('document.create',['count_doc_code'=>0]);
-       
+        Log::info('user '.$documents->User_id.' Request '.$documents->Doc_Code);
+        
+        return redirect()->route('regDoc.create')->with('success', 'Document added!');
+        // return view('document.reg.create',['users'=>Auth::user()]);
     }
 
-    public function approve(request $add){
-        $id = $add->regID;
-        $approve = $add->manage;
-        $reg_doc = document_request::find($id);
+    public function approve(request $request){
+        // dd($request);
+        $id = $request->regID;
+        $approve = $request->manage;
+        $reg_doc = DocumentRequest::find($id);
+
+        $toastType = 'success';
+        $toastMsg = 'Document '.$reg_doc->Doc_Name.' Approved!';
         if($approve === 'approved'){
             $reg_doc->Doc_Status = '1';
             // dd($reg_doc);
-            $documents = ModelsDocument::updateOrCreate(
+            $documents = Document::updateOrCreate(
                 [
                     'Doc_Name' => $reg_doc->Doc_Name
                 ],
@@ -174,15 +151,17 @@ class DocumentRequestController extends Controller
             $documents->save();
             echo 'approved';
         }else{
+            $toastType = 'warning';
+            $toastMsg = 'Document '.$reg_doc->Doc_Name.' Rejected!';
             $reg_doc->Doc_Status = '-1';
-            echo 'rejected';
+            // echo 'rejected';
         }
         
         $reg_doc->Doc_DateApprove = now();
         $reg_doc->User_Approve = Auth::user()->id;
         $reg_doc->save();
         // dd($reg_doc->Doc_Name);
-        $message = $add->manage;
+        $message = $request->manage;
         // echo $add->manage;
         // dd($add->id);
 
@@ -190,6 +169,7 @@ class DocumentRequestController extends Controller
         
 
 
+        Log::info('user '.$reg_doc->User_Approve.$approve.' Request '.$reg_doc->Doc_Code);
         //disible mail service during test
 
         // Mail::send(['text'=>'mail'], array('name'=>"Virat Gandhi"), function($message) {
@@ -204,6 +184,6 @@ class DocumentRequestController extends Controller
         //     'documents'=>document_request::all(),
         // ]);
         // dd($message);
-        return redirect()->route('regisManage',['id'=>$id,'result'=>$message,'name'=>$reg_doc->Doc_Name,'code'=>$reg_doc->Doc_Code] );
+        return redirect()->route('regDoc.all')->with($toastType, $toastMsg);
     }
 }

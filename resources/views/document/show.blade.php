@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Show Single Doc') }}
         </h2>
     </x-slot>
 
@@ -9,35 +9,56 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200 flex flex-col">
-                    Regis
-                    {{ $documents }}
+                        {{$documents->Doc_Code}} : {{$documents->Doc_Name}} 
+                            @unless ($documents->Doc_ver===0)
+                                Rev {{$documents->Doc_ver}}
+                            @endunless
+                        <p>
+                            {{$documents->Doc_Type}}
+                        </p>
+                        <p>
+                            {{$documents->Doc_Obj}} {{__('reason')}} {{$documents->Doc_Description}}
+
+                            </p>
+                            <p>
+                            upload by :
+                            {{$documents->user_id}}
+                            <span class="text-sm "> {{$documents->created_at}}</span> 
+                        </p>
+                        <p>
+                            Approved by :
+                            {{$documents->User_Approve}}
+                            <span class="text-sm ">last update {{$documents->updated_at}}</span> 
+                        </p>
+                    
+                        <br>
+                    
+                    <!-- {{$dar}} -->
                     <!-- {{ Auth::user()->id }} -->
                     <hr>
-                    {{asset($documents->Doc_Location)}}
-                    <!-- <embed src="{{asset('img'.$documents->Doc_Location)}}" width="100%" height="400px" showPageControls=false showAnnotationTools=false dockPageControls=false showLeftHandPanel=false/> -->
-                    <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
-                    <button onclick="savePdf(file)" class="bg-blue-400 p-2 hover:bg-green-300">download</button>
+                    <!-- <iframe src="{{asset($dar->Doc_Location)}}" width="100%" height="500px"> -->
                     
-                    <div>
-                        <button id="prev">Previous</button>
-                        <button id="next">Next</button>
-                        &nbsp; &nbsp;
+                    <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+                    
+                    <div class="bg-gray-300 p-4">
+                        <x-button onclick="savePdf(file)" class="w-max py-1 m-2">download</x-button>
+                        <x-button id="prev" class="w-max py-1 m-2">Previous</x-button>
+                        <x-button id="next" class="w-max py-1 m-2">Next</x-button>
+                        
                         <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
                     </div>
                     <canvas id="the-canvas" width="100%"></canvas>
                     <hr>
                     <script src="https://unpkg.com/downloadjs@1.4.7"></script>
                     <script type="text/javascript" src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
-                    <!-- <script type="text/javascript" src="https://www.jsdelivr.com/package/npm/pdfjs-dist"></script> -->
-                    <!-- <h2>i frame</h2>
-                    <iframe id="frame" class="w-full h-screen" frameborder="0"></iframe> -->
+                    
 
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
-
+ 
 <script type="text/javascript">
 
     const {
@@ -47,7 +68,7 @@
         StandardFonts
     } = PDFLib
 
-    const file = "{{asset($documents->Doc_Location)}}"
+    const file = "{{asset($dar->Doc_Location)}}"
     // document.querySelector('#frame').src = url
     modifyPdf(file)
     async function modifyPdf(url) {
@@ -356,9 +377,4 @@
 
 </script>  
 
-<script type="text/javascript">
-    // const file = "{{asset($documents->Doc_Location)}}",
-    //       canvasContainer = 'the-canvas'
-    // showPDF(file,canvasContainer);
-    
-</script>  
+

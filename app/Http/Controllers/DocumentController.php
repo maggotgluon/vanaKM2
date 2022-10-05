@@ -2,87 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoredocumentRequest;
-use App\Http\Requests\UpdatedocumentRequest;
-use App\Models\document;
-use App\Models\document_request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Document;
+use App\Models\DocumentRequest;
 
 class DocumentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    //
+    public function all(){
+        // dd('doc all');
+        
+        return view('document.index',['documents'=>Document::all()]);
     }
+    public function view($Doc_Code){
+        $doc = Document::where('Doc_Code',$Doc_Code)->firstOrFail();  
+        $dar = DocumentRequest::where('Doc_Code',$Doc_Code)->firstOrFail();   
+        // $dar = $doc->Document()->where('Doc_Code',$Doc_Code)->get();
+        // dd($Doc_Code,$doc,$dar);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(document_request $doc)
-    {
-        //
-        dd($doc);
+        return view('document.show',['documents'=>$doc,'dar'=>$dar]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoredocumentRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoredocumentRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\document  $document
-     * @return \Illuminate\Http\Response
-     */
-    public function show(document $document)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\document  $document
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(document $document)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdatedocumentRequest  $request
-     * @param  \App\Models\document  $document
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdatedocumentRequest $request, document $document)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\document  $document
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(document $document)
-    {
-        //
+    public function create(){
+        // dd('doc create');
+        return view('document.reg.create',['users'=>Auth::user()]);
     }
 }

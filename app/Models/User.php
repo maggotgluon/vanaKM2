@@ -20,12 +20,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
-        
         'staff_id',
-        'department',
-        'department_head',
-        'user_level',
+        'password',
     ];
 
     /**
@@ -46,17 +42,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
-    public function document_request()
+
+
+    public function DocumentRequest()
     {
-        return $this->hasMany(document_request::class);
+        return $this->hasMany(DocumentRequest::class);
     }
-    public function train_request()
+    public function TrainingRequest()
     {
-        return $this->hasMany(train_request::class);
+        return $this->hasMany(TrainingRequest::class);
     }
-    public function users_permission()
+    public function userPermission()
     {
-        return $this->hasMany(users_permission::class);
+        return $this->hasMany(userPermission::class);
     }
 }

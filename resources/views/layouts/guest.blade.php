@@ -8,14 +8,17 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=noto-sans-thai:wght@400;600;700&display=swap">
+        
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
-        <div class="font-sans text-gray-900 antialiased">
+        <div class="font-sans text-gray-900 antialiased bg-gray-100 dark:bg-gray-900">
             {{ $slot }}
         </div>
+
+        @include('sweetalert::alert')
     </body>
 </html>

@@ -8,6 +8,11 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Log;
+
+// use RealRashid\SweetAlert\Facades\Alert;
+
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -17,6 +22,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
+        // alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');
         return view('auth.login');
     }
 
@@ -28,11 +34,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+        Log::info('user Try to login with id : '.$request->staff_id);
         $request->authenticate();
-
         $request->session()->regenerate();
-
-        return redirect()->intended(RouteServiceProvider::HOME);
+        Log::info('user '.$request->staff_id.' login');
+        
+        return redirect()->intended(RouteServiceProvider::HOME)->with('success', 'Login Successfully!');
     }
 
     /**
@@ -43,12 +50,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
+        
+        Log::info('user '.Auth::user()->staff_id.' logout');
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+
+        return redirect('/')->with('info', 'Logout Successfully!');
     }
 }
