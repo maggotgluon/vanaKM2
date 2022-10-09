@@ -5,13 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DocumentRequest;
-
+ 
 use App\Models\Document;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class DocumentRequestController extends Controller
 {
+    
+    private function InputToDate($Input)
+    {
+        $Date = new Carbon($Input);
+        return date_format($Date,"d F Y");
+    }
+
+
+
     //
     public function all($user=null){
         if($user==null){
@@ -26,6 +38,26 @@ class DocumentRequestController extends Controller
         $regDoc = DocumentRequest::where('Doc_Code',$Doc_Code)->firstOrFail();   
         return view('document.reg.show',['documents'=>$regDoc]);
     }
+    public function DarForm($Doc_Code){
+        // dd('reg DarForm');
+        $DarForm = DocumentRequest::where('Doc_Code',$Doc_Code)->firstOrFail();
+        
+        $created_at =  $this->InputToDate($DarForm->created_at);
+        $updated_at =  $this->InputToDate($DarForm->updated_at);
+        $DarForm->Doc_StartDate =  $this->InputToDate($DarForm->Doc_StartDate);
+        $date = array(
+            'created_at'=>$created_at,
+            'updated_at'=>$updated_at
+
+        );
+        // dd($date);
+        // $DarReq = $this->hasone(User::class,'id',$id);
+
+        return view('document.reg.f-dar',['DarForm'=>$DarForm],['date'=>$date]
+        // ,['DarReq'=>$DarReq]
+    );
+    }
+
     public function createView(){
         // dd('create');
         $currentYear = date("Y");
@@ -33,6 +65,7 @@ class DocumentRequestController extends Controller
         $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
         
         $count = DocumentRequest::whereBetween('created_at',[$startYear,$endYear])->count();
+
 
         return view('document.reg.create',['count_doc_code'=>$count,]);
     }
@@ -64,7 +97,7 @@ class DocumentRequestController extends Controller
             ]
         );
 
-
+ 
         //Version File
         $file = $request->file('file');
         $docver = DocumentRequest::where('Doc_Name',$request->Doc_Name)->count();
@@ -124,9 +157,9 @@ class DocumentRequestController extends Controller
 
         $toastType = 'success';
         $toastMsg = 'Document '.$reg_doc->Doc_Name.' Approved!';
-        if($approve === 'approved'){
-            $reg_doc->Doc_Status = '1';
-            // dd($reg_doc);
+
+        if($approve === 'mrapproved'){
+            $reg_doc->Doc_Status = '2';
             $documents = Document::updateOrCreate(
                 [
                     'Doc_Name' => $reg_doc->Doc_Name
@@ -140,19 +173,11 @@ class DocumentRequestController extends Controller
                     'Doc_DateApprove' => now()
                 ]
             );
-
-            // DB::table('users')
-            // ->updateOrInsert(
-            //     ['email' => 'john@example.com', 'name' => 'John'],
-            //     ['votes' => '2']
-            // );
-            
-            // dd($documents);
             $documents->save();
-            echo 'approved';
+        }
+        if($approve === 'approved'){
+            $reg_doc->Doc_Status = '1';
         }else{
-            $toastType = 'warning';
-            $toastMsg = 'Document '.$reg_doc->Doc_Name.' Rejected!';
             $reg_doc->Doc_Status = '-1';
             // echo 'rejected';
         }
@@ -185,5 +210,14 @@ class DocumentRequestController extends Controller
         // ]);
         // dd($message);
         return redirect()->route('regDoc.all')->with($toastType, $toastMsg);
+
+
+
     }
+   
+
+
+
+
+
 }
