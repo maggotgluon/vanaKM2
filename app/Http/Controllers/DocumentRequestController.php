@@ -14,12 +14,17 @@ class DocumentRequestController extends Controller
 {
     //
     public function all($user=null){
+        
+        $docPending = DocumentRequest::where('Doc_Status',0)->paginate(15);
+        $docAccepted = DocumentRequest::where('Doc_Status',1)->paginate(15);
+        $docReject = DocumentRequest::where('Doc_Status',-1)->paginate(15);
+
         if($user==null){
             $regDoc = DocumentRequest::paginate(15);
         }else{
             $regDoc = Auth::user()->DocumentRequest;
         }
-        return view('document.reg.index',['documents'=>$regDoc]);
+        return view('document.reg.index',['documents'=>$regDoc,'docPending'=>$docPending,'docAccepted'=>$docAccepted,'docReject'=>$docReject]);
     }
     public function view($Doc_Code){
         // dd('reg view');
@@ -63,7 +68,11 @@ class DocumentRequestController extends Controller
                 // 'file'=>'',
             ]
         );
-
+        $currentYear = date("Y");
+        $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
+        $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
+        
+        $count = DocumentRequest::whereBetween('created_at',[$startYear,$endYear])->count();
 
         //Version File
         $file = $request->file('file');
@@ -81,7 +90,7 @@ class DocumentRequestController extends Controller
         
         // //บันทึกข้อมูล 
         $documents = new DocumentRequest;
-        $documents->Doc_Code = $request->DocCode;
+        $documents->Doc_Code = $count;
         $documents->Doc_Name = $request->Doc_Name;
         $documents->User_id = Auth::user()->id;
         $documents->Doc_Type = $request->type;

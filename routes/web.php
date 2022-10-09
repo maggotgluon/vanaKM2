@@ -109,6 +109,14 @@ Route::middleware(['auth'])->group(function(){
 
         Route::get('/{id}', [UserController::class,'profile'] )
         ->name('profile'); //userProfile
+
+        Route::post('/update/{id}', [UserController::class,'update'] )
+        ->name('update'); //userProfile
+
+        Route::post('/permission/{id}', [UserController::class,'permission'] )
+        ->name('permission'); //userProfile
+
+        
     });
 });
 

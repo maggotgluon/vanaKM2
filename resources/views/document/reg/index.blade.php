@@ -40,7 +40,7 @@
                     @else
                         <h2 class="text-xl mt-10" id="Pending">Pending Approved ({{$pending}})</h2>
                         <ul class="border-2 border-top-none  p-4">
-                            @foreach($documents as $doc)
+                            @foreach($docPending as $doc)
                             @if ($doc->Doc_Status == 0)
                             <li class="clear-both ">
 
@@ -105,7 +105,7 @@
                             @endforeach
                         </ul>
                         <span class="m-4">
-                            {{ $documents->links() }}
+                            {{ $docPending->links() }}
                         </span>
                     @endif
                         <hr>
@@ -115,7 +115,7 @@
                     @else
                         <h2 class="text-xl mt-10" id="Approved">Approved ({{$approved}})</h2>
                         <ul class="border-2 border-top-none  p-4">
-                            @foreach($documents as $doc)
+                            @foreach($docAccepted as $doc)
                             @if ($doc->Doc_Status == 1)
                             <li class="clear-both">
                                 
@@ -176,7 +176,7 @@
                         </ul>
 
                         <span class="m-4">
-                            {{ $documents->links() }}
+                            {{ $docAccepted->links() }}
                         </span>
                     @endif
                     <hr>
@@ -187,7 +187,7 @@
                     @else
                     <h2 class="text-xl mt-10" id="Reject">Reject ({{$reject}})</h2>
                     <ul class="border-2 border-top-none  p-4">
-                        @foreach($documents as $doc)
+                        @foreach($docReject as $doc)
                         @if ($doc->Doc_Status == -1)
                         <li class="clear-both">
                             
@@ -248,7 +248,7 @@
                         </ul>
                     
                         <span class="m-4">
-                            {{ $documents->links() }}
+                            {{ $docReject->links() }}
                         </span>
                         @endif
                         <hr>
