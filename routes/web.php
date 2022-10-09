@@ -116,6 +116,9 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/permission/{id}', [UserController::class,'permission'] )
         ->name('permission'); //userProfile
 
+        Route::post('/changePassword/{id}', [UserController::class,'changePassword'] )
+        ->name('changePassword'); //userProfile
+
         
     });
 });

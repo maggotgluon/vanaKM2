@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use App\Rules\MatchOldPassword;
 // use RealRashid\SweetAlert\Facades\Alert;
 class UserController extends Controller
 {
@@ -37,13 +39,55 @@ class UserController extends Controller
         return redirect(route('user.profile',$selectUser->id))->with('success', 'Permission update!');
     }
     public function update(request $data,$user){
-        // dd($data->suser, $user);
+        // dd($data, $user);
         $selectUser = user::find($user);
-        $newDP = user::where('staff_id',$data->suser)->first();
-            // dd($newDP->name,$selectUser);
-            $selectUser->department_head = $newDP->name;
-            $selectUser->save();
-            return redirect(route('user.profile',$selectUser->id))->with('success', 'User update!');
+        switch ($data->update) {
+            case 'department_head':
+                $newDepartmentHead = user::where('staff_id',$data->suser)->first();
+                $selectUser->department_head = $newDepartmentHead->name;
+                $selectUser->save();
+                break;
+            case 'department':
+                $selectUser->department = $data->department;
+                $selectUser->save();
+                break;
+            case 'position':
+                $selectUser->position = $data->position;
+                $selectUser->save();
+                break;
+            case 'user_level':
+                $selectUser->user_level = $data->user_level;
+                $selectUser->save();
+                break;
+            case 'email':
+                $selectUser->email = $data->email;
+                $selectUser->save();
+                break;
+            default:
+                # code...
+                break;
+        }
+        
+        return redirect(route('user.profile',$selectUser->id))->with('success', 'User update!');
+    }
+
+    public function changePassword(Request $request)
+    {
+        
+         $request->validate([
+            'current_password' => ['required',new MatchOldPassword],
+            'new_password' => ['required'],
+            'new_confirm_password' => ['same:new_password'],
+        ],[
+            
+            'current_password' => 'password missmatch',
+            'new_password' => 'password require',
+            'new_confirm_password' => 'new password missmatch',
+        ]
+        );
+        
+        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+        return redirect(route('user.profile',User::find(auth()->user()->id)))->with('success', 'User update!');
     }
     
 }
