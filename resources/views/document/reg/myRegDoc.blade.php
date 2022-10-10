@@ -39,6 +39,7 @@
                                 <th>Type</th>
                                 <th>Status</th>
                                 <th>Last Update</th>
+                                <th>Action</th>
                                 <th>Remark</th>
                             </tr>
                         
@@ -69,7 +70,8 @@
                                 
                             </td>
                             <td>{{$document->updated_at}}<br><span class="text-sm"> Create at :{{$document->created_at}}</span></td>
-                            <td></td>
+                            <td><x-button href="{{route('regDoc.view',$document->Doc_Code)}}">view</x-button></td>
+                            <td>{{$document->Remark}}</td>
                             
                         </tr>
                         @endforeach

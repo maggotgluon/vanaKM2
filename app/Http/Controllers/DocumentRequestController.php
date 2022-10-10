@@ -185,13 +185,17 @@ class DocumentRequestController extends Controller
             $toastMsg = 'MR Approved!';
         }else if($approve === 'approved'){
             $reg_doc->Doc_Status = '1';
-            echo 'approved';
         }else{
+            // $toastType = 'worning';
+            // dd($request);
+            $reg_doc->Remark = $request->remark;
+            $toastMsg = 'Document '.$reg_doc->Doc_Name.' Reject!';
             $reg_doc->Doc_Status = '-1';
             // echo 'rejected';
         }
         $reg_doc->Doc_DateApprove = now();
         $reg_doc->User_Approve = Auth::user()->id;
+        // dd($reg_doc);
         $reg_doc->save();
         // dd($reg_doc->Doc_Name);
         $message = $request->manage;

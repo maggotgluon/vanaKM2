@@ -32,6 +32,7 @@
                                 <th>Type</th>
                                 <th>Status</th>
                                 <th>Last Update</th>
+                                <th>Action</th>
                                 <th>Remark</th>
                             </tr>
                         
@@ -55,7 +56,34 @@
                                 
                             </td>
                             <td>{{$document->updated_at}}<br><span class="text-sm"> Create at :{{$document->created_at}}</span></td>
-                            <td></td>
+                            <td>
+                            <form action="{{ route('regDoc.approve',$document->id,'approve=true') }}" method="post">
+                            @csrf
+                                <input type="hidden" name="regID" value="{{$document->id}}">
+                                <input type="hidden" name="manage" value="mrapproved">
+                                <x-primary-button class="bg-brand_blue py-1 m-2">MR Approve</x-button>
+                            </form>
+
+                            <x-primary-button class="bg-brand_orange py-1 m-2" onclick="document.querySelector('#{{$document->Doc_Code}}').showModal()">Reject</x-button>
+
+                                            <dialog id="{{$document->Doc_Code}}">
+                                                <p>{{$document->Doc_Code}}</p>
+                                                <form action="{{ route('regDoc.approve',$document->id,'approve=false') }}" method="post">
+                                                @csrf
+                                                    <input type="hidden" name="regID" value="{{$document->id}}">
+                                                    <input type="hidden" name="manage" value="rejected">
+                                                    <x-textarea-input name="remark" class="w-full"></x-textarea-input>
+                                                    
+                                                    <x-primary-button href="{{route('regDoc.view',$document->Doc_Code)}}" class="py-1">
+                                                        {{__('Submit')}}
+                                                    </x-primary-button>
+                                                </form>
+                                                    <x-primary-button onclick="document.querySelector('#{{$document->Doc_Code}}').close()" class="py-1">
+                                                        {{__('Dismiss')}}
+                                                    </x-primary-button>
+                                            </dialog>
+                            </td>
+                            <td>{{$document->Remark}}</td>
                             
                         </tr>
                         @endforeach
