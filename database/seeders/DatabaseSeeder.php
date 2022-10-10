@@ -67,5 +67,29 @@ class DatabaseSeeder extends Seeder
             $firstline = false;
         }
         fclose($csvFile);
+
+
+        $csvFile = fopen(base_path("database/data/trainrec.csv"), "r");
+        $firstline = true;
+        while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
+            if (!$firstline) {
+                \App\Models\TrainingRequest::factory()->create([
+                    'Doc_Code'=> $data[1],
+                    'Doc_008'=> $data[2],
+                    'Doc_009'=> $data[3],
+                    'Doc_DateApprove'=> null,
+                    'User_Approve'=> null,
+                    'Access_Lv'=> null,
+        
+                    
+                    'Doc_Location'=> $data[9],
+                    'Doc_Status'=> 0,
+        
+                    'user_id'=> 106
+                ]);    
+            }
+            $firstline = false;
+        }
+        fclose($csvFile);
     }
 }

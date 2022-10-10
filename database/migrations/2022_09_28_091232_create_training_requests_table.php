@@ -28,6 +28,7 @@ return new class extends Migration
             $table->integer('Doc_Status'); // status 0 pending 1 approved -1 reject
 
             $table->foreignId('user_id');
+            $table->string('Remark')->nullable(); // who approve
         });
     }
 
