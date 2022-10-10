@@ -8,10 +8,10 @@ use App\Models\DocumentRequest;
  
 use App\Models\Document;
 use App\Models\User;
-<<<<<<< HEAD
-=======
+
+
 use Illuminate\Database\Eloquent\Relations\HasOne;
->>>>>>> c7015be6bb25e3f95c9f6771989bcef63145be2e
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
@@ -25,10 +25,6 @@ class DocumentRequestController extends Controller
         return date_format($Date,"d F Y");
     }
 
-
-
-    //
-<<<<<<< HEAD
     public function all($user=null,$filter=null){
         // dd($user,$filter);
         // Gate::authorize('manage_document');
@@ -41,20 +37,7 @@ class DocumentRequestController extends Controller
             // dd(User::find($user)->where('user_level','MR'));
             $documents = DocumentRequest::where('Doc_Status',1)->get();
             return view('document.reg.MRRegDoc',['documents'=>$documents]);
-=======
-    public function all($user=null){
-        if($user==null){
-            $regDoc = DocumentRequest::paginate(15);
->>>>>>> c7015be6bb25e3f95c9f6771989bcef63145be2e
-        }else{
-            $documents = Auth::user()->DocumentRequest->where('Doc_Status','=',0);
-            return view('document.reg.myRegDoc',['documents'=>$documents]);
         }
-<<<<<<< HEAD
-        
-=======
-        return view('document.reg.index',['documents'=>$regDoc]);
->>>>>>> c7015be6bb25e3f95c9f6771989bcef63145be2e
     }
     public function view($Doc_Code){
         // dd('reg view');
@@ -78,7 +61,7 @@ class DocumentRequestController extends Controller
 
         return view('document.reg.f-dar',['DarForm'=>$DarForm],['date'=>$date]
         // ,['DarReq'=>$DarReq]
-    );
+        );
     }
 
     public function createView(){
@@ -180,12 +163,7 @@ class DocumentRequestController extends Controller
 
         $toastType = 'success';
         $toastMsg = 'Document '.$reg_doc->Doc_Name.' Approved!';
-<<<<<<< HEAD
-        if($approve === 'MRapproved'){
-=======
-
         if($approve === 'mrapproved'){
->>>>>>> c7015be6bb25e3f95c9f6771989bcef63145be2e
             $reg_doc->Doc_Status = '2';
             $documents = Document::updateOrCreate(
                 [
@@ -201,16 +179,10 @@ class DocumentRequestController extends Controller
                 ]
             );
             $documents->save();
-<<<<<<< HEAD
             $toastMsg = 'MR Approved!';
         }else if($approve === 'approved'){
             $reg_doc->Doc_Status = '1';
             echo 'approved';
-=======
-        }
-        if($approve === 'approved'){
-            $reg_doc->Doc_Status = '1';
->>>>>>> c7015be6bb25e3f95c9f6771989bcef63145be2e
         }else{
             $reg_doc->Doc_Status = '-1';
             // echo 'rejected';
@@ -247,10 +219,5 @@ class DocumentRequestController extends Controller
 
 
     }
-   
-
-
-
-
 
 }
