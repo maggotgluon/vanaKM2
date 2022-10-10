@@ -61,5 +61,26 @@
     "Register new Document":"ขอขึ้นทะเบียนเอกสาร",
     "My Registed Document":"เอกสารขึ้นทะเบียนของฉัน",
     "Registed Document Management":"อนุมัติ เอกสารขึ้นทะเบียน",
-    "Dar_Name":"ชื่อ-นามสกุล"
-}
+    "Request Document":"เอกสารขึ้นทะเบียน",
+    "Dar Number":"รหัสเอกสารขึ้นทะเบียน",
+    "Department":"แผนก",
+    "Department Head":"หัวหน้าแผนก",
+    "Document Type":"ประเภทเอกสาร",
+    "Document Name":"ชื่อเอกสาร",
+    "Objective":"วัตถุประสงค์",
+    "description":"รายละเอียด",
+    "Effctive_Date":"วันที่บังคับใช้",
+    "DocumentAge":"อายุเอกสาร",
+    "Year":"ปี",
+    "Date":"วันที่",
+    "View_Document":"ดูเอกสาร",
+    "Remark":"หมายเหตุ",
+    "Document_Status":"สถานะเอกสาร",
+    "Dar_Name":"ชื่อเอกสารขึ้นทะเบียน"
+
+    
+
+  
+    
+
+} 

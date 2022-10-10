@@ -108,7 +108,7 @@
 
 
                         <span>
-                            <label for="type">Type</label>
+                            <label for="type">{{__('Document Type')}}</label>
                             <select class="bg-backdrop rounded-md" name="type" id="type">
                                 <optgroup label="Document">
                                     <option disabled value="Document-SM">SM: System Manual</option>
@@ -164,7 +164,7 @@
 
                         <div class="py-2">
                             <x-input-label for="objective" class="inline" >
-                                Objective :
+                                 {{__('Objective')}} : 
                             </x-input-label>
                             <!-- <div class="flex flex-col md:flex-row justify-around flex-wrap"> -->
                             <div class="grid grid-cols-2 grid-flow-dense">
@@ -242,7 +242,7 @@
                         </div>
 
                         <span class="flex flex-col">
-                            <label for="info">รายละเอียดการแก้ไข </label>
+                            <label for="info">  {{__('description')}} :  </label>
                             <textarea name="info" id="info" cols="30" rows="5" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full{{$errors->has('name') ? ' border-accent' : ''}}"></textarea>
                             @error('info')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
@@ -254,7 +254,7 @@
                             <span class="px-4">
                                 <x-input-label 
                                     for="usedate" class="inline"> 
-                                    {{__('date-use ')}} : 
+                                    {{__('Effctive_Date')}} : 
                                 </x-input-label>
                                 <x-text-input 
                                     name="usedate" id="usedate"
@@ -273,14 +273,14 @@
                         <span class="px-4">
                                 <x-input-label 
                                     for="Year" class="inline"> 
-                                    {{__('date-use ')}} : 
+                                    {{__('DocumentAge')}} : 
                                 </x-input-label>
                                 <x-text-input 
                                     name="Year" id="Year"
                                     class="" maxlength="10"
                                     value="{{old( 'Year' ,1) }}"
                                     min="1" max="10" step="1"
-                                    type="number" /> Year(s)
+                                    type="number" />   {{__('Year')}}
                             </span>
 
                                 <!-- <label for="dateKeep">Year Life : </label>
