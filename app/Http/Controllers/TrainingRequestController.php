@@ -34,12 +34,11 @@ class TrainingRequestController extends Controller
     public function allReg($user=null){
         if($user==null){
             $regDoc = TrainingRequest::all();
+            return view('training.reg.index', ['documents' => $regDoc,]);
         }else{
             $regDoc = Auth::user()->TrainingRequest;
+            return view('training.reg.indexMy', ['documents' => $regDoc,]);
         }
-        return view('training.reg.index', [
-            'documents' => $regDoc,
-        ]);
     }
     public function viewReg($id){
         return view('training.reg.show', [
@@ -223,7 +222,7 @@ class TrainingRequestController extends Controller
         $reg_doc = TrainingRequest::find($id);
 
         $toastType = 'success';
-        $toastMsg = 'Document Approved!';
+        $toastMsg = 'Training Approved!';
         if($approve === 'approved'){
             $reg_doc->Doc_Status = 1;
             // dd($reg_doc);
@@ -252,6 +251,9 @@ class TrainingRequestController extends Controller
             echo 'approved';
         }else{
             $reg_doc->Doc_Status = -1;
+            $reg_doc->Remark = $request->remark;
+
+            $toastMsg = 'Training rejected!';
             echo 'rejected';
         }
         
@@ -281,6 +283,6 @@ class TrainingRequestController extends Controller
         //     'documents'=>document_request::all(),
         // ]);
         // dd($message);
-        return redirect()->route('training.all')->with($toastType, $toastMsg);
+        return redirect()->route('regTraining.all')->with($toastType, $toastMsg);
     }
 }

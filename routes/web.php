@@ -44,11 +44,13 @@ Route::middleware(['auth'])->group(function(){
 
         Route::name('regDoc.')->group(function (){
             // regDoc.all
-            Route::get('/reg/all', [DocumentRequestController::class,'all'] )
+            Route::get('/reg/all/{filter?}', [DocumentRequestController::class,'all'] )
             ->name('all'); //all reg doc
             // regDoc.all
-            Route::get('/reg/all/{user?}', [DocumentRequestController::class,'all'] )
+            Route::get('/reg/user/{filter?}/', [DocumentRequestController::class,'allUser'] )
             ->name('allUser'); //all reg doc
+            Route::get('/reg/MR/{filter?}', [DocumentRequestController::class,'allMR'] )
+            ->name('allMR'); //all reg doc
             // regDoc.createView
             Route::get('/reg/create', [DocumentRequestController::class,'createView'] )
             ->name('create'); //all reg doc

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Show Single Doc') }}
+            {{$documents->Doc_Name}} 
         </h2>
     </x-slot>
 
@@ -9,25 +9,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200 flex flex-col">
-                        {{$documents->Doc_Code}} : {{$documents->Doc_Name}} 
-                            @unless ($documents->Doc_ver===0)
-                                Rev {{$documents->Doc_ver}}
-                            @endunless
+                        
                         <p>
                             {{$documents->Doc_Type}}
                         </p>
+                        
                         <p>
-                            {{$documents->Doc_Obj}} {{__('reason')}} {{$documents->Doc_Description}}
-
-                            </p>
-                            <p>
-                            upload by :
-                            {{$documents->user_id}}
-                            <span class="text-sm "> {{$documents->created_at}}</span> 
-                        </p>
-                        <p>
-                            Approved by :
-                            {{$documents->User_Approve}}
                             <span class="text-sm ">last update {{$documents->updated_at}}</span> 
                         </p>
                     

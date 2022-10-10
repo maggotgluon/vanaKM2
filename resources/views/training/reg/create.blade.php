@@ -24,7 +24,7 @@
                         <input class="bg-backdrop rounded-md"  name="DocCode" type="text"  value="{{'TRAIN'. date('Y').str_pad($count_train_code+1,4,'0',STR_PAD_LEFT)}}"> 
                          -->
                             <x-input-label 
-                                for="DocCode" class="inline"> 
+                                for="DocCode" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('TRAINCODE')}} : 
                             </x-input-label>
                             <x-text-input 
@@ -37,7 +37,7 @@
                         <hr>
                         <!-- SUBJECT หัวข้อเรื่อง: ________________________________ -->
                             <x-input-label 
-                                for="SUBJECT" class="inline"> 
+                                for="SUBJECT" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('SUBJECT หัวข้อเรื่อง')}} : 
                             </x-input-label>
                             <x-text-input 
@@ -54,7 +54,7 @@
                        
                         <div class="flex items-center gap-4 mt-2">
                         <x-input-label 
-                                for="starttraindate" class="inline"> 
+                                for="starttraindate" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('วันที่เริ่มการอบรม')}} : 
                             </x-input-label>
                             <x-text-input 
@@ -69,7 +69,7 @@
                                  <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                             @enderror
                         <x-input-label 
-                                for="endtraindate" class="inline"> 
+                                for="endtraindate" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('วันสิ้นสุดการอบรม')}} : 
                             </x-input-label>
                             <x-text-input 
@@ -90,7 +90,7 @@
                         <div class="flex items-center gap-4 mt-2">
                             
                             <x-input-label 
-                                for="starttraintime" class="inline"> 
+                                for="starttraintime" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('เริ่มเวลา')}} : 
                             </x-input-label>
                             <x-text-input 
@@ -103,7 +103,7 @@
                                 <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                             @enderror
                         <x-input-label 
-                                for="endtraintime" class="inline"> 
+                                for="endtraintime" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('เวลาสิ้นสุด')}} : 
                             </x-input-label>
                             <x-text-input 
@@ -122,7 +122,7 @@
                         <!-- วันที่อบรม____________________  เวลา_________________ -->
                         <!-- "Objective & Outcome วัตถุประสงค์" -->
 
-                        <x-input-label  for="Objective">Objective & Outcome วัตถุประสงค์:</x-input-label >
+                        <x-input-label  for="Objective"><span class="required text-brand_orange text-xs"> * </span>Objective & Outcome วัตถุประสงค์:</x-input-label >
                         @error('Objective')
                              <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full w-full" >{{$message}}</span> 
                         @enderror
@@ -136,7 +136,7 @@
                         <div class="flex justify-between gap-2">
                             <div class="w-2/4">
                                 
-                                <x-input-label for="SubjectDetails">Description รายละเอียด:</x-input-label>
+                                <x-input-label for="SubjectDetails"><span class="required text-brand_orange text-xs"> * </span>Description รายละเอียด:</x-input-label>
                                 <x-textarea-input class="w-full"
                                  id="SubjectDetails" name="SubjectDetails">
                                 {{old('SubjectDetails')}}
@@ -150,7 +150,7 @@
                             <div class="w-1/6">
 
                                 <x-input-label 
-                                    for="SubjectTime" class=""> 
+                                    for="SubjectTime" class=""> <span class="required text-brand_orange text-xs"> * </span>
                                     {{__('Duration เวลา(นาที)')}} : 
                                 </x-input-label>
                                 <x-text-input 
@@ -256,7 +256,7 @@
                         <div class="flex justify-between gap-2">
                             <div class="w-2/4">
                                 
-                                <x-input-label for="AssessmentDetails">Description รายละเอียด:</x-input-label>
+                                <x-input-label for="AssessmentDetails"><span class="required text-brand_orange text-xs"> * </span>Description รายละเอียด:</x-input-label>
                                 <x-textarea-input class="w-full"
                                  id="AssessmentDetails" name="AssessmentDetails">
                                 {{old('AssessmentDetails')}}
@@ -270,7 +270,7 @@
                             <div class="w-1/6">
 
                                 <x-input-label 
-                                    for="AssessmentTime" class=""> 
+                                    for="AssessmentTime" class=""> <span class="required text-brand_orange text-xs"> * </span>
                                     {{__('Duration เวลา(นาที)')}} : 
                                 </x-input-label>
                                 <x-text-input 
@@ -286,7 +286,7 @@
                             </div>
 
                             <div class="w-1/6">
-                                <x-input-label for="AssessmentMaterial">
+                                <x-input-label for="AssessmentMaterial"><span class="required text-brand_orange text-xs"> * </span>
                                     Material อุปกรณ์:
                                 </x-input-label>
                                 <x-textarea-input class="w-full"
@@ -314,7 +314,7 @@
                         <hr>
                         <h2 class="text-lg font-bold">FM-LDS-009</h2>
                         <span>แนวทางการประเมินผลการอบรมในการปฏิบัติงาน</span>
-                        <x-input-label for="checkbox[]">รูปแบบการประเมิน:</x-input-label>
+                        <x-input-label for="checkbox[]"><span class="required text-brand_orange text-xs"> * </span>รูปแบบการประเมิน:</x-input-label>
                         <div class="flex w-full justify-around">
                             <span>
                                 <x-text-input type="checkbox" id="Q&A" name="checkbox[]" value="ถาม-ตอบ" />
@@ -356,7 +356,7 @@
                         </ol>
                         
 
-                        <x-input-label for="Testing009">คำถาม/แบบทดสอบ/หัวข้อการปฏิบัติงาน :</x-input-label> 
+                        <x-input-label for="Testing009"><span class="required text-brand_orange text-xs"> * </span>คำถาม/แบบทดสอบ/หัวข้อการปฏิบัติงาน :</x-input-label> 
                          @error('Testing009')
                                          <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                         @enderror
@@ -370,7 +370,7 @@
                         
 
                         <h3 class="text-lg">เกณฑ์การประเมิน </h3>
-                        <x-input-label for="pass">ผ่าน :</x-input-label> 
+                        <x-input-label for="pass"><span class="required text-brand_orange text-xs"> * </span>ผ่าน :</x-input-label> 
                          @error('pass')
                                          <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                         @enderror
@@ -379,7 +379,7 @@
                                 {{old('pass')}}
                                 </x-textarea-input>
                         <!-- <textarea rows="2" cols="30" class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="pass" name="pass" ></textarea> -->
-                        <x-input-label for="nopass">ไม่ผ่าน :</x-input-label> 
+                        <x-input-label for="nopass"><span class="required text-brand_orange text-xs"> * </span>ไม่ผ่าน :</x-input-label> 
                          @error('nopass')
                                          <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                         @enderror
@@ -395,7 +395,7 @@
                     <h3 class="text-lg">เอกสารแนบการอบรม </h3>
                     <!-- <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >*** กรูณารวมเป็นไฟล์เดียว เฉพาะ PDF</span>  -->
                     <x-input-label 
-                                    for="file" class="inline"> 
+                                    for="file" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                     {{__('เอกสารแนบการอบรม')}} : 
                                 </x-input-label>
                                 <x-text-input 

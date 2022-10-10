@@ -25,22 +25,31 @@ class DocumentRequestController extends Controller
         return date_format($Date,"d F Y");
     }
 
-    public function all($user=null,$filter=null){
+    public function all($filter=null){
         // dd($user,$filter);
         // Gate::authorize('manage_document');
-        $docPending = DocumentRequest::where('Doc_Status',0)->paginate(5);
-        $docAccepted = DocumentRequest::where('Doc_Status',1)->paginate(5);
-        $docReject = DocumentRequest::where('Doc_Status',-1)->paginate(5);
-        if($user===null){
-            return view('document.reg.index',['docPending'=>$docPending,'docAccepted'=>$docAccepted,'docReject'=>$docReject]);
-        }else if(User::find($user)->user_level=="MR"){
-            // dd(User::find($user)->where('user_level','MR'));
-            $documents = DocumentRequest::where('Doc_Status',1)->get();
-            return view('document.reg.MRRegDoc',['documents'=>$documents]);
+        if($filter!=null){
+            $documents = DocumentRequest::where('Doc_Status',$filter)->paginate(5);
+        }else{
+            $documents = DocumentRequest::all()->paginate(5);
+        }
+        return view('document.reg.index',['documents'=>$documents,'filter'=>$filter]);
+    }
+    public function allUser($filter=null){
+        
+        if($filter!=null){
+            $documents = Auth::user()->DocumentRequest->where('Doc_Status',$filter);
         }else{
             $documents = Auth::user()->DocumentRequest;
-            return view('document.reg.myRegDoc',['documents'=>$documents]);
         }
+        return view('document.reg.indexMy',['documents'=>$documents]);
+    }
+    public function allMR($filter=null){
+        $documents = DocumentRequest::where('Doc_Status',1)->get();
+        return view('document.reg.indexMR',['documents'=>$documents]);
+    }
+    public function allFilter($filter ,$user=null){
+        
     }
     public function view($Doc_Code){
         // dd('reg view');
@@ -75,13 +84,11 @@ class DocumentRequestController extends Controller
         
         $count = DocumentRequest::whereBetween('created_at',[$startYear,$endYear])->count();
 
-
         return view('document.reg.create',['count_doc_code'=>$count,]);
     }
     public function create(request $request){
         //dd($request);
         //ตรวจสอบข้อมูล
-        
         $request->validate(
             [   
                 // 'Doc_Name'=>'required|max:10|unique:document_requests',
@@ -106,8 +113,15 @@ class DocumentRequestController extends Controller
                 // 'file'=>'',
             ]
         );
-
- 
+        // generate new doccode
+        
+        $currentYear = date("Y");
+        $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
+        $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
+        
+        $count = DocumentRequest::whereBetween('created_at',[$startYear,$endYear])->count();
+        $DocCode = 'DAR'.date('Y').str_pad( $count+1 ,4,'0',STR_PAD_LEFT);
+        // dd($code,$request->DocCode);
         //Version File
         $file = $request->file('file');
         $docver = DocumentRequest::where('Doc_Name',$request->Doc_Name)->count();
@@ -123,7 +137,7 @@ class DocumentRequestController extends Controller
         
         // //บันทึกข้อมูล 
         $documents = new DocumentRequest;
-        $documents->Doc_Code = $request->DocCode;
+        $documents->Doc_Code = $DocCode;
         $documents->Doc_Name = $request->Doc_Name;
         $documents->User_id = Auth::user()->id;
         $documents->Doc_Type = $request->type;
@@ -221,6 +235,7 @@ class DocumentRequestController extends Controller
         //     'documents'=>document_request::all(),
         // ]);
         // dd($message);
+        return back()->with($toastType, $toastMsg);
         return redirect()->route('regDoc.all')->with($toastType, $toastMsg);
 
 

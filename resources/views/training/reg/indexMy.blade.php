@@ -36,7 +36,6 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Type</th>
                                 <th>Status</th>
                                 <th>Last Update</th>
                                 <th>Action</th>
@@ -52,8 +51,6 @@
                                 $status='Pending';
                             }else if($document->Doc_Status==1){
                                 $status='Approve';
-                            }else if($document->Doc_Status==2){
-                                $status='MrApprove';
                             }else if($document->Doc_Status==-1){
                                 $status='Reject';
                             }
@@ -63,14 +60,12 @@
                             <td>{{$document->Doc_Code}}:{{$document->Doc_Name}} <hr>
                                 <span>{{$document->Doc_Obj}} {{__('reason')}} {{$document->Doc_Description}}</span>
                             </td>
-                            <td>{{$document->Doc_Type}}</td>
-                            
                             <td>
                             {{$status}}
                                 
                             </td>
                             <td>{{$document->updated_at}}<br><span class="text-sm"> Create at :{{$document->created_at}}</span></td>
-                            <td><x-button href="{{route('regDoc.view',$document->Doc_Code)}}">view</x-button></td>
+                            <td><x-button href="{{route('regTraining.view',$document->Doc_Code)}}">view</x-button></td>
                             <td>{{$document->Remark}}</td>
                             
                         </tr>

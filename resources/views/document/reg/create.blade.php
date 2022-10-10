@@ -19,23 +19,23 @@
                         <div class="py-2 col-span-2">
                             
                             <x-input-label 
-                                for="date" class="inline"> 
+                                for="date" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('Date')}} : 
                             </x-input-label>
-                            <x-text-input 
+                            <x-text-input required
                                 name="date" 
-                                value="{{date('Y-m-d')}}"
-                                disabled type="date" />
+                                value="{{Carbon\Carbon::now()->toDateString()}}"
+                                readonly type="date" />
                             <!-- <input class="bg-backdrop rounded-md" type="date" disabled name="date" value="{{date('Y-m-d')}}" id=""> -->
 
                         </div>
                         <div class="py-2">
 
                             <x-input-label 
-                                for="name" class="inline"> 
+                                for="name" class="inline"><span class="required text-brand_orange text-xs"> * </span> 
                                 {{__('Name')}} : 
                             </x-input-label>
-                            <x-text-input 
+                            <x-text-input required
                                 name="name" id="name"
                                 class="w-full"
                                 value="{{old('name', Auth::user()->name) }}"
@@ -48,10 +48,10 @@
                         </div>
                         <div class="py-2">
                             <x-input-label 
-                                for="email" class="inline"> 
+                                for="email" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('Email')}} : 
                             </x-input-label>
-                            <x-text-input 
+                            <x-text-input required
                                 name="email" id="email"
                                 class="w-full"
                                 value="{{old('email', Auth::user()->email) }}"
@@ -63,10 +63,10 @@
                         </div>
                         <div class="py-2">
                             <x-input-label 
-                                for="email" class="inline"> 
+                                for="email" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('Department')}} : 
                             </x-input-label>
-                            <x-text-input 
+                            <x-text-input required
                                 name="department" id="department"
                                 class="w-full"
                                 value="{{old('department', Auth::user()->department) }}"
@@ -78,10 +78,10 @@
                         </div>
                         <div class="py-2">
                             <x-input-label 
-                                for="departmenthead" class="inline"> 
+                                for="departmenthead" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('Department Head')}} : 
                             </x-input-label>
-                            <x-text-input 
+                            <x-text-input required
                                 name="departmenthead" id="departmenthead"
                                 class="w-full"
                                 value="{{old('departmenthead', Auth::user()->department_head) }}"
@@ -93,22 +93,33 @@
                         </div>
                         <hr class="col-span-2">
                         <div class="py-2">
-
                             <x-input-label 
+                                for="Doc_Name" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
+                                {{__('Document Name')}} : 
+                            </x-input-label>
+                            <x-text-input required
+                                name="Doc_Name" id="Doc_Name"
+                                class="" maxlength="10"
+                                value="{{old('Doc_Name') }}"
+                                type="text" />
+                            @error('Doc_Name')
+                            <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
+                            @enderror
+                            <!-- <x-input-label 
                                 for="DocCode" class="inline"> 
                                 {{__('Dar Number')}} : 
                             </x-input-label>
                             <x-text-input 
                                 name="DocCode" id="DocCode"
                                 value="{{old('DocCode', 'DAR'.date('Y').str_pad( $count_doc_code+1 ,4,'0',STR_PAD_LEFT) ) }}"
-                                type="text" readonly/>
+                                type="text" readonly/> -->
                             <!-- Dar Number :
                             <input class="bg-backdrop rounded-md" name="DocCode" type="text" value="{{'DAR'.date('Y').str_pad( $count_doc_code+1 ,4,'0',STR_PAD_LEFT)}}"> -->
                         </div>
 
 
                         <span>
-                            <label for="type">Type</label>
+                            <label for="type"><span class="required text-brand_orange text-xs"> * </span> Type</label> 
                             <select class="bg-backdrop rounded-md" name="type" id="type">
                                 <optgroup label="Document">
                                     <option disabled value="Document-SM">SM: System Manual</option>
@@ -147,23 +158,9 @@
                                 </optgroup>
                             </select>
                         </span>
-                        <div class="py-2 col-span-2">
-                            <x-input-label 
-                                for="Doc_Name" class="inline"> 
-                                {{__('Document Name')}} : 
-                            </x-input-label>
-                            <x-text-input 
-                                name="Doc_Name" id="Doc_Name"
-                                class="" maxlength="10"
-                                value="{{old('Doc_Name') }}"
-                                type="text" />
-                            @error('Doc_Name')
-                            <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
-                            @enderror
-                        </div>
 
                         <div class="py-2">
-                            <x-input-label for="objective" class="inline" >
+                            <x-input-label for="objective" class="inline" ><span class="required text-brand_orange text-xs"> * </span>
                                 Objective :
                             </x-input-label>
                             <!-- <div class="flex flex-col md:flex-row justify-around flex-wrap"> -->
@@ -242,8 +239,8 @@
                         </div>
 
                         <span class="flex flex-col">
-                            <label for="info">รายละเอียดการแก้ไข </label>
-                            <textarea name="info" id="info" cols="30" rows="5" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full{{$errors->has('name') ? ' border-accent' : ''}}"></textarea>
+                            <label for="info"><span class="required text-brand_orange text-xs"> * </span>รายละเอียดการแก้ไข </label>
+                            <x-textarea-input required name="info" id="info" cols="30" rows="5"></x-textarea-input>
                             @error('info')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
                             @enderror
@@ -253,14 +250,14 @@
                         <div class="flex flex-wrap justify-between gap-4">
                             <span class="px-4">
                                 <x-input-label 
-                                    for="usedate" class="inline"> 
+                                    for="usedate" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                     {{__('date-use ')}} : 
                                 </x-input-label>
                                 <x-text-input 
                                     name="usedate" id="usedate"
                                     class="" maxlength="10"
-                                    value="{{old( 'usedate' ,Carbon\Carbon::now()->toDateString()) }}"
-                                    min="{{Carbon\Carbon::now()->toDateString()}}"
+                                    value="{{old( 'usedate' ,Carbon\Carbon::now()->addDay(10)->toDateString()) }}"
+                                    min="{{Carbon\Carbon::now()->addDay(10)->toDateString()}}"
                                     type="date" />
                             </span>
 
@@ -272,7 +269,7 @@
 
                         <span class="px-4">
                                 <x-input-label 
-                                    for="Year" class="inline"> 
+                                    for="Year" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                     {{__('date-use ')}} : 
                                 </x-input-label>
                                 <x-text-input 
@@ -291,7 +288,7 @@
                     @enderror -->
                             <span class="px-4 block">
                                 <x-input-label 
-                                    for="file" class="inline"> 
+                                    for="file" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                     {{__('File')}} : 
                                 </x-input-label>
                                 <x-text-input 

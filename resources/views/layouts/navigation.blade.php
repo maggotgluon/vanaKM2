@@ -40,17 +40,22 @@
                                     {{ __('Register new Document') }}
                             </x-responsive-nav-link>
 
-                            <x-responsive-nav-link :href="route('regDoc.allUser',Auth::User())"  :active="request()->routeIs('regDoc.allUser')">
+                            <!-- cannot('manage_document', Auth::user()) -->
+                            <x-responsive-nav-link :href="route('regDoc.allUser')"  :active="request()->routeIs('regDoc.allUser')">
                                     {{ __('My Registed Document') }}
                             </x-responsive-nav-link>
-
-                            <x-responsive-nav-link :href="route('regDoc.allUser')"  :active="request()->routeIs('regDoc.allUser')">
+                            <!-- endcannot -->
+                            @can('manage_document', Auth::user())
+                            <x-responsive-nav-link :href="route('regDoc.all')"  :active="request()->routeIs('regDoc.all')">
                                     {{ __('Registed Document Management') }}
                             </x-responsive-nav-link>
-                            <hr>
-                            <x-responsive-nav-link :href="route('regDoc.allUser',Auth::User())"  :active="request()->routeIs('regDoc.allUser')">
+                            @endcan
+
+                            @can('publish_document', Auth::user())
+                            <x-responsive-nav-link :href="route('regDoc.allMR')"  :active="request()->routeIs('regDoc.allMR')">
                                     {{ __('MR Document Management') }}
                             </x-responsive-nav-link>
+                            @endcan
 
                         </x-slot>
 
