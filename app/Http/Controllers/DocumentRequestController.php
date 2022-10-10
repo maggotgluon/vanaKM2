@@ -59,11 +59,16 @@ class DocumentRequestController extends Controller
     public function DarForm($Doc_Code){
         // dd('reg DarForm');
         $DarForm = DocumentRequest::where('Doc_Code',$Doc_Code)->firstOrFail();
-        
+        // dd(User::find(id)->DocumentRequest->where('Doc_Name','ITD-001'));
+
+
+
         $created_at =  $this->InputToDate($DarForm->created_at);
         $updated_at =  $this->InputToDate($DarForm->updated_at);
+        $Date_Approve =  $this->InputToDate($DarForm->Doc_DateApprove);
         $DarForm->Doc_StartDate =  $this->InputToDate($DarForm->Doc_StartDate);
         $date = array(
+            'Date_Approve'=>$Date_Approve,
             'created_at'=>$created_at,
             'updated_at'=>$updated_at
 

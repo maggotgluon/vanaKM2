@@ -160,8 +160,13 @@
                         </span>
 
                         <div class="py-2">
+<<<<<<< HEAD
                             <x-input-label for="objective" class="inline" ><span class="required text-brand_orange text-xs"> * </span>
                                 Objective :
+=======
+                            <x-input-label for="objective" class="inline" >
+                                 {{__('Objective')}} : 
+>>>>>>> be17d702e22e3bbe5b471abbd167a87b83aedc01
                             </x-input-label>
                             <!-- <div class="flex flex-col md:flex-row justify-around flex-wrap"> -->
                             <div class="grid grid-cols-2 grid-flow-dense">
@@ -239,8 +244,13 @@
                         </div>
 
                         <span class="flex flex-col">
+<<<<<<< HEAD
                             <label for="info"><span class="required text-brand_orange text-xs"> * </span>รายละเอียดการแก้ไข </label>
                             <x-textarea-input required name="info" id="info" cols="30" rows="5"></x-textarea-input>
+=======
+                            <label for="info">  {{__('description')}} :  </label>
+                            <textarea name="info" id="info" cols="30" rows="5" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full{{$errors->has('name') ? ' border-accent' : ''}}"></textarea>
+>>>>>>> be17d702e22e3bbe5b471abbd167a87b83aedc01
                             @error('info')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
                             @enderror
@@ -250,8 +260,13 @@
                         <div class="flex flex-wrap justify-between gap-4">
                             <span class="px-4">
                                 <x-input-label 
+<<<<<<< HEAD
                                     for="usedate" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                     {{__('date-use ')}} : 
+=======
+                                    for="usedate" class="inline"> 
+                                    {{__('Effctive_Date')}} : 
+>>>>>>> be17d702e22e3bbe5b471abbd167a87b83aedc01
                                 </x-input-label>
                                 <x-text-input 
                                     name="usedate" id="usedate"
@@ -269,15 +284,20 @@
 
                         <span class="px-4">
                                 <x-input-label 
+<<<<<<< HEAD
                                     for="Year" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                     {{__('date-use ')}} : 
+=======
+                                    for="Year" class="inline"> 
+                                    {{__('DocumentAge')}} : 
+>>>>>>> be17d702e22e3bbe5b471abbd167a87b83aedc01
                                 </x-input-label>
                                 <x-text-input 
                                     name="Year" id="Year"
                                     class="" maxlength="10"
                                     value="{{old( 'Year' ,1) }}"
                                     min="1" max="10" step="1"
-                                    type="number" /> Year(s)
+                                    type="number" />   {{__('Year')}}
                             </span>
 
                                 <!-- <label for="dateKeep">Year Life : </label>
