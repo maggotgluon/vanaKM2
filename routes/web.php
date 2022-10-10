@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function(){
             Route::get('/reg/all', [DocumentRequestController::class,'all'] )
             ->name('all'); //all reg doc
             // regDoc.all
-            Route::get('/reg/all/{user}', [DocumentRequestController::class,'all'] )
+            Route::get('/reg/all/{user?}', [DocumentRequestController::class,'all'] )
             ->name('allUser'); //all reg doc
             // regDoc.createView
             Route::get('/reg/create', [DocumentRequestController::class,'createView'] )
@@ -58,6 +58,11 @@ Route::middleware(['auth'])->group(function(){
             
             Route::post('/management/{id}',  [DocumentRequestController::class,'approve','$id'] ) 
             -> name('approve');
+
+            Route::get('/management/reject/{id}',  [DocumentRequestController::class,'approve','$id'] ) 
+            -> name('reject');
+            Route::post('/management/reject/{id}',  [DocumentRequestController::class,'approve','$id'] ) 
+            -> name('reject');
 
             // regDoc.view
             Route::get('/reg/dar/{id}', [DocumentRequestController::class,'view'] )

@@ -44,8 +44,12 @@
                                     {{ __('My Registed Document') }}
                             </x-responsive-nav-link>
 
-                            <x-responsive-nav-link :href="route('regDoc.all')"  :active="request()->routeIs('regDoc.all')">
+                            <x-responsive-nav-link :href="route('regDoc.allUser')"  :active="request()->routeIs('regDoc.allUser')">
                                     {{ __('Registed Document Management') }}
+                            </x-responsive-nav-link>
+                            <hr>
+                            <x-responsive-nav-link :href="route('regDoc.allUser',Auth::User())"  :active="request()->routeIs('regDoc.allUser')">
+                                    {{ __('MR Document Management') }}
                             </x-responsive-nav-link>
 
                         </x-slot>

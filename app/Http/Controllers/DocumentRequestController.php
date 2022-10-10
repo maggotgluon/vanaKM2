@@ -7,24 +7,30 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\DocumentRequest;
 
 use App\Models\Document;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 class DocumentRequestController extends Controller
 {
     //
-    public function all($user=null){
-        
-        $docPending = DocumentRequest::where('Doc_Status',0)->paginate(15);
-        $docAccepted = DocumentRequest::where('Doc_Status',1)->paginate(15);
-        $docReject = DocumentRequest::where('Doc_Status',-1)->paginate(15);
-
-        if($user==null){
-            $regDoc = DocumentRequest::paginate(15);
+    public function all($user=null,$filter=null){
+        // dd($user,$filter);
+        // Gate::authorize('manage_document');
+        $docPending = DocumentRequest::where('Doc_Status',0)->paginate(5);
+        $docAccepted = DocumentRequest::where('Doc_Status',1)->paginate(5);
+        $docReject = DocumentRequest::where('Doc_Status',-1)->paginate(5);
+        if($user===null){
+            return view('document.reg.index',['docPending'=>$docPending,'docAccepted'=>$docAccepted,'docReject'=>$docReject]);
+        }else if(User::find($user)->user_level=="MR"){
+            // dd(User::find($user)->where('user_level','MR'));
+            $documents = DocumentRequest::where('Doc_Status',1)->get();
+            return view('document.reg.MRRegDoc',['documents'=>$documents]);
         }else{
-            $regDoc = Auth::user()->DocumentRequest;
+            $documents = Auth::user()->DocumentRequest->where('Doc_Status','=',0);
+            return view('document.reg.myRegDoc',['documents'=>$documents]);
         }
-        return view('document.reg.index',['documents'=>$regDoc,'docPending'=>$docPending,'docAccepted'=>$docAccepted,'docReject'=>$docReject]);
+        
     }
     public function view($Doc_Code){
         // dd('reg view');
@@ -133,9 +139,8 @@ class DocumentRequestController extends Controller
 
         $toastType = 'success';
         $toastMsg = 'Document '.$reg_doc->Doc_Name.' Approved!';
-        if($approve === 'approved'){
-            $reg_doc->Doc_Status = '1';
-            // dd($reg_doc);
+        if($approve === 'MRapproved'){
+            $reg_doc->Doc_Status = '2';
             $documents = Document::updateOrCreate(
                 [
                     'Doc_Name' => $reg_doc->Doc_Name
@@ -149,15 +154,10 @@ class DocumentRequestController extends Controller
                     'Doc_DateApprove' => now()
                 ]
             );
-
-            // DB::table('users')
-            // ->updateOrInsert(
-            //     ['email' => 'john@example.com', 'name' => 'John'],
-            //     ['votes' => '2']
-            // );
-            
-            // dd($documents);
             $documents->save();
+            $toastMsg = 'MR Approved!';
+        }else if($approve === 'approved'){
+            $reg_doc->Doc_Status = '1';
             echo 'approved';
         }else{
             $toastType = 'warning';
@@ -165,7 +165,6 @@ class DocumentRequestController extends Controller
             $reg_doc->Doc_Status = '-1';
             // echo 'rejected';
         }
-        
         $reg_doc->Doc_DateApprove = now();
         $reg_doc->User_Approve = Auth::user()->id;
         $reg_doc->save();
