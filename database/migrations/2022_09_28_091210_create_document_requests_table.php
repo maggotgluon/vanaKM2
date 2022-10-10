@@ -27,11 +27,13 @@ return new class extends Migration
             $table->date('Doc_StartDate'); // date start use -> default today
             $table->string('Doc_Location'); // file location
             $table->integer('Doc_Status'); // status 0 pending 1 approved -1 reject
-            $table->string('Doc_DateApprove')->nullable(); //approved date
+            $table->date('Doc_DateApprove')->nullable(); //approved date
             $table->string('User_Approve')->nullable(); // who approve
+            $table->date('Doc_DateMRApprove')->nullable(); //approved date
+            $table->string('User_MRApprove')->nullable(); // who approve
+            $table->string('Remark')->nullable(); // who approve
             $table->integer('Access_Lv')->nullable(); // level of acess
             $table->timestamps();
-
             $table->foreignId('user_id');
         });
     }
