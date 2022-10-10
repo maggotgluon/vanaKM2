@@ -51,6 +51,8 @@
                                 $status='Pending';
                             }else if($document->Doc_Status==1){
                                 $status='Approve';
+                            }else if($document->Doc_Status==2){
+                                $status='MrApprove';
                             }else if($document->Doc_Status==-1){
                                 $status='Reject';
                             }

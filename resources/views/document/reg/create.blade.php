@@ -101,7 +101,7 @@
                             <x-text-input 
                                 name="DocCode" id="DocCode"
                                 value="{{old('DocCode', 'DAR'.date('Y').str_pad( $count_doc_code+1 ,4,'0',STR_PAD_LEFT) ) }}"
-                                type="text" disabled/>
+                                type="text" readonly/>
                             <!-- Dar Number :
                             <input class="bg-backdrop rounded-md" name="DocCode" type="text" value="{{'DAR'.date('Y').str_pad( $count_doc_code+1 ,4,'0',STR_PAD_LEFT)}}"> -->
                         </div>
@@ -253,13 +253,13 @@
                         <div class="flex flex-wrap justify-between gap-4">
                             <span class="px-4">
                                 <x-input-label 
-                                    for="dateUse" class="inline"> 
+                                    for="usedate" class="inline"> 
                                     {{__('date-use ')}} : 
                                 </x-input-label>
                                 <x-text-input 
-                                    name="dateUse" id="dateUse"
+                                    name="usedate" id="usedate"
                                     class="" maxlength="10"
-                                    value="{{old( 'dateUse' ,Carbon\Carbon::now()->toDateString()) }}"
+                                    value="{{old( 'usedate' ,Carbon\Carbon::now()->toDateString()) }}"
                                     min="{{Carbon\Carbon::now()->toDateString()}}"
                                     type="date" />
                             </span>

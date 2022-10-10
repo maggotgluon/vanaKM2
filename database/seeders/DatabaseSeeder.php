@@ -40,11 +40,11 @@ class DatabaseSeeder extends Seeder
         }
         fclose($csvFile);
 
-
         $csvFile = fopen(base_path("database/data/docrec.csv"), "r");
         $firstline = true;
         while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
             if (!$firstline) {
+                
                 \App\Models\DocumentRequest::factory()->create([
                     'Doc_Code' => $data['1'],
                     'Doc_Name' => $data['2'],
@@ -53,13 +53,15 @@ class DatabaseSeeder extends Seeder
                     'Doc_Description' => $data['5'],
                     'Doc_Life' =>1,
                     'Doc_ver' => $data['7'],
-                    'Doc_StartDate' => $data['8'],
+                    'Doc_StartDate' => fake()->date(),
                     'Doc_Location' => $data['9'],
                     'Doc_Status' =>0,
-                    'Doc_DateApprove' =>0,
+                    'Doc_DateApprove' =>null,
                     'User_Approve' =>null,
+                    'Doc_DateMRApprove' =>null,
+                    'User_MRApprove' =>null,
                     'Access_Lv' =>null,
-                    'user_id' => $data[16],
+                    'user_id' => 106
                 ]);    
             }
             $firstline = false;

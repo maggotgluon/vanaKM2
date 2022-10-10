@@ -32,12 +32,14 @@
                                 <span class="float-right">
                                         <div class="flex">
                                             <!-- route('regisApprove',$doc->id,'approve=true') -->
+                                            @if($doc->Doc_Status == 1)
                                             <form action="{{ route('regDoc.approve',$doc->id,'approve=true') }}" method="post">
                                             @csrf
                                                 <input type="hidden" name="regID" value="{{$doc->id}}">
-                                                <input type="hidden" name="manage" value="MRapproved">
+                                                <input type="hidden" name="manage" value="mrapproved">
                                                 <x-primary-button class="bg-brand_blue py-1 m-2">MR Approve</x-button>
                                             </form>
+                                            @endif
                                             <!-- route('regisApprove',$doc->id,'approve=true') -->
                                             <form action="{{ route('regDoc.approve',$doc->id,'approve=true') }}" method="post">
                                             @csrf
@@ -119,7 +121,7 @@
                                                 <form action="{{ route('regDoc.approve',$doc->id,'approve=true') }}" method="post">
                                                 @csrf
                                                     <input type="hidden" name="regID" value="{{$doc->id}}">
-                                                    <input type="hidden" name="manage" value="MRapproved">
+                                                    <input type="hidden" name="manage" value="mrapproved">
                                                     <x-primary-button class="bg-brand_blue py-1 m-2">MR Approve</x-button>
                                                 </form>
                                                 <!-- route('regisApprove',$doc->id,'approve=true') -->
@@ -198,7 +200,7 @@
                                             <form action="{{ route('regDoc.approve',$doc->id,'approve=true') }}" method="post">
                                             @csrf
                                                 <input type="hidden" name="regID" value="{{$doc->id}}">
-                                                <input type="hidden" name="manage" value="MRapproved">
+                                                <input type="hidden" name="manage" value="mrapproved">
                                                 <x-primary-button class="bg-brand_blue py-1 m-2">MR Approve</x-button>
                                             </form>
                                             <!-- route('regisApprove',$doc->id,'approve=true') -->

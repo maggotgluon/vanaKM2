@@ -37,6 +37,9 @@ class DocumentRequestController extends Controller
             // dd(User::find($user)->where('user_level','MR'));
             $documents = DocumentRequest::where('Doc_Status',1)->get();
             return view('document.reg.MRRegDoc',['documents'=>$documents]);
+        }else{
+            $documents = Auth::user()->DocumentRequest;
+            return view('document.reg.myRegDoc',['documents'=>$documents]);
         }
     }
     public function view($Doc_Code){
@@ -76,8 +79,9 @@ class DocumentRequestController extends Controller
         return view('document.reg.create',['count_doc_code'=>$count,]);
     }
     public function create(request $request){
-        // dd('create');
+        //dd($request);
         //ตรวจสอบข้อมูล
+        
         $request->validate(
             [   
                 // 'Doc_Name'=>'required|max:10|unique:document_requests',
@@ -115,7 +119,6 @@ class DocumentRequestController extends Controller
         $upload_location = '/FilePDF/';
         $full_path = $upload_location.$NameFile;
         // dd($full_path);
-
 
         
         // //บันทึกข้อมูล 
