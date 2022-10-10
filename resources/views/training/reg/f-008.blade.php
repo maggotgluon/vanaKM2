@@ -26,7 +26,7 @@
             <h3 >SUBJECT หัวข้อเรื่อง :   {{ $f008['SUBJECT'] }}  </h3>
         </div>
    
-        <div class="font-bold text-center">
+        <div class="font-bold text-center"> 
                 <h3>วันที่เริ่มอบรม : {{ $f008['starttraindate'] }}  วันที่สิ้นสุด : {{ $f008['endtraindate'] }} </h3>
                 <h3>   เวลาเริ่ม : {{ $f008['starttraintime'] }}  เวลาสิ้นสุด : {{ $f008['endtraintime'] }} </h3>
             </div>

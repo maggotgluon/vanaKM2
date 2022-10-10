@@ -9,7 +9,7 @@ use App\Models\DocumentRequest;
 
 class DocumentController extends Controller
 {
-    //
+    // 
     public function all(){
         // dd('doc all');
         

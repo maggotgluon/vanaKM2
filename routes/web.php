@@ -67,6 +67,10 @@ Route::middleware(['auth'])->group(function(){
             // regDoc.view
             Route::get('/reg/dar/{id}', [DocumentRequestController::class,'view'] )
             ->name('view'); //single reg doc
+
+            // regDoc.Dar
+            Route::get('/f-dar/{id}', [DocumentRequestController::class,'DarForm',] )
+            ->name('DarForm');
         });
     });
 
@@ -96,10 +100,10 @@ Route::middleware(['auth'])->group(function(){
             -> name('approve');
             //view regis training 008
 
-            Route::get('/f008/{id}', [TrainingRequestController::class,'form008',] ) ->middleware(['auth'])
+            Route::get('/f008/{id}', [TrainingRequestController::class,'form008',] )
             ->name('form008');
             //view regis training 009
-            Route::get('/f009/{id}', [TrainingRequestController::class,'form009',] ) ->middleware(['auth'])
+            Route::get('/f009/{id}', [TrainingRequestController::class,'form009',] ) 
             ->name('form009');
 
             Route::get('/reg/view/{id}', [TrainingRequestController::class,'viewReg'] )

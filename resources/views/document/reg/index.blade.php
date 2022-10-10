@@ -85,6 +85,10 @@
                                     <x-button href="{{route('regDoc.view',$doc->Doc_Code)}}" class="py-1">
                                         {{__('view Requested document')}}
                                     </x-button>
+                                    
+                                    <x-button href="{{route('regDoc.DarForm',$doc->Doc_Code)}}" class="py-1">
+                                        {{__('view dar')}}
+                                    </x-button>
                                 
                                 </details>
                             <!-- {{$doc}} -->

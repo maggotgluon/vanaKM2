@@ -5,15 +5,30 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DocumentRequest;
-
+ 
 use App\Models\Document;
 use App\Models\User;
+<<<<<<< HEAD
+=======
+use Illuminate\Database\Eloquent\Relations\HasOne;
+>>>>>>> c7015be6bb25e3f95c9f6771989bcef63145be2e
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class DocumentRequestController extends Controller
 {
+    
+    private function InputToDate($Input)
+    {
+        $Date = new Carbon($Input);
+        return date_format($Date,"d F Y");
+    }
+
+
+
     //
+<<<<<<< HEAD
     public function all($user=null,$filter=null){
         // dd($user,$filter);
         // Gate::authorize('manage_document');
@@ -26,17 +41,46 @@ class DocumentRequestController extends Controller
             // dd(User::find($user)->where('user_level','MR'));
             $documents = DocumentRequest::where('Doc_Status',1)->get();
             return view('document.reg.MRRegDoc',['documents'=>$documents]);
+=======
+    public function all($user=null){
+        if($user==null){
+            $regDoc = DocumentRequest::paginate(15);
+>>>>>>> c7015be6bb25e3f95c9f6771989bcef63145be2e
         }else{
             $documents = Auth::user()->DocumentRequest->where('Doc_Status','=',0);
             return view('document.reg.myRegDoc',['documents'=>$documents]);
         }
+<<<<<<< HEAD
         
+=======
+        return view('document.reg.index',['documents'=>$regDoc]);
+>>>>>>> c7015be6bb25e3f95c9f6771989bcef63145be2e
     }
     public function view($Doc_Code){
         // dd('reg view');
         $regDoc = DocumentRequest::where('Doc_Code',$Doc_Code)->firstOrFail();   
         return view('document.reg.show',['documents'=>$regDoc]);
     }
+    public function DarForm($Doc_Code){
+        // dd('reg DarForm');
+        $DarForm = DocumentRequest::where('Doc_Code',$Doc_Code)->firstOrFail();
+        
+        $created_at =  $this->InputToDate($DarForm->created_at);
+        $updated_at =  $this->InputToDate($DarForm->updated_at);
+        $DarForm->Doc_StartDate =  $this->InputToDate($DarForm->Doc_StartDate);
+        $date = array(
+            'created_at'=>$created_at,
+            'updated_at'=>$updated_at
+
+        );
+        // dd($date);
+        // $DarReq = $this->hasone(User::class,'id',$id);
+
+        return view('document.reg.f-dar',['DarForm'=>$DarForm],['date'=>$date]
+        // ,['DarReq'=>$DarReq]
+    );
+    }
+
     public function createView(){
         // dd('create');
         $currentYear = date("Y");
@@ -44,6 +88,7 @@ class DocumentRequestController extends Controller
         $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
         
         $count = DocumentRequest::whereBetween('created_at',[$startYear,$endYear])->count();
+
 
         return view('document.reg.create',['count_doc_code'=>$count,]);
     }
@@ -74,12 +119,8 @@ class DocumentRequestController extends Controller
                 // 'file'=>'',
             ]
         );
-        $currentYear = date("Y");
-        $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
-        $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
-        
-        $count = DocumentRequest::whereBetween('created_at',[$startYear,$endYear])->count();
 
+ 
         //Version File
         $file = $request->file('file');
         $docver = DocumentRequest::where('Doc_Name',$request->Doc_Name)->count();
@@ -96,7 +137,7 @@ class DocumentRequestController extends Controller
         
         // //บันทึกข้อมูล 
         $documents = new DocumentRequest;
-        $documents->Doc_Code = $count;
+        $documents->Doc_Code = $request->DocCode;
         $documents->Doc_Name = $request->Doc_Name;
         $documents->User_id = Auth::user()->id;
         $documents->Doc_Type = $request->type;
@@ -139,7 +180,12 @@ class DocumentRequestController extends Controller
 
         $toastType = 'success';
         $toastMsg = 'Document '.$reg_doc->Doc_Name.' Approved!';
+<<<<<<< HEAD
         if($approve === 'MRapproved'){
+=======
+
+        if($approve === 'mrapproved'){
+>>>>>>> c7015be6bb25e3f95c9f6771989bcef63145be2e
             $reg_doc->Doc_Status = '2';
             $documents = Document::updateOrCreate(
                 [
@@ -155,13 +201,17 @@ class DocumentRequestController extends Controller
                 ]
             );
             $documents->save();
+<<<<<<< HEAD
             $toastMsg = 'MR Approved!';
         }else if($approve === 'approved'){
             $reg_doc->Doc_Status = '1';
             echo 'approved';
+=======
+        }
+        if($approve === 'approved'){
+            $reg_doc->Doc_Status = '1';
+>>>>>>> c7015be6bb25e3f95c9f6771989bcef63145be2e
         }else{
-            $toastType = 'warning';
-            $toastMsg = 'Document '.$reg_doc->Doc_Name.' Rejected!';
             $reg_doc->Doc_Status = '-1';
             // echo 'rejected';
         }
@@ -193,5 +243,14 @@ class DocumentRequestController extends Controller
         // ]);
         // dd($message);
         return redirect()->route('regDoc.all')->with($toastType, $toastMsg);
+
+
+
     }
+   
+
+
+
+
+
 }
