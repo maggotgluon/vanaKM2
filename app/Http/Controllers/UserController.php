@@ -17,12 +17,12 @@ class UserController extends Controller
         return view('user.index',['users'=>User::all()]);
     }
     public function allFiltter(request $data){
-        if($data->department!=null){
+        if($data->department==null || $data->department=='null'){
+            $user = User::all();
+        }else if($data->department!=null){
             $user = User::where('department',$data->department)->get();
         }else if($data->level!=null){
             $user = User::where('user_level',$data->level)->get();
-        }else{
-            $user = User::all();
         }
         // dd($user);
         // alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');
@@ -46,7 +46,7 @@ class UserController extends Controller
         // dd($data->allowance,$allowance );
         DB::table('user_permissions')->updateOrInsert([
             'user_id' =>$user,
-            'permissions_type' => 'permission',
+            'permissions_type' => $data->permissions_type,
             'parmission_name'=>$data->permission,
         ],['allowance'=>$allowance]);
         return redirect(route('user.profile',$selectUser->id))->with('success', 'Permission update!');

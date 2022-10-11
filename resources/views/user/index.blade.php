@@ -60,6 +60,7 @@
                             <input id="departmentValue" hidden value="{{$data->department}}">
                             @endisset
                             <select name="department" id="department" onchange="this.closest('form').submit();">
+                                <option value="null">All</option>
                                 <option value="Admissions">Admissions</option>
                                 <option value="Engineering">Engineering</option>
                                 <option value="Executive Office">Executive Office</option>
@@ -83,6 +84,7 @@
                             <input id="levelValue" hidden value="{{$data->level}}">
                             @endisset
                             <select name="level" id="level" onchange="this.closest('form').submit();">
+                                <option value="null">Any</option>
                                 <option value="MR">MR</option>
                                 <option value="Director">Director</option>
                                 <option value="Manager">Manager</option>
@@ -109,7 +111,7 @@
                     @foreach ($users as $user)
                     <tr>
                         <td>{{$user->staff_id}}</td>
-                        <td><a href="{{route('user.profile',$user->id)}}">{{$user->name}}</a> <br> <span calss="text-sm">{{$user->email}}</span></td>
+                        <td><a href="{{route('user.profile',$user->id)}}">{{$user->name}}</a> <br> <span class="text-sm">{{$user->email}}</span></td>
                         <td>{{$user->department}}</td>
                         <td>{{$user->position}}</td>
                         <td>{{$user->user_level}}</td>

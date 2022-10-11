@@ -149,6 +149,7 @@
                     <div class="grid grid-cols-3 gap-4">
                             <form action="{{route('user.permission',$user)}}" method="post" >
                                 @csrf
+                                    <x-text-input hidden value="permission" name="permissions_type"></x-text-input>
                                     <x-text-input hidden value="edit_document" name="permission"></x-text-input>
                                     <x-text-input hidden value="1" name="allowance"></x-text-input>
                                     <x-primary-button class="w-full">can edit document</x-primary-button>
@@ -157,6 +158,7 @@
 
                             <form action="{{route('user.permission',$user)}}" method="post" >
                                 @csrf
+                                    <x-text-input hidden value="permission" name="permissions_type"></x-text-input>
                                     <x-text-input hidden value="edit_trainDocument" name="permission"></x-text-input>
                                     <x-text-input hidden value="1" name="allowance"></x-text-input>
                                     <x-primary-button class="w-full">can edit_trainDocument</x-primary-button>
@@ -164,6 +166,7 @@
 
                             <form action="{{route('user.permission',$user)}}" method="post" >
                                 @csrf
+                                    <x-text-input hidden value="permission" name="permissions_type"></x-text-input>
                                     <x-text-input hidden value="manage_document" name="permission"></x-text-input>
                                     <x-text-input hidden value="1" name="allowance"></x-text-input>
                                     <x-primary-button class="w-full">can manage_document</x-primary-button>
@@ -171,6 +174,7 @@
 
                             <form action="{{route('user.permission',$user)}}" method="post" >
                                 @csrf
+                                    <x-text-input hidden value="permission" name="permissions_type"></x-text-input>
                                     <x-text-input hidden value="manage_trainDocument" name="permission"></x-text-input>
                                     <x-text-input hidden value="1" name="allowance"></x-text-input>
                                     <x-primary-button class="w-full">can manage_trainDocument</x-primary-button>
@@ -178,6 +182,7 @@
 
                             <form action="{{route('user.permission',$user)}}" method="post" >
                                 @csrf
+                                    <x-text-input hidden value="permission" name="permissions_type"></x-text-input>
                                     <x-text-input hidden value="manage_users" name="permission"></x-text-input>
                                     <x-text-input hidden value="1" name="allowance"></x-text-input>
                                     <x-primary-button class="w-full">can manage_users</x-primary-button>
@@ -185,12 +190,29 @@
 
                             <form action="{{route('user.permission',$user)}}" method="post" >
                                 @csrf
+                                    <x-text-input hidden value="permission" name="permissions_type"></x-text-input>
                                     <x-text-input hidden value="publish_document" name="permission"></x-text-input>
                                     <x-text-input hidden value="1" name="allowance"></x-text-input>
                                     <x-primary-button class="w-full">can publish_document</x-primary-button>
                                 </form>
                         </div>
-
+                        <h3>Update Role</h3>
+                        <div class="grid gap-4">
+                            <form action="{{route('user.permission',$user)}}" method="post" >
+                                @csrf
+                                    <x-text-input hidden value="role" name="permissions_type"></x-text-input>
+                                    <x-text-input hidden value="MR" name="permission"></x-text-input>
+                                    <x-text-input hidden value="1" name="allowance"></x-text-input>
+                                    <x-primary-button class="w-full">Add MR Role</x-primary-button>
+                            </form>
+                            <form action="{{route('user.permission',$user)}}" method="post" >
+                                @csrf
+                                    <x-text-input hidden value="role" name="permissions_type"></x-text-input>
+                                    <x-text-input hidden value="DCC" name="permission"></x-text-input>
+                                    <x-text-input hidden value="1" name="allowance"></x-text-input>
+                                    <x-primary-button class="w-full">Add DCC Role</x-primary-button>
+                            </form>
+                        </div>
 
                         <div class="p-4">
                             @foreach ($user->userPermission as $permission)
@@ -205,6 +227,7 @@
                                     <form action="{{route('user.permission',$user)}}" method="post" class="ml-auto">
                                     @csrf
                                         <x-text-input hidden value="{{$permission->parmission_name }}" name="permission"></x-text-input>
+                                        <x-text-input hidden value="{{$permission->permissions_type }}" name="permissions_type"></x-text-input>
                                         <x-text-input hidden value="0" name="allowance"></x-text-input>
                                         <x-primary-button class="w-full bg-red-500 hover:bg-red-700">Removed {{$permission->parmission_name }}</x-primary-button>
                                     </form>
@@ -212,7 +235,9 @@
                                 @endif
                             @endforeach
                         </div>
-                </div>
+                
+                        
+                    </div>
             </div>
             @endcan
         </div>
