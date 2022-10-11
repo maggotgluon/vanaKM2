@@ -31,14 +31,25 @@ class TrainingRequestController extends Controller
     }
 
       //
-    public function allReg($user=null){
-        if($user==null){
-            $regDoc = TrainingRequest::all();
-            return view('training.reg.index', ['documents' => $regDoc,]);
+    public function allReg($filter=null){
+
+        if($filter!=null){
+            $regDoc = TrainingRequest::where('Doc_Status',$filter)->paginate(5);
+        }else{
+            $regDoc = TrainingRequest::all()->paginate(5);
+        }
+
+        return view('training.reg.index', ['documents' => $regDoc,'filter'=>$filter]);
+    }
+    public function allRegUser($filter=null){
+        
+        if($filter!=null){
+            $regDoc = Auth::user()->TrainingRequest->where('Doc_Status',$filter);
         }else{
             $regDoc = Auth::user()->TrainingRequest;
-            return view('training.reg.indexMy', ['documents' => $regDoc,]);
         }
+        return view('training.reg.indexMy', ['documents' => $regDoc,'filter'=>$filter]);
+        
     }
     public function viewReg($id){
         return view('training.reg.show', [

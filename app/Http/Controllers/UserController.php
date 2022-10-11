@@ -11,9 +11,22 @@ use App\Rules\MatchOldPassword;
 // use RealRashid\SweetAlert\Facades\Alert;
 class UserController extends Controller
 {
-    public function all(){
+    public function all($filter = null, request $data=null){
+        // dd($data);
         // alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');
         return view('user.index',['users'=>User::all()]);
+    }
+    public function allFiltter(request $data){
+        if($data->department!=null){
+            $user = User::where('department',$data->department)->get();
+        }else if($data->level!=null){
+            $user = User::where('user_level',$data->level)->get();
+        }else{
+            $user = User::all();
+        }
+        // dd($user);
+        // alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');
+        return view('user.index',['users'=>$user,'data'=>$data]);
     }
 
     public function profile($uid){

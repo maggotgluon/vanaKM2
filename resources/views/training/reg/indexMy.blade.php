@@ -32,6 +32,12 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg relative">
                 
                 <div class="p-6 bg-white border-b border-gray-200">
+
+                <div class="p-6 bg-white border-b border-gray-200 grid grid-cols-3 gap-4 ">
+                    <x-button href="{{route('regTraining.allUser',1)}}">Approved</x-button>
+                    <x-button href="{{route('regTraining.allUser',0)}}">Pending Approved</x-button>
+                    <x-button href="{{route('regTraining.allUser',-1)}}">Reject</x-button>
+                </div>
                     <table id="table_id" class="display">
                         <thead>
                             <tr>

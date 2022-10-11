@@ -11,11 +11,11 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <!-- {{$user}} -->
                     <!-- <h2>{{$user->name}}</h2> -->
-                    E-mail : {{$user->email}}<br>
-                    ID : {{$user->staff_id}}<br>
-                    Department : {{$user->department}}<br>
-                    position : {{$user->position}}<br>
-                    Department Head : {{$user->department_head}}<br>
+                    {{__('E-mail')}} : {{$user->email}}<br>
+                    {{__('ID')}} : {{$user->staff_id}}<br>
+                    {{__('Department')}} : {{$user->department}}<br>
+                    {{__('position')}} : {{$user->position}}<br>
+                    {{__('Department Head')}} : {{$user->department_head}}<br>
                     {{$user->user_level}}<br>
                     <hr>
                 </div>
@@ -24,28 +24,28 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4">
                 <div class="p-6  border-b border-gray-200">
-                    <h3>Update Password</h3>
+                    <h3>{{__('Update Password')}}</h3>
                     <form action="{{route('user.changePassword',$user)}}" method="post" >
                         @csrf
                         <div>
-                            <x-input-label for="current_password" class="inline">Current Password</x-input-label>
-                            <x-text-input value="{{old('current_password') }}" type="password" name="current_password" id="current_password" />
+                            <x-input-label for="current_password" class="inline">{{__('Current Password')}}</x-input-label>
+                            <x-text-input required value="{{old('current_password') }}" type="password" name="current_password" id="current_password" />
 
                             @error('current_password')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
                             @enderror
                         </div>
                         <div>
-                            <x-input-label for="new_password" class="inline">New Password</x-input-label>
-                            <x-text-input value="{{old('new_password') }}" type="password" name="new_password" id="new_password" />
+                            <x-input-label for="new_password" class="inline">{{__('New Password')}}</x-input-label>
+                            <x-text-input required value="{{old('new_password') }}" type="password" name="new_password" id="new_password" />
 
                             @error('new_password')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
                             @enderror
                         </div>
                         <div>
-                            <x-input-label for="new_confirm_password" class="inline">confirm Password</x-input-label>
-                            <x-text-input value="{{old('new_confirm_password') }}" type="password" name="new_confirm_password" id="new_confirm_password" />
+                            <x-input-label for="new_confirm_password" class="inline">{{__('Confirm Password')}}</x-input-label>
+                            <x-text-input required value="{{old('new_confirm_password') }}" type="password" name="new_confirm_password" id="new_confirm_password" />
 
                             @error('new_confirm_password')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
@@ -64,8 +64,8 @@
                     <form action="{{route('user.update',$user)}}" method="post" >
                     @csrf
                         <x-text-input hidden value="email" name="update"></x-text-input>
-                        <x-input-label for="email" class="inline">email</x-input-label >
-                        <x-text-input value="{{$user->email}}" type="text" class="bg-backdrop rounded-md"  name="email" id="email" />
+                        <x-input-label  for="email" class="inline">email</x-input-label >
+                        <x-text-input required value="{{$user->email}}" type="email" class="bg-backdrop rounded-md"  name="email" id="email" />
                         <x-primary-button type="submit">Save</x-primary-button>
                     </form>
                 </div>

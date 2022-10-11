@@ -26,7 +26,6 @@
                                 name="date" 
                                 value="{{Carbon\Carbon::now()->toDateString()}}"
                                 readonly type="date" />
-                            <!-- <input class="bg-backdrop rounded-md" type="date" disabled name="date" value="{{date('Y-m-d')}}" id=""> -->
 
                         </div>
                         <div class="py-2">
@@ -41,10 +40,6 @@
                                 value="{{old('name', Auth::user()->name) }}"
                                 type="text" readonly/>
 
-                            <!-- <input id="name" value="{{ Auth::user()->name }}" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full{{$errors->has('name') ? ' border-accent' : ''}}" type="text" name="name" value="{{ old('name') }}" readonly />
-                            <label for="name" class="block font-medium text-sm text-content{{$errors->has('name') ? ' text-accent' : ''}}">
-                                {{ __('Name') }}
-                            </label> -->
                         </div>
                         <div class="py-2">
                             <x-input-label 
@@ -56,10 +51,6 @@
                                 class="w-full"
                                 value="{{old('email', Auth::user()->email) }}"
                                 type="email" />
-
-                            <!-- <input id="name" value="{{ Auth::user()->email }}" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full{{$errors->has('email') ? ' border-accent' : ''}}" type="email" name="email" value="{{ old('email') }}" readonly />
-                            <label for="email" class="block font-medium text-sm text-content{{$errors->has('email') ? ' text-accent' : ''}}">
-                                {{ __('Email') }}</label> -->
                         </div>
                         <div class="py-2">
                             <x-input-label 
@@ -72,9 +63,6 @@
                                 value="{{old('department', Auth::user()->department) }}"
                                 type="text" readonly/>
 
-                            <!-- <input id="department" value="{{ Auth::user()->department }}" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full{{$errors->has('department') ? ' border-accent' : ''}}" type="text" name="department" value="{{ old('department') }}" />
-                            <label for="department" class="block font-medium text-sm text-content{{$errors->has('department') ? ' text-accent' : ''}}">
-                                {{ __('Department') }}</label> -->
                         </div>
                         <div class="py-2">
                             <x-input-label 
@@ -87,9 +75,6 @@
                                 value="{{old('departmenthead', Auth::user()->department_head) }}"
                                 type="text" />
 
-                            <!-- <input id="departmenthead" value="{{ Auth::user()->department_head }}" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full{{$errors->has('departmenthead') ? ' border-accent' : ''}}" type="text" name="departmenthead" value="{{ old('departmenthead') }}" />
-                            <label for="departmenthead" class="block font-medium text-sm text-content{{$errors->has('departmenthead') ? ' text-accent' : ''}}">
-                                {{ __('Department Head') }}</label> -->
                         </div>
                         <hr class="col-span-2">
                         <div class="py-2">
@@ -105,16 +90,6 @@
                             @error('Doc_Name')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
                             @enderror
-                            <!-- <x-input-label 
-                                for="DocCode" class="inline"> 
-                                {{__('Dar Number')}} : 
-                            </x-input-label>
-                            <x-text-input 
-                                name="DocCode" id="DocCode"
-                                value="{{old('DocCode', 'DAR'.date('Y').str_pad( $count_doc_code+1 ,4,'0',STR_PAD_LEFT) ) }}"
-                                type="text" readonly/> -->
-                            <!-- Dar Number :
-                            <input class="bg-backdrop rounded-md" name="DocCode" type="text" value="{{'DAR'.date('Y').str_pad( $count_doc_code+1 ,4,'0',STR_PAD_LEFT)}}"> -->
                         </div>
 
 
@@ -160,13 +135,8 @@
                         </span>
 
                         <div class="py-2">
-<<<<<<< HEAD
-                            <x-input-label for="objective" class="inline" ><span class="required text-brand_orange text-xs"> * </span>
-                                Objective :
-=======
                             <x-input-label for="objective" class="inline" >
                                  {{__('Objective')}} : 
->>>>>>> be17d702e22e3bbe5b471abbd167a87b83aedc01
                             </x-input-label>
                             <!-- <div class="flex flex-col md:flex-row justify-around flex-wrap"> -->
                             <div class="grid grid-cols-2 grid-flow-dense">
@@ -226,14 +196,6 @@
                                     อื่นๆ 
                                     </x-input-label>
                                 </span>
-                                <!-- <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-1" value="ขอเอกสารใหม่"><label for="objective-1" selected>ขอเอกสารใหม่ </label></span> -->
-                                <!-- <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-2" value="เปลี่ยนแปลง"><label for="objective-2">เปลี่ยนแปลง </label></span> -->
-                                <!-- <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-3" value="ขอนำเข้าเอกสารภายนอก"><label for="objective-3">ขอนำเข้าเอกสารภายนอก </label></span> -->
-                                <!-- <span class="col-span-2"><input class="px-2 mx-2" type="radio" name="objective" id="objective-4" value="ขอเพิ่ม / เปลี่ยนแปลง / ยกเลิกผู้ถือครอง"><label for="objective-4">ขอเพิ่ม / เปลี่ยนแปลง / ยกเลิกผู้ถือครอง </label></span>
-                                <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-5" value="ขอสำเนาเอกสาร"><label for="objective-5">ขอสำเนาเอกสาร </label></span> -->
-                                <!-- <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-6" value="ขอยกเลิก"><label for="objective-6">ขอยกเลิก </label></span>
-                                <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-7" value="ขอทำลาย"><label for="objective-7">ขอทำลาย </label></span>
-                                <span><input class="px-2 mx-2" type="radio" name="objective" id="objective-8" value="อื่นๆ"><label for="objective-8">อื่นๆ </label></span> -->
                             </div>
                             <br>
                             <div>
@@ -244,13 +206,8 @@
                         </div>
 
                         <span class="flex flex-col">
-<<<<<<< HEAD
-                            <label for="info"><span class="required text-brand_orange text-xs"> * </span>รายละเอียดการแก้ไข </label>
-                            <x-textarea-input required name="info" id="info" cols="30" rows="5"></x-textarea-input>
-=======
                             <label for="info">  {{__('description')}} :  </label>
-                            <textarea name="info" id="info" cols="30" rows="5" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full{{$errors->has('name') ? ' border-accent' : ''}}"></textarea>
->>>>>>> be17d702e22e3bbe5b471abbd167a87b83aedc01
+                            <x-textarea-input name="info" id="info" cols="30" rows="5"></x-textarea-input>
                             @error('info')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
                             @enderror
@@ -260,13 +217,8 @@
                         <div class="flex flex-wrap justify-between gap-4">
                             <span class="px-4">
                                 <x-input-label 
-<<<<<<< HEAD
-                                    for="usedate" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
-                                    {{__('date-use ')}} : 
-=======
                                     for="usedate" class="inline"> 
                                     {{__('Effctive_Date')}} : 
->>>>>>> be17d702e22e3bbe5b471abbd167a87b83aedc01
                                 </x-input-label>
                                 <x-text-input 
                                     name="usedate" id="usedate"
@@ -276,21 +228,11 @@
                                     type="date" />
                             </span>
 
-                                    <!-- <label for="dateUse">date-use : </label>
-                                    <input type="date" name="usedate" id="dateUse" value="{{Carbon\Carbon::now()->toDateString()}}" min="{{Carbon\Carbon::now()->toDateString()}}" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  my-2 {{$errors->has('name') ? ' border-accent' : ''}}"></span> -->
-                                <!-- @error('usedate')
-                        <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span>
-                    @enderror -->
 
                         <span class="px-4">
                                 <x-input-label 
-<<<<<<< HEAD
-                                    for="Year" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
-                                    {{__('date-use ')}} : 
-=======
                                     for="Year" class="inline"> 
                                     {{__('DocumentAge')}} : 
->>>>>>> be17d702e22e3bbe5b471abbd167a87b83aedc01
                                 </x-input-label>
                                 <x-text-input 
                                     name="Year" id="Year"
@@ -300,12 +242,6 @@
                                     type="number" />   {{__('Year')}}
                             </span>
 
-                                <!-- <label for="dateKeep">Year Life : </label>
-                                <input type="number" name="Year" id="Year" value="1" min="1" max="10" step="1" class="bg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  my-2 {{$errors->has('name') ? ' border-accent' : ''}}">
-                            </span>Year(s) -->
-                            <!-- @error('Year')
-                        <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span>
-                    @enderror -->
                             <span class="px-4 block">
                                 <x-input-label 
                                     for="file" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
@@ -315,8 +251,6 @@
                                     name="file" id="file"
                                     value="{{old( 'file') }}"
                                     type="file"  accept=".pdf" required/> 
-                                <!-- <label>File</label>
-                                <input type="file" name="file"> -->
 
                             </span>
                             @error('file')
@@ -326,10 +260,6 @@
 
 
                         <div class="flex justify-end mt-4 ">
-                            <!-- <button  class='mr-5 inline-flex items-center px-4 py-2 bg-backdrop-inv border border-transparent rounded-md font-semibold text-xs text-content-inv uppercase tracking-widest hover:bg-backdrop-light active:bg-backdrop-light focus:outline-none focus:border-backdrop-light focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150'>
-                {{ __('Add More') }}
-            </button> -->
-
                             <x-primary-button>
                                 {{ __('Request Document') }}
                             </x-primary-button>

@@ -205,7 +205,7 @@ class DocumentRequestController extends Controller
         }else if($approve === 'approved'){
             $reg_doc->Doc_Status = '1';
         }else{
-            // $toastType = 'worning';
+            $toastType = 'warning';
             // dd($request);
             $reg_doc->Remark = $request->remark;
             $toastMsg = 'Document '.$reg_doc->Doc_Name.' Reject!';

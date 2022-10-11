@@ -91,7 +91,7 @@
                                     {{ __('Add new Training Presentation') }}
                             </x-responsive-nav-link>
 
-                            <x-responsive-nav-link :href="route('regTraining.allUser',Auth::User())" :active="request()->routeIs('regTraining.allUser')">
+                            <x-responsive-nav-link :href="route('regTraining.allUser')" :active="request()->routeIs('regTraining.allUser')">
                                     {{ __('My Presentation') }}
                             </x-responsive-nav-link>
 

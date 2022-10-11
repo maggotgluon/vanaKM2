@@ -86,9 +86,9 @@ Route::middleware(['auth'])->group(function(){
         });
 
         Route::name('regTraining.')->group(function (){
-            Route::get('/reg/all', [TrainingRequestController::class,'allReg'] )
+            Route::get('/reg/all/{filter?}', [TrainingRequestController::class,'allReg'] )
             ->name('all'); //all reg doc
-            Route::get('/reg/all/{user}', [TrainingRequestController::class,'allReg'] )
+            Route::get('/reg/user/{filter?}', [TrainingRequestController::class,'allRegUser'] )
             ->name('allUser'); //all reg doc
             
             // regDoc.createView
@@ -117,6 +117,8 @@ Route::middleware(['auth'])->group(function(){
 
         Route::get('/', [UserController::class,'all'] )
         ->name('manage'); //userManage
+        Route::post('/', [UserController::class,'allFiltter'] )
+        ->name('allFilter'); //userManage
 
         Route::get('/{id}', [UserController::class,'profile'] )
         ->name('profile'); //userProfile

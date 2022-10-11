@@ -32,13 +32,13 @@
     </div>
     <div class=" p-4 mt-2 flex justify-between">รูปแบบการประเมิน :  
         
-          
-        <!-- {{ $f009['checkbox'][0]}} -->
-        @foreach ($f009['checkbox'] as $checkbox)
-           <span class="py-1">
-               {{$checkbox}}
-           </span> 
-        @endforeach
+        @if ($f009['checkbox']!==null)
+            @foreach ($f009['checkbox'] as $checkbox)
+            <span class="py-1">
+                {{$checkbox}}
+            </span> 
+            @endforeach
+        @endif
 
             <!-- <span class="px-2 mx-2">☐ ถาม-ตอบ</span><span class="px-2 mx-2">☐ แบบทดสอบ</span><span class="px-2 mx-2">☐ ทดลองปฏิบัติงานจริง</span> -->
         
