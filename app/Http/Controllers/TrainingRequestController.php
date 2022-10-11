@@ -7,6 +7,8 @@ use App\Models\TrainingRequest;
 use App\Models\training;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 use Carbon\Carbon;
 class TrainingRequestController extends Controller
@@ -220,6 +222,7 @@ class TrainingRequestController extends Controller
         // dd($request, $doc_train);
 
         $doc_train->save();
+        Log::channel('training')->info('user '. User::find($doc_train->User_id)->name .' Request '.$doc_train->Doc_Code);
 
         return redirect()->route('regTraining.create')->with('success', 'Document added!');
         
