@@ -63,6 +63,8 @@
     "Registed Document Management":"อนุมัติ เอกสารขึ้นทะเบียน",
     "Request Document":"เอกสารขึ้นทะเบียน",
     "Dar Number":"รหัสเอกสารขึ้นทะเบียน",
+    "Doc Code":"รหัสเอกสาร",
+    
     "Department":"แผนก",
     "Department Head":"หัวหน้าแผนก",
     "Document Type":"ประเภทเอกสาร",
@@ -73,9 +75,21 @@
     "DocumentAge":"อายุเอกสาร",
     "Year":"ปี",
     "Date":"วันที่",
+    "Doc Version":"แก้ไขครั้งที่",
+    "Attachment":"เอกสารแนบ",
+    "Date Request":"วันที่ส่งเอกสาร",
     "View_Document":"ดูเอกสาร",
     "Remark":"หมายเหตุ",
     "Document_Status":"สถานะเอกสาร",
-    "Dar_Name":"ชื่อเอกสารขึ้นทะเบียน"
+    "Last Update":"แก้ไข้ล่าสุด",
+    "Dar_Name":"ชื่อเอกสารขึ้นทะเบียน",
+    "MR Requested Document":"อนุมัติเอกสารขึ้นทะเบียนโดยตัวแทนฝ่ายบริหาร",
+    "Action":"ดำเนินการ",
+    "File":"ไฟล์เอกสาร",
+    "Training":"การฝึกอบรม",
+    "Add new Training Presentation":"ขอขึ้นทะเบียนเอกสารการฝึกอบรม",
+    "My Presentation":"เอกสารการฝึกอบรมของฉัน",
+    "Training Management":"อนุมัติ เอกสารขึ้นทะเบียนการฝึกอบรม"
+
 
 } 

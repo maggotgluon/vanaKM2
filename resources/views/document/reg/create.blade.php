@@ -94,7 +94,7 @@
 
 
                         <span>
-                            <label for="type"><span class="required text-brand_orange text-xs"> * </span> Type</label> 
+                            <label for="type"><span class="required text-brand_orange text-xs"> * </span> {{__('Document Type')}} : </label> 
                             <select class="bg-backdrop rounded-md" name="type" id="type">
                                 <optgroup label="Document">
                                     <option disabled value="Document-SM">SM: System Manual</option>
