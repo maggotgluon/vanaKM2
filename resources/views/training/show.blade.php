@@ -1,7 +1,11 @@
 <x-app-layout>
+    @php
+        $f008 = json_decode($documents->Doc_008);
+        $f009 = json_decode($documents->Doc_009);
+    @endphp
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Show Single Train') }}
+            {{$f008->SUBJECT}}
         </h2>
     </x-slot>
 
@@ -9,21 +13,22 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200 flex flex-col">
-                    Regis
-                    {{ $documents }}
-                    <!-- {{ Auth::user()->id }} -->
-                    <hr>
-                    {{asset($documents->Doc_Location)}}
+                    <p>
+                        {{$f008->starttraindate}} - {{$f008->endtraindate}}
+                        ({{$f008->starttraintime}} - {{$f008->endtraintime}})
+                    </p>
+                    <span class="text-sm ">last update {{$documents->updated_at}}</span> 
+                    
                     <!-- <embed src="{{asset('img'.$documents->Doc_Location)}}" width="100%" height="400px" showPageControls=false showAnnotationTools=false dockPageControls=false showLeftHandPanel=false/> -->
                     <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
-                    <button onclick="savePdf(file)" class="bg-blue-400 p-2 hover:bg-green-300">download</button>
-                    
-                    <div>
-                        <button id="prev">Previous</button>
-                        <button id="next">Next</button>
-                        &nbsp; &nbsp;
+                    <div class="flex gap-4 items-center">
+                        <x-primary-button onclick="savePdf(file)">download</x-primary-button>
+
+                        <x-primary-button id="prev">Previous</x-primary-button>
+                        <x-primary-button id="next">Next</x-primary-button>
                         <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
                     </div>
+                    
                     <canvas id="the-canvas" width="100%"></canvas>
                     <hr>
                     <script src="https://unpkg.com/downloadjs@1.4.7"></script>

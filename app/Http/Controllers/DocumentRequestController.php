@@ -171,7 +171,8 @@ class DocumentRequestController extends Controller
 
         // dd($documents);
         $documents->save();
-        Log::info('user '.$documents->User_id.' Request '.$documents->Doc_Code);
+
+        Log::channel('document')->info($documents->Doc_Code .' Create Request by '. User::find($documents->User_id)->name);
         
         return redirect()->route('regDoc.create')->with('success', 'Document added!');
         // return view('document.reg.create',['users'=>Auth::user()]);
@@ -205,7 +206,7 @@ class DocumentRequestController extends Controller
         }else if($approve === 'approved'){
             $reg_doc->Doc_Status = '1';
         }else{
-            // $toastType = 'worning';
+            $toastType = 'warning';
             // dd($request);
             $reg_doc->Remark = $request->remark;
             $toastMsg = 'Document '.$reg_doc->Doc_Name.' Reject!';
@@ -225,7 +226,7 @@ class DocumentRequestController extends Controller
         
 
 
-        Log::info('user '.$reg_doc->User_Approve.$approve.' Request '.$reg_doc->Doc_Code);
+        Log::channel('document')->info($reg_doc->Doc_Code.' update '.$approve.' by '.User::find($reg_doc->User_Approve)->name.' '.$reg_doc->Remark);
         //disible mail service during test
 
         // Mail::send(['text'=>'mail'], array('name'=>"Virat Gandhi"), function($message) {

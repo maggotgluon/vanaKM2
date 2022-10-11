@@ -11,9 +11,22 @@ use App\Rules\MatchOldPassword;
 // use RealRashid\SweetAlert\Facades\Alert;
 class UserController extends Controller
 {
-    public function all(){
+    public function all($filter = null, request $data=null){
+        // dd($data);
         // alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');
         return view('user.index',['users'=>User::all()]);
+    }
+    public function allFiltter(request $data){
+        if($data->department==null || $data->department=='null'){
+            $user = User::all();
+        }else if($data->department!=null){
+            $user = User::where('department',$data->department)->get();
+        }else if($data->level!=null){
+            $user = User::where('user_level',$data->level)->get();
+        }
+        // dd($user);
+        // alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');
+        return view('user.index',['users'=>$user,'data'=>$data]);
     }
 
     public function profile($uid){
@@ -33,7 +46,7 @@ class UserController extends Controller
         // dd($data->allowance,$allowance );
         DB::table('user_permissions')->updateOrInsert([
             'user_id' =>$user,
-            'permissions_type' => 'permission',
+            'permissions_type' => $data->permissions_type,
             'parmission_name'=>$data->permission,
         ],['allowance'=>$allowance]);
         return redirect(route('user.profile',$selectUser->id))->with('success', 'Permission update!');

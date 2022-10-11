@@ -11,11 +11,11 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <!-- {{$user}} -->
                     <!-- <h2>{{$user->name}}</h2> -->
-                    E-mail : {{$user->email}}<br>
-                    ID : {{$user->staff_id}}<br>
-                    Department : {{$user->department}}<br>
-                    position : {{$user->position}}<br>
-                    Department Head : {{$user->department_head}}<br>
+                    {{__('E-mail')}} : {{$user->email}}<br>
+                    {{__('ID')}} : {{$user->staff_id}}<br>
+                    {{__('Department')}} : {{$user->department}}<br>
+                    {{__('position')}} : {{$user->position}}<br>
+                    {{__('Department Head')}} : {{$user->department_head}}<br>
                     {{$user->user_level}}<br>
                     <hr>
                 </div>
@@ -24,28 +24,28 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4">
                 <div class="p-6  border-b border-gray-200">
-                    <h3>Update Password</h3>
+                    <h3>{{__('Update Password')}}</h3>
                     <form action="{{route('user.changePassword',$user)}}" method="post" >
                         @csrf
                         <div>
-                            <x-input-label for="current_password" class="inline">Current Password</x-input-label>
-                            <x-text-input value="{{old('current_password') }}" type="password" name="current_password" id="current_password" />
+                            <x-input-label for="current_password" class="inline">{{__('Current Password')}}</x-input-label>
+                            <x-text-input required value="{{old('current_password') }}" type="password" name="current_password" id="current_password" />
 
                             @error('current_password')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
                             @enderror
                         </div>
                         <div>
-                            <x-input-label for="new_password" class="inline">New Password</x-input-label>
-                            <x-text-input value="{{old('new_password') }}" type="password" name="new_password" id="new_password" />
+                            <x-input-label for="new_password" class="inline">{{__('New Password')}}</x-input-label>
+                            <x-text-input required value="{{old('new_password') }}" type="password" name="new_password" id="new_password" />
 
                             @error('new_password')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
                             @enderror
                         </div>
                         <div>
-                            <x-input-label for="new_confirm_password" class="inline">confirm Password</x-input-label>
-                            <x-text-input value="{{old('new_confirm_password') }}" type="password" name="new_confirm_password" id="new_confirm_password" />
+                            <x-input-label for="new_confirm_password" class="inline">{{__('Confirm Password')}}</x-input-label>
+                            <x-text-input required value="{{old('new_confirm_password') }}" type="password" name="new_confirm_password" id="new_confirm_password" />
 
                             @error('new_confirm_password')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
@@ -64,8 +64,8 @@
                     <form action="{{route('user.update',$user)}}" method="post" >
                     @csrf
                         <x-text-input hidden value="email" name="update"></x-text-input>
-                        <x-input-label for="email" class="inline">email</x-input-label >
-                        <x-text-input value="{{$user->email}}" type="text" class="bg-backdrop rounded-md"  name="email" id="email" />
+                        <x-input-label  for="email" class="inline">email</x-input-label >
+                        <x-text-input required value="{{$user->email}}" type="email" class="bg-backdrop rounded-md"  name="email" id="email" />
                         <x-primary-button type="submit">Save</x-primary-button>
                     </form>
                 </div>
@@ -149,6 +149,7 @@
                     <div class="grid grid-cols-3 gap-4">
                             <form action="{{route('user.permission',$user)}}" method="post" >
                                 @csrf
+                                    <x-text-input hidden value="permission" name="permissions_type"></x-text-input>
                                     <x-text-input hidden value="edit_document" name="permission"></x-text-input>
                                     <x-text-input hidden value="1" name="allowance"></x-text-input>
                                     <x-primary-button class="w-full">can edit document</x-primary-button>
@@ -157,6 +158,7 @@
 
                             <form action="{{route('user.permission',$user)}}" method="post" >
                                 @csrf
+                                    <x-text-input hidden value="permission" name="permissions_type"></x-text-input>
                                     <x-text-input hidden value="edit_trainDocument" name="permission"></x-text-input>
                                     <x-text-input hidden value="1" name="allowance"></x-text-input>
                                     <x-primary-button class="w-full">can edit_trainDocument</x-primary-button>
@@ -164,6 +166,7 @@
 
                             <form action="{{route('user.permission',$user)}}" method="post" >
                                 @csrf
+                                    <x-text-input hidden value="permission" name="permissions_type"></x-text-input>
                                     <x-text-input hidden value="manage_document" name="permission"></x-text-input>
                                     <x-text-input hidden value="1" name="allowance"></x-text-input>
                                     <x-primary-button class="w-full">can manage_document</x-primary-button>
@@ -171,6 +174,7 @@
 
                             <form action="{{route('user.permission',$user)}}" method="post" >
                                 @csrf
+                                    <x-text-input hidden value="permission" name="permissions_type"></x-text-input>
                                     <x-text-input hidden value="manage_trainDocument" name="permission"></x-text-input>
                                     <x-text-input hidden value="1" name="allowance"></x-text-input>
                                     <x-primary-button class="w-full">can manage_trainDocument</x-primary-button>
@@ -178,6 +182,7 @@
 
                             <form action="{{route('user.permission',$user)}}" method="post" >
                                 @csrf
+                                    <x-text-input hidden value="permission" name="permissions_type"></x-text-input>
                                     <x-text-input hidden value="manage_users" name="permission"></x-text-input>
                                     <x-text-input hidden value="1" name="allowance"></x-text-input>
                                     <x-primary-button class="w-full">can manage_users</x-primary-button>
@@ -185,12 +190,29 @@
 
                             <form action="{{route('user.permission',$user)}}" method="post" >
                                 @csrf
+                                    <x-text-input hidden value="permission" name="permissions_type"></x-text-input>
                                     <x-text-input hidden value="publish_document" name="permission"></x-text-input>
                                     <x-text-input hidden value="1" name="allowance"></x-text-input>
                                     <x-primary-button class="w-full">can publish_document</x-primary-button>
                                 </form>
                         </div>
-
+                        <h3>Update Role</h3>
+                        <div class="grid gap-4">
+                            <form action="{{route('user.permission',$user)}}" method="post" >
+                                @csrf
+                                    <x-text-input hidden value="role" name="permissions_type"></x-text-input>
+                                    <x-text-input hidden value="MR" name="permission"></x-text-input>
+                                    <x-text-input hidden value="1" name="allowance"></x-text-input>
+                                    <x-primary-button class="w-full">Add MR Role</x-primary-button>
+                            </form>
+                            <form action="{{route('user.permission',$user)}}" method="post" >
+                                @csrf
+                                    <x-text-input hidden value="role" name="permissions_type"></x-text-input>
+                                    <x-text-input hidden value="DCC" name="permission"></x-text-input>
+                                    <x-text-input hidden value="1" name="allowance"></x-text-input>
+                                    <x-primary-button class="w-full">Add DCC Role</x-primary-button>
+                            </form>
+                        </div>
 
                         <div class="p-4">
                             @foreach ($user->userPermission as $permission)
@@ -205,6 +227,7 @@
                                     <form action="{{route('user.permission',$user)}}" method="post" class="ml-auto">
                                     @csrf
                                         <x-text-input hidden value="{{$permission->parmission_name }}" name="permission"></x-text-input>
+                                        <x-text-input hidden value="{{$permission->permissions_type }}" name="permissions_type"></x-text-input>
                                         <x-text-input hidden value="0" name="allowance"></x-text-input>
                                         <x-primary-button class="w-full bg-red-500 hover:bg-red-700">Removed {{$permission->parmission_name }}</x-primary-button>
                                     </form>
@@ -212,7 +235,9 @@
                                 @endif
                             @endforeach
                         </div>
-                </div>
+                
+                        
+                    </div>
             </div>
             @endcan
         </div>
