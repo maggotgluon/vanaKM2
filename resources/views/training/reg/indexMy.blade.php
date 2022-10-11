@@ -41,11 +41,11 @@
                     <table id="table_id" class="display">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Status</th>
-                                <th>Last Update</th>
-                                <th>Action</th>
-                                <th>Remark</th>
+                                <th>{{ __('Doc Code') }}</th>
+                                <th>{{ __('Document_Status') }}</th>
+                                <th>{{ __('Date') }}</th>
+                                <th>{{ __('Action') }}</th>
+                                <th>{{ __('Remark') }}</th>
                             </tr>
                         
                         </thead>

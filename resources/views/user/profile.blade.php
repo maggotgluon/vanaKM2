@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('User Profile') }} : {{$user->name}}
+            {{ __('Name') }} : {{$user->name}} 
         </h2>
     </x-slot>
 
@@ -12,11 +12,11 @@
                     <!-- {{$user}} -->
                     <!-- <h2>{{$user->name}}</h2> -->
                     {{__('E-mail')}} : {{$user->email}}<br>
-                    {{__('ID')}} : {{$user->staff_id}}<br>
+                    {{__('IDSTAFF')}} : {{$user->staff_id}}<br>
                     {{__('Department')}} : {{$user->department}}<br>
-                    {{__('position')}} : {{$user->position}}<br>
+                    {{__('Position')}} : {{$user->position}}<br>
                     {{__('Department Head')}} : {{$user->department_head}}<br>
-                    {{$user->user_level}}<br>
+                    {{__('Level')}} :  {{$user->user_level}}<br>
                     <hr>
                 </div>
             </div>
@@ -59,12 +59,12 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4">
                 <div class="p-6  border-b border-gray-200">
-                    <h3>Update Email</h3>
+                    <h3>{{__('Update E-mail')}}</h3>
 
                     <form action="{{route('user.update',$user)}}" method="post" >
                     @csrf
                         <x-text-input hidden value="email" name="update"></x-text-input>
-                        <x-input-label  for="email" class="inline">email</x-input-label >
+                        <x-input-label  for="email" class="inline">{{__('E-mail')}}</x-input-label >
                         <x-text-input required value="{{$user->email}}" type="email" class="bg-backdrop rounded-md"  name="email" id="email" />
                         <x-primary-button type="submit">Save</x-primary-button>
                     </form>
@@ -73,13 +73,13 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4">
                 <div class="p-6  border-b border-gray-200">
-                    <h3>Update User info</h3>
+                    <h3>{{__('Update User info')}}</h3>
 
 
                     <form action="{{route('user.update',$user)}}" method="post" >
                         @csrf
                             <x-text-input hidden value="department_head" name="update"></x-text-input>
-                            <x-input-label for="suser" class="inline">Department Head : </x-input-label >
+                            <x-input-label for="suser" class="inline"> {{__('Department Head')}}  </x-input-label >
                             <select class="bg-backdrop rounded-md"  name="suser" id="suser">
                                 <option value="{{$user->department_head}}">{{$user->department_head}}</option>
                                 @foreach ($dp as $suser)
@@ -95,7 +95,7 @@
                     <form action="{{route('user.update',$user)}}" method="post" >
                         @csrf
                         <x-text-input hidden value="department" name="update"></x-text-input>
-                        <x-input-label for="department" class="inline">Department</x-input-label >
+                        <x-input-label for="department" class="inline">{{__('Department')}} </x-input-label >
                         <!-- <x-text-input value="{{$user->department}}" list="departments" type="text" class="bg-backdrop rounded-md"  name="department" id="department" /> -->
                         <select class="bg-backdrop rounded-md"  name="department" id="department">
                             <option value="{{$user->department}}">{{$user->department}}</option>
@@ -119,14 +119,14 @@
                     <form action="{{route('user.update',$user)}}" method="post" >
                         @csrf
                         <x-text-input hidden value="position" name="update"></x-text-input>
-                        <x-input-label for="position" class="inline">position</x-input-label >
+                        <x-input-label for="position" class="inline">{{__('Position')}} </x-input-label >
                         <x-text-input value="{{$user->position}}" type="text" class="bg-backdrop rounded-md"  name="position" id="position" />
                         <x-primary-button type="submit">Save</x-primary-button>
                     </form>
                     <form action="{{route('user.update',$user)}}" method="post" >
                         @csrf
                         <x-text-input hidden value="user_level" name="update"></x-text-input>
-                        <x-input-label for="user_level" class="inline">user_level</x-input-label >
+                        <x-input-label for="user_level" class="inline">{{__('Level')}} </x-input-label >
                         <select class="bg-backdrop rounded-md"  name="user_level" id="user_level">
                             <option value="{{$user->user_level}}">{{$user->user_level}}</option>
                             <option value="MR">MR</option>
@@ -145,7 +145,7 @@
             @can('manage_users', Auth::user())
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4">
                 <div class="p-6  border-b border-gray-200">
-                    <h3>Update Parmission</h3>
+                    <h3>{{__('Update Parmission')}}</h3>
                     <div class="grid grid-cols-3 gap-4">
                             <form action="{{route('user.permission',$user)}}" method="post" >
                                 @csrf
@@ -196,7 +196,7 @@
                                     <x-primary-button class="w-full">can publish_document</x-primary-button>
                                 </form>
                         </div>
-                        <h3>Update Role</h3>
+                        <h3>{{__('Update Role')}}</h3>
                         <div class="grid gap-4">
                             <form action="{{route('user.permission',$user)}}" method="post" >
                                 @csrf
