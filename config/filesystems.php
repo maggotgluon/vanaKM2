@@ -70,9 +70,9 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
-        public_path('FilePDF') => storage_path('app/FilePDF'),
-        public_path('TrainPDF') => storage_path('app/TrainPDF'),
+        public_path('storage') => storage_path('app/public/'),
+        public_path('FilePDF') => storage_path('app/FilePDF/'),
+        public_path('TrainPDF') => storage_path('app/TrainPDF/'),
     ],
 
 ];

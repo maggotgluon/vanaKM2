@@ -97,6 +97,9 @@
                     <span class="text-sm ">last update {{$documents->updated_at}}</span> 
                 
                     <br>
+                    <span class="text-sm {{nameFilter($documents->Doc_Status)}}">
+                        {{$documents->Doc_Location}}
+                    </span>
                     
                     <!-- {{ $documents }} -->
                     <!-- {{ Auth::user()->id }} -->

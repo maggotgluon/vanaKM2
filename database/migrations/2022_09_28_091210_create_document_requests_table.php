@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('Doc_Code')->unique(); // Dar number
             $table->string('Doc_Name'); // file name and document run number
+            $table->string('Doc_FullName')->nullable(); // file name and document run number
 
             $table->string('Doc_Type'); // type of document
             $table->string('Doc_Obj'); // register objection

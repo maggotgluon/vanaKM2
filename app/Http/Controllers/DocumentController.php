@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Document;
 use App\Models\DocumentRequest;
 
+use Illuminate\Support\Facades\Storage;
+
 class DocumentController extends Controller
 {
     // 
@@ -19,9 +21,12 @@ class DocumentController extends Controller
         $doc = Document::where('Doc_Code',$Doc_Code)->firstOrFail();  
         $dar = DocumentRequest::where('Doc_Code',$Doc_Code)->firstOrFail();   
         // $dar = $doc->Document()->where('Doc_Code',$Doc_Code)->get();
-        // dd($Doc_Code,$doc,$dar);
+        $file = Storage::get($doc->Doc_Location);
+        $visibility = Storage::getVisibility($doc->Doc_Location);
+        $lastModified = Storage::lastModified($doc->Doc_Location);
+        // dd($doc->Doc_Location,$visibility, $lastModified);
 
-        return view('document.show',['documents'=>$doc,'dar'=>$dar]);
+        return view('document.show',['documents'=>$doc,'dar'=>$dar,'file'=>$file ]);
     }
     public function create(){
         // dd('doc create');

@@ -27,6 +27,7 @@
                     
                     <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
                     
+                    {{$documents->Doc_Location}}
                     <div class="bg-gray-300 p-4">
                         <x-button onclick="savePdf(file)" class="w-max py-1 m-2">download</x-button>
                         <x-button id="prev" class="w-max py-1 m-2">Previous</x-button>
@@ -34,6 +35,7 @@
                         
                         <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
                     </div>
+                    {{asset($documents->Doc_Location)}}
                     <canvas id="the-canvas" width="100%"></canvas>
                     <hr>
                     <script src="https://unpkg.com/downloadjs@1.4.7"></script>
@@ -55,7 +57,7 @@
         StandardFonts
     } = PDFLib
 
-    const file = "{{asset($dar->Doc_Location)}}"
+    const file = "{{asset($documents->Doc_Location)}}"
     // document.querySelector('#frame').src = url
     modifyPdf(file)
     async function modifyPdf(url) {

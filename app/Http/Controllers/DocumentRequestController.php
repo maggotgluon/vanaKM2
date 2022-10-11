@@ -126,13 +126,18 @@ class DocumentRequestController extends Controller
         
         $count = DocumentRequest::whereBetween('created_at',[$startYear,$endYear])->count();
         $DocCode = 'DAR'.date('Y').str_pad( $count+1 ,4,'0',STR_PAD_LEFT);
+
         // dd($code,$request->DocCode);
         //Version File
         $file = $request->file('file');
-        $docver = DocumentRequest::where('Doc_Name',$request->Doc_Name)->count();
+        $extension = $file->getClientOriginalExtension();
+        
+        
+        $docver = Document::where('Doc_Name',$request->Doc_Name)->count();
         $docname = $request->Doc_Name;
-        $NameFile = $docname.'-'.$docver;
-
+        $timestamp = Carbon::now()->getTimestamp();
+        $NameFile = $docname.'-'.$docver.'-'.$timestamp.$extension;
+        // dd(Carbon::now()->locale('th_TH')->toDateString());
         // dd($NameFile);
 
         $upload_location = '/FilePDF/';
@@ -157,7 +162,7 @@ class DocumentRequestController extends Controller
         $documents->Doc_Status ='0';
 
         // loc / upload file / rename to
-        Storage::putFileAs($upload_location,$file,$docname.'-'.$docver);
+        Storage::putFileAs($upload_location,$file,$docname.'-'.$docver.'.pdf');
         // Storage::putFileAs($upload_location,$file,doc_name.'-'.ver);
 
         $visibility = Storage::getVisibility($upload_location);
@@ -188,6 +193,13 @@ class DocumentRequestController extends Controller
         $toastMsg = 'Document '.$reg_doc->Doc_Name.' Approved!';
         if($approve === 'mrapproved'){
             $reg_doc->Doc_Status = '2';
+
+            // $files = Storage::get($reg_doc->Doc_Location);
+            $newPath = 'storage/'.$reg_doc->Doc_Name.'.pdf';
+
+            
+            // dd($reg_doc->Doc_Location,$newPath,$files);
+
             $documents = Document::updateOrCreate(
                 [
                     'Doc_Name' => $reg_doc->Doc_Name
@@ -198,9 +210,14 @@ class DocumentRequestController extends Controller
                     'Doc_Type' => $reg_doc->Doc_Type,
                     'Doc_Life' => $reg_doc->Doc_Life,
                     'Doc_ver' => $reg_doc->Doc_ver,
+                    'Doc_Location' => $newPath,
                     'Doc_DateApprove' => now()
                 ]
             );
+            // $documents->Doc_Location = 'public/'.$reg_doc->Doc_Name.'.pdf';
+            Storage::copy($reg_doc->Doc_Location, $newPath);
+            $size = Storage::size($newPath);
+            // dd($size);
             $documents->save();
             $toastMsg = 'MR Approved!';
         }else if($approve === 'approved'){

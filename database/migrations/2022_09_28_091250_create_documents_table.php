@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('Doc_Type'); // type of document
             $table->integer('Doc_Life'); // document life  time 
             $table->integer('Doc_ver'); // document version
+            $table->string('Doc_Location')->nullable(); // file location
             $table->date('Doc_DateApprove')->nullable(); //approved date
         });
     }
