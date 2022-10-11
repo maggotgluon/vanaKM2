@@ -171,7 +171,7 @@ class DocumentRequestController extends Controller
 
         // dd($documents);
         $documents->save();
-        Log::info('user '.$documents->User_id.' Request '.$documents->Doc_Code);
+        Log::channel('document')->info('user '.$documents->User_id.' Request '.$documents->Doc_Code);
         
         return redirect()->route('regDoc.create')->with('success', 'Document added!');
         // return view('document.reg.create',['users'=>Auth::user()]);
@@ -225,7 +225,7 @@ class DocumentRequestController extends Controller
         
 
 
-        Log::info('user '.$reg_doc->User_Approve.$approve.' Request '.$reg_doc->Doc_Code);
+        Log::channel('document')->info('user '.User::find($reg_doc->User_Approve)->name.' '.$approve.' Request '.$reg_doc->Doc_Code);
         //disible mail service during test
 
         // Mail::send(['text'=>'mail'], array('name'=>"Virat Gandhi"), function($message) {
