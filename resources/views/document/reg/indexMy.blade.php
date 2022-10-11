@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('My Requested Document') }}
+            {{ __('My Registed Document') }}
         </h2>
     </x-slot>
 
@@ -41,12 +41,12 @@
                     <table id="table_id" class="display">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th>Status</th>
-                                <th>Last Update</th>
-                                <th>Action</th>
-                                <th>Remark</th>
+                                <th> {{ __('Dar Number') }}</th>
+                                <th> {{ __('Document Type') }}</th>
+                                <th> {{ __('Document_Status') }}</th>
+                                <th> {{ __('Date') }}</th>
+                                <th> {{ __('View_Document') }}</th>
+                                <th> {{ __('Remark') }}</th>
                             </tr>
                         
                         </thead>

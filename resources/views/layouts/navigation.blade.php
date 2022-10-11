@@ -53,7 +53,7 @@
 
                             @can('publish_document', Auth::user())
                             <x-responsive-nav-link :href="route('regDoc.allMR')"  :active="request()->routeIs('regDoc.allMR')">
-                                    {{ __('MR Document Management') }}
+                                    {{ __('MR Requested Document') }}
                             </x-responsive-nav-link>
                             @endcan
 
