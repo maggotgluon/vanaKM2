@@ -13,16 +13,10 @@
 
                     <form action="{{route('regTraining.create')}}" method="post" enctype="multipart/form-data">
                     @csrf
-                        <h2 class="text-lg font-bold">FM-LDS-008</h2>
-                        <hr class="col-span-2">
-                        <div class="py-2">
-                        <!-- TRAINCODE :
-                        {{'TRAIN'.date('Y').str_pad( $count_train_code+1 ,4,'0',STR_PAD_LEFT)}}
-
-                        
-
-                        <input class="bg-backdrop rounded-md"  name="DocCode" type="text"  value="{{'TRAIN'. date('Y').str_pad($count_train_code+1,4,'0',STR_PAD_LEFT)}}"> 
-                         -->
+                     
+                    
+                        <!-- <div class="py-2 hidden">
+                    
                             <x-input-label 
                                 for="DocCode" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('TRAINCODE')}} : 
@@ -32,10 +26,11 @@
                                 value="{{'TRAIN'. date('Y').str_pad($count_train_code+1,4,'0',STR_PAD_LEFT)}}"
                                 type="text" readonly/>
 
-                        </div>
-                        <span>{{__('TRAINING OUTLINE')}} : </span>
-                        <hr>
-                        <!-- SUBJECT หัวข้อเรื่อง: ________________________________ -->
+                        </div> -->
+
+                        <h2 class=" z-20 text-2xl mb-4  font-bold text-center">{{__('TRAINING OUTLINE')}}  </h2>
+                        <hr class="col-span-2">
+                        <h2 class="text-lg font-bold">FM-LDS-008</h2>
                             <x-input-label 
                                 for="SUBJECT" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('SUBJECT')}} : 
@@ -57,12 +52,13 @@
                                 for="starttraindate" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('Date Strat')}} : 
                             </x-input-label>
-                            <x-text-input 
-                                name="starttraindate" id="starttraindate"
-                                value="{{old( 'starttraindate' ,Carbon\Carbon::now()->toDateString()) }}"
-                                min="{{Carbon\Carbon::now()->toDateString()}}"
-                                
-                                type="date" />
+                            
+                                <x-text-input 
+                                    name="starttraindate" id="starttraindate"
+                                    class="" maxlength="3"
+                                    value="{{old( 'starttraindate' ,Carbon\Carbon::now()->addDay(3)->toDateString()) }}"
+                                    min="{{Carbon\Carbon::now()->addDay(3)->toDateString()}}"
+                                    type="date" />
                             <!-- <label for="date">วันที่เริ่มการอบรม:</label>
                             <input type="date" class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-1/4" id="starttraindate" name="starttraindate"> -->
                             @error('starttraindate')
@@ -72,12 +68,13 @@
                                 for="endtraindate" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('Date End')}} : 
                             </x-input-label>
-                            <x-text-input 
-                                name="endtraindate" id="endtraindate"
-                                value="{{old( 'endtraindate' ,Carbon\Carbon::now()->toDateString()) }}"
-                                min="{{Carbon\Carbon::now()->toDateString()}}"
-                                
-                                type="date" />
+                                <x-text-input 
+                                    name="endtraindate" id="endtraindate"
+                                    class="" maxlength="3"
+                                    value="{{old( 'endtraindate' ,Carbon\Carbon::now()->addDay(3)->toDateString()) }}"
+                                    min="{{Carbon\Carbon::now()->addDay(3)->toDateString()}}"
+                                    type="date" />
+
                            
                             <!-- <label for="date">วันสิ้นสุดการอบรม:</label>
                             <input type="date" class="bg-slate-100 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-fullbg-backdrop-dark rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-1/4" id="endtraindate" name="endtraindate"> -->
@@ -133,7 +130,7 @@
 
                         <hr class="w-1/2 m-auto mt-10 mb-2 border-2">
                         <h3 class="text-lg">{{__('SubjectDetails')}}</h3>
-                        <div class="flex justify-between gap-2">
+                        <div class="flex justify-start  gap-2">
                             <div class="w-2/4">
                                 
                                 <x-input-label for="SubjectDetails"><span class="required text-brand_orange text-xs"> * </span>{{__('description')}} </x-input-label>
@@ -165,7 +162,7 @@
                                  @enderror
                             </div>
 
-                            <div class="w-1/6">
+                            <!-- <div class="w-1/6">
                                 <x-input-label for="SubjectMaterial">
                                 {{__('Material')}} :  
                                 </x-input-label>
@@ -176,9 +173,9 @@
                                 @error('SubjectMaterial')
                                          <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                                  @enderror
-                            </div>
+                            </div> -->
 
-                            <div>
+                            <!-- <div>
 
                                 <x-input-label for="SubjectRemark">
                                 {{__('Remark')}} :  
@@ -187,13 +184,13 @@
                                  id="SubjectRemark" name="SubjectRemark">
                                 {{old('SubjectRemark')}}
                                 </x-textarea-input><br>
-                            </div>
+                            </div> -->
 
 
                         </div>
                         <hr class="w-1/2 m-auto mt-10 mb-2 border-2">
                         <h3 class="text-lg">{{__('Activity')}}</h3>
-                        <div class="flex justify-between gap-2">
+                        <div class="flex justify-start gap-2">
                             <div class="w-2/4">
                                 
                                 <x-input-label for="ActivityDetails">{{__('description')}} :</x-input-label>
@@ -225,7 +222,7 @@
                                  @enderror
                             </div>
 
-                            <div class="w-1/6">
+                            <!-- <div class="w-1/6">
                                 <x-input-label for="ActivityMaterial">
                                 {{__('Material')}} :  
                                 </x-input-label>
@@ -236,9 +233,9 @@
                                 @error('ActivityMaterial')
                                          <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                                  @enderror
-                            </div>
+                            </div> -->
 
-                            <div>
+                            <!-- <div>
 
                                 <x-input-label for="ActivityRemark">
                                      {{__('Remark')}} :  
@@ -247,13 +244,13 @@
                                  id="ActivityRemark" name="ActivityRemark">
                                 {{old('ActivityRemark')}}
                                 </x-textarea-input><br>
-                            </div>
+                            </div> -->
 
 
                         </div>
                         <hr class="w-1/2 m-auto mt-10 mb-2 border-2">
                         <h3 class="text-lg">{{__('Assessment')}}</h3>
-                        <div class="flex justify-between gap-2">
+                        <div class="flex justify-start gap-2">
                             <div class="w-2/4">
                                 
                                 <x-input-label for="AssessmentDetails"><span class="required text-brand_orange text-xs"> * </span>{{__('description')}} :</x-input-label>
@@ -285,7 +282,7 @@
                                  @enderror
                             </div>
 
-                            <div class="w-1/6">
+                            <!-- <div class="w-1/6">
                                 <x-input-label for="AssessmentMaterial"><span class="required text-brand_orange text-xs"> * </span>
                                 {{__('Material')}} :  
                                 </x-input-label>
@@ -296,8 +293,8 @@
                                 @error('AssessmentMaterial')
                                          <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                                  @enderror
-                            </div>
-
+                            </div> -->
+<!-- 
                             <div>
 
                                 <x-input-label for="AssessmentRemark">
@@ -307,10 +304,25 @@
                                  id="AssessmentRemark" name="AssessmentRemark">
                                 {{old('AssessmentRemark')}}
                                 </x-textarea-input><br>
+                            </div> -->
+                        </div>
+                        <hr class="w-1/2 m-auto mt-10 mb-2 border-2">
+                        <h3 class="text-lg">{{__('Remark')}}</h3>
+                        <div class="flex justify-start gap-2">
+                            <div class="w-full">
+                                
+                                <x-input-label for="Remark"></x-input-label>
+                                <x-textarea-input class="w-3/4"
+                                 id="Remark" name="Remark">
+                                {{old('Remark')}}
+                                </x-textarea-input>
+                              
+
                             </div>
 
-
+                            
                         </div>
+                
                         <hr class="my-4">
                         <h2 class="text-lg font-bold">FM-LDS-009</h2>
                         <span> {{__('Assessment process')}} </span>
@@ -336,7 +348,12 @@
                                          <span class=" center  text-blue-800 bg-red-300 p-2 m-2 rounded-full " >{{$message}}</span> 
                                  @enderror
                                  </div>
-                        <hr class="w-1/2 m-auto mt-10 mb-2 border-2">
+
+
+
+
+                                 
+                        <hr class="w-1/2 m-auto mt-4 mb-2 border-2">
                         <!-- "Subject Details รายละเอียดการอบรม"
                         "Description รายละเอียด"
                         Durationเวลา(นาที)
@@ -392,11 +409,11 @@
                         <!-- คำถาม/แบบทดสอบ/หัวข้อการปฏิบัติงาน :  -->
 
 
-                    <h3 class="text-lg"> {{__('Attachment')}} :  </h3>
+                    <h3 class="text-lg"> {{__('AttachmentTrain')}} :  </h3>
                     <!-- <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full " >*** กรูณารวมเป็นไฟล์เดียว เฉพาะ PDF</span>  -->
                     <x-input-label 
                                     for="file" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
-                                    {{__('Attachment')}} : 
+                                    {{__('AttachmentTrain')}} : 
                                 </x-input-label>
                                 <x-text-input 
                                     name="file" id="file"

@@ -14,17 +14,18 @@
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
 
-          <button onclick="window.print();" class="block  float-right rounded-lg ring p-1 ring-blue-600 bg-blue-500 font-bold text-white  print:hidden  "> PRINT </button>
+        <button onclick="window.print();" class=" z-10 block  float-right rounded-lg ring p-1 ring-blue-600 bg-blue-500 font-bold text-white  print:hidden  "> PRINT </button>
+          
 
           <div id="FM-LDS-009" class="">
+         
 
-            <!-- <span class="text-sm text-gray-300">FM-LDS-009-rev.00-แนวทางการประเมินผลการอบรมในการปฏิบัติงาน</span> -->
-
-            <h2 class="text-2xl mb-4 font-bold text-center">
-              DOCUMENT ACTION REQUEST
-              <br>
-              ใบแจ้งขอดำเนินการด้านเอกสาร
-            </h2>
+            <h2 class=" z-20 text-2xl mb-4  font-bold text-center">
+              DOCUMENT ACTION REQUEST</h2>
+              <h2 class="text-2xl mb-4 font-bold text-center">
+              ใบแจ้งขอดำเนินการด้านเอกสาร</h2>
+              
+            
 
 
             <table class="md:table-auto p-4  w-full mt-4">
@@ -85,13 +86,13 @@
 
               <div class="w-1/4">
                 <div>
-                  <span class=" font-bold">{{__('Doc Code')}} : </span> {{$DarForm->Doc_Code}}
+                  <span class=" font-bold">{{__('Doc Code')}} : </span> {{$DarForm->Doc_Name}}
                 </div>
               </div>
 
               <div class="w-3/4 float-right ">
                   <div>
-                  <span class=" font-bold">{{__('Document Name')}} : </span>{{$DarForm->Doc_Name}}
+                  <span class=" font-bold">{{__('Document Name')}} : </span>{{$DarForm->Doc_FullName}}
                   </div>
               </div>
             </div>
@@ -118,7 +119,7 @@
 
               <div class="w-1/6 float-right ">
                   <div>
-                  <span class=" font-bold">{{__('DocumentAge')}} : </span>{{$DarForm->Doc_Life}}
+                  <span class=" font-bold">{{__('DocumentAge')}} : </span>{{$DarForm->Doc_Life}} YEAR
                   </div>
               </div>
               <div class="w-1/6 float-right ">
@@ -149,7 +150,7 @@
 
             <tbody>
               <tr>
-                <td class="table-auto border"><span class=" p-4 font-bold">{{__('Name')}} 1: </span>
+                <td class="table-auto border"><span class=" p-4 font-bold">{{__('Name')}} : </span>
                   <span>
                     {{$DarForm->User_MRApprove}}
 
@@ -167,7 +168,7 @@
                   </span><br>
                   <span class=" p-4 font-bold">{{__('Date')}} :</span>
                   <span>
-                    {{$date['Date_Approve']}}
+                    {{$date['Doc_DateApprove']}}
                   </span>
                 </td>
 

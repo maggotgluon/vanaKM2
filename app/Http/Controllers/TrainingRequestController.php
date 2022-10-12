@@ -104,16 +104,16 @@ class TrainingRequestController extends Controller
             'Objective' => $request->Objective,
             'SubjectDetails' => $request->SubjectDetails,
             'SubjectTime' => $request->SubjectTime,
-            'SubjectMaterial' => $request->SubjectMaterial,
-            'SubjectRemark' => $request->SubjectRemark,
-            'ActivityDetail' => $request->ActivityDetail,
+            // 'SubjectMaterial' => $request->SubjectMaterial,
+            // 'SubjectRemark' => $request->SubjectRemark,
+            'ActivityDetails' => $request->ActivityDetails,
             'ActivityTime' => $request->ActivityTime,
-            'ActivityMaterial' => $request->ActivityMaterial,
-            'ActivityRemark' => $request->ActivityRemark,
-            'AssessmentDetail' => $request->AssessmentDetail,
+            // 'ActivityMaterial' => $request->ActivityMaterial,
+            // 'ActivityRemark' => $request->ActivityRemark,
+            'AssessmentDetails' => $request->AssessmentDetails,
             'AssessmentTime' => $request->AssessmentTime,
-            'AssessmentMaterial' => $request->AssessmentMaterial,
-            'AssessmentRemark' => $request->AssessmentRemark,
+            // 'AssessmentMaterial' => $request->AssessmentMaterial,
+            'Remark008' => $request->Remark008,
         );
 
         $d009 = array(
@@ -127,7 +127,6 @@ class TrainingRequestController extends Controller
         //json_encode
         $d008 = json_encode($d008);
         $d009 = json_encode($d009);
-
 
         $currentYear = date("Y");
         $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
@@ -149,63 +148,63 @@ class TrainingRequestController extends Controller
         //  dd( $full_path);
         // dd(json_encode($d008));
 
-        //   //ตรวจสอบข้อมูล
-        // $request->validate(
-        //     [
-        //         'SUBJECT'=>'required',
-        //         'starttraindate'=>'required',
-        //         'endtraindate'=>'required',
-        //         'starttraintime'=>'required',
-        //         'endtraintime'=>'required',
-        //         'Objective'=>'required',
-        //   *     'SubjectDetails'=>'required',
-        //   *     'SubjectTime'=>'required',
-        //         'SubjectMaterial'=>'required',
-        //         'ActivityDetail'=>'required',
-        //         'ActivityTime'=>'required',
-        //         'ActivityMaterial'=>'required',
-        //   *     'AssessmentDetail'=>'required',
-        //   *     'AssessmentTime'=>'required',
-        //         'AssessmentMaterial'=>'required',
-        //         'checkbox'=> 'required',
-        //         'Testing009'=>'required',
-        //         'pass'=>'required',
-        //         'nopass'=>'required',
-        //         'file'=>'required',
+          //ตรวจสอบข้อมูล
+        $request->validate(
+            [
+                'SUBJECT'=>'required',
+                'starttraindate'=>'required',
+                'endtraindate'=>'required',
+                'starttraintime'=>'required',
+                'endtraintime'=>'required',
+                'Objective'=>'required',
+                'SubjectDetails'=>'required',
+                'SubjectTime'=>'required',
+                // 'SubjectMaterial'=>'required',
+                'ActivityDetails'=>'required',
+                'ActivityTime'=>'required',
+                // 'ActivityMaterial'=>'required',
+               'AssessmentDetails'=>'required',
+               'AssessmentTime'=>'required',
+                // 'AssessmentMaterial'=>'required',
+                'checkbox'=> 'required',
+                'Testing009'=>'required',
+                'pass'=>'required',
+                'nopass'=>'required',
+                'file'=>'required'
 
-        //         // 'info'=>'required',
-        //         // // 'usedate'=>'required',
-        //         // // 'Year'=>'required',
-        //         // 'file'=>'required|mimes:pdf|size:10mb',
+                // 'info'=>'required',
+                // // 'usedate'=>'required',
+                // // 'Year'=>'required',
+                // 'file'=>'required|mimes:pdf|size:10mb',
 
-        //     ],
-        //     [
+            ],
+            [
 
-        //         'SUBJECT.required' => "กรุณาป้อนชื่อเอกสาร",
-        //         'starttraindate.required' => "กรุณาป้อนข้อมูล",
-        //         'endtraindate.required' => "กรุณาป้อนข้อมูล",
-        //         'starttraintime.required' => "กรุณาป้อนข้อมูล",
-        //         'endtraintime.required' => "กรุณาป้อนข้อมูล",
-        //         'Objective.required' => "กรุณาป้อนข้อมูล",
-        //         'SubjectDetails.required' => "กรุณาป้อนข้อมูล",
-        //         'SubjectTime.required'=>"กรุณาป้อนข้อมูล",
-        //         'SubjectMaterial.required'=>"กรุณาป้อนข้อมูล",
-        //         'ActivityDetail.required'=>"กรุณาป้อนข้อมูล",
-        //         'ActivityTime.required'=>"กรุณาป้อนข้อมูล",
-        //         'ActivityMaterial.required'=>"กรุณาป้อนข้อมูล",
-        //         'AssessmentDetail.required'=>"กรุณาป้อนข้อมูล",
-        //         'AssessmentTime.required'=>"กรุณาป้อนข้อมูล",
-        //         'AssessmentMaterial.required'=>"กรุณาป้อนข้อมูล",
-        //         'Testing009.required'=>"กรุณาป้อนข้อมูล",
-        //         'pass.required'=>"กรุณาป้อนข้อมูล",
-        //         'nopass.required'=>"กรุณาป้อนข้อมูล",
-        //         'file.required'=>"กรุณาป้อนข้อมูล",
-        //         // 'file.mimes' => "กรุณาเลือกไฟล์ PDF เท่านั้น",
-        //         // 'file.size' => "กรุณาเลือกไฟล์ PDF ขนาดไม่เกิน 10 MB",
-        //         'checkbox.required'=>"กรุณาเลือกอย่างน้อยหนึ่งข้อ",
+                'SUBJECT.required' => "กรุณาป้อนชื่อเอกสาร",
+                'starttraindate.required' => "กรุณาป้อนข้อมูล",
+                'endtraindate.required' => "กรุณาป้อนข้อมูล",
+                'starttraintime.required' => "กรุณาป้อนข้อมูล",
+                'endtraintime.required' => "กรุณาป้อนข้อมูล",
+                'Objective.required' => "กรุณาป้อนข้อมูล",
+                'SubjectDetails.required' => "กรุณาป้อนข้อมูล",
+                'SubjectTime.required'=>"กรุณาป้อนข้อมูล",
+                // 'SubjectMaterial.required'=>"กรุณาป้อนข้อมูล",
+                'ActivityDetails.required'=>"กรุณาป้อนข้อมูล",
+                'ActivityTime.required'=>"กรุณาป้อนข้อมูล",
+                // 'ActivityMaterial.required'=>"กรุณาป้อนข้อมูล",
+                'AssessmentDetails.required'=>"กรุณาป้อนข้อมูล",
+                'AssessmentTime.required'=>"กรุณาป้อนข้อมูล",
+                // 'AssessmentMaterial.required'=>"กรุณาป้อนข้อมูล",
+                'Testing009.required'=>"กรุณาป้อนข้อมูล",
+                'pass.required'=>"กรุณาป้อนข้อมูล",
+                'nopass.required'=>"กรุณาป้อนข้อมูล",
+                // 'file.required'=>"กรุณาป้อนข้อมูล",
+                // 'file.mimes' => "กรุณาเลือกไฟล์ PDF เท่านั้น",
+                // 'file.size' => "กรุณาเลือกไฟล์ PDF ขนาดไม่เกิน 10 MB",
+                'checkbox.required'=>"กรุณาเลือกอย่างน้อยหนึ่งข้อ",
 
-        //     ]
-        // );
+            ]
+        );
 
         // // loc / upload file / rename to
         // dd($upload_location,$file,$docname,$docver);
@@ -227,7 +226,7 @@ class TrainingRequestController extends Controller
         $doc_train->Doc_Location = $full_path;
         $doc_train->Doc_Status = '0';
 
-        // dd($request, $doc_train);
+        
 
         $doc_train->save();
         Log::channel('training')->info( $doc_train->Doc_Code . 'requested by user '. User::find($doc_train->user_id)->name);
