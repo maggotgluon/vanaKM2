@@ -83,7 +83,7 @@
         
             <div class=" flex justify-self-start gap-2 w-full px-2 py-1">
                 <div class="w-2/5">
-                <span class="font-bold " >Trained by: </span>{{ Auth::user()->name }}</div>
+                <span class="font-bold " >Trained by: </span>{{$user->name }}</div>
                 <div class="w-1/3">
                 <span class="font-bold " >Position: </span>{{ Auth::user()->name }}</div>
                 <div class="w-1/5">
@@ -92,20 +92,20 @@
 
             <div class=" flex justify-self-start gap-2 w-full px-2 py-1">
                 <div class="w-2/5">
-                <span class="font-bold " >Acknowledge by: </span>{{ Auth::user()->name }}</div>
+                <span class="font-bold " >Acknowledge by: </span>MR >name </div>
                 <div class="w-1/3">
-                <span class="font-bold " >Position: </span>{{ Auth::user()->name }}</div>
+                <span class="font-bold " >Position: </span>MR</div>
                 <div class="w-1/5">
-                <span class="font-bold " >Date: </span>  {{$D008->created_at }}</div>
+                <span class="font-bold " >Date: </span> MR DATE APPOVRE</div>
             </div>
 
             <div class=" flex justify-self-start gap-2 w-full px-2 py-1">
                 <div class="w-2/5">
-                <span class="font-bold " >Reviewed by: </span>{{ Auth::user()->name }}</div>
+                <span class="font-bold " >Reviewed by: </span>{{$D008->User_Approve }}</div>
                 <div class="w-1/3">
                 <span class="font-bold " >Position: </span>{{ Auth::user()->name }}</div>
                 <div class="w-1/5">
-                <span class="font-bold " >Date: </span> {{ $f008['endtraindate'] }}</div>
+                <span class="font-bold " >Date: </span> {{$D008->Doc_DateApprove }}</div>
             </div>
         
     </div>

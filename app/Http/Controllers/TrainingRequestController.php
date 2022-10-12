@@ -15,8 +15,13 @@ class TrainingRequestController extends Controller
 {
     private function InputToDate($Input)
     {
-        $Date = new Carbon($Input);
-        return date_format($Date,"d F Y");
+        if($Input!=null) {
+            $Date = new Carbon($Input);
+            $Date = date_format($Date,"d F Y");
+            }
+            else 
+             $Date = "";
+            return  $Date;
     }
     //
     public function all(){
@@ -63,8 +68,17 @@ class TrainingRequestController extends Controller
     public function form008($Doc_Code){
         $d008 =TrainingRequest::where('Doc_Code',$Doc_Code)->firstOrFail() ;
         $sub_d008 = json_decode($d008->Doc_008, TRUE);
-        // dd($sub_d008);
-        return view('training.reg.f-008', ['f008'=>$sub_d008],['D008'=>$d008]);
+        $Doc_DateApprove =  $this->InputToDate($d008->Doc_DateApprove);
+        $Doc_DateMRApprove =  $this->InputToDate($d008->Doc_DateMRApprove);
+
+        $date = array(
+            'Doc_DateMRApprove'=>$Doc_DateMRApprove,
+            'Doc_DateApprove'=>$Doc_DateApprove
+        );
+
+        $user=User::find($d008->user_id);
+        // dd($user);
+        return view('training.reg.f-008', ['f008'=>$sub_d008],['D008'=>$d008,'user'=>$user,'date',$date]);
 
     }
     public function form009($Doc_Code){ 
