@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('User Manage') }}
+            {{ __('Manage User') }}
         </h2>
     </x-slot>
 
@@ -50,7 +50,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <h2>list of all user</h2>
+                    <h2 class="font-semibold text-xl text-gray-800 leading-tight"> {{ __('ListAllUser') }}</h2>
                     
                     <div class="flex gap-4 py-2">
                         <form method="post" action="{{ route('user.allFilter') }}">
@@ -79,7 +79,7 @@
                     
                         <form method="post" action="{{ route('user.allFilter') }}">
                         @csrf
-                        {{__('User Level')}}
+                        {{__('Level')}}
                             @isset($data->level)
                             <input id="levelValue" hidden value="{{$data->level}}">
                             @endisset
@@ -98,7 +98,7 @@
                     <table id="table_id" class="display">
                     <thead>
                         <tr>
-                            <th>{{__('ID')}}</th>
+                            <th>{{__('IDSTAFF')}}</th>
                             <th>{{__('Name')}}</th>
                             <th>{{__('Department')}}</th>
                             <th>{{__('Position')}}</th>
