@@ -20,38 +20,40 @@
                     <hr>
                 </div>
             </div>
-
-
+            <div class="grid grid-cols-2 gap-2">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4">
                 <div class="p-6  border-b border-gray-200">
                     <h3>{{__('Update Password')}}</h3>
-                    <form action="{{route('user.changePassword',$user)}}" method="post" >
+                    <form action="{{route('user.changePassword',$user)}}" method="post">
                         @csrf
-                        <div>
-                            <x-input-label for="current_password" class="inline">{{__('Current Password')}}</x-input-label>
+                        <div class="grid grid-cols-2 gap-4 pb-2">
+                            <x-input-label for="current_password" class="inline ml-auto my-auto">{{__('Current Password')}}</x-input-label>
                             <x-text-input required value="{{old('current_password') }}" type="password" name="current_password" id="current_password" />
 
                             @error('current_password')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
                             @enderror
                         </div>
-                        <div>
-                            <x-input-label for="new_password" class="inline">{{__('New Password')}}</x-input-label>
+                        <div class="grid grid-cols-2 gap-4 pb-2">
+                            <x-input-label for="new_password" class="inline ml-auto my-auto">{{__('New Password')}}</x-input-label>
                             <x-text-input required value="{{old('new_password') }}" type="password" name="new_password" id="new_password" />
 
                             @error('new_password')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
                             @enderror
                         </div>
-                        <div>
-                            <x-input-label for="new_confirm_password" class="inline">{{__('Confirm Password')}}</x-input-label>
+                        <div class="grid grid-cols-2 gap-4 pb-2">
+                            <x-input-label for="new_confirm_password" class="inline ml-auto my-auto">{{__('Confirm Password')}}</x-input-label>
                             <x-text-input required value="{{old('new_confirm_password') }}" type="password" name="new_confirm_password" id="new_confirm_password" />
 
                             @error('new_confirm_password')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
                             @enderror
                         </div>
-                            <x-primary-button >changePassword</x-primary-button>
+
+                        <div class="grid grid-cols-1 gap-4 pb-2">
+                            <x-primary-button class="ml-auto">changePassword</x-primary-button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -63,23 +65,29 @@
 
                     <form action="{{route('user.update',$user)}}" method="post" >
                     @csrf
+                        <div class="grid grid-cols-2 gap-4 pb-2">
                         <x-text-input hidden value="email" name="update"></x-text-input>
-                        <x-input-label  for="email" class="inline">{{__('E-mail')}}</x-input-label >
+                        <x-input-label  for="email" class="inline ml-auto my-auto">{{__('E-mail')}}</x-input-label >
                         <x-text-input required value="{{$user->email}}" type="email" class="bg-backdrop rounded-md"  name="email" id="email" />
-                        <x-primary-button type="submit">Save</x-primary-button>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4 pb-2">
+                            <x-primary-button type="submit" class="ml-auto w-48">Save</x-primary-button>
+                            </div>
+                        
                     </form>
                 </div>
             </div>
-
+            </div>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4">
                 <div class="p-6  border-b border-gray-200">
                     <h3>{{__('Update User info')}}</h3>
 
-
-                    <form action="{{route('user.update',$user)}}" method="post" >
+                    <div class="grid grid-cols-2 gap-2">
+                    <form action="{{route('user.update',$user)}}" method="post">
                         @csrf
+                        <div class="grid grid-cols-2 gap-4 pb-2">
                             <x-text-input hidden value="department_head" name="update"></x-text-input>
-                            <x-input-label for="suser" class="inline"> {{__('Department Head')}}  </x-input-label >
+                            <x-input-label for="suser" class="inline ml-auto my-auto"> {{__('Department Head')}}  </x-input-label >
                             <select class="bg-backdrop rounded-md"  name="suser" id="suser">
                                 <option value="{{$user->department_head}}">{{$user->department_head}}</option>
                                 @foreach ($dp as $suser)
@@ -88,14 +96,20 @@
                                     @endif
                                 @endforeach
                             </select>
-                            <x-primary-button type="submit">Save</x-primary-button>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-4 pb-2">
+                            <x-primary-button type="submit" class="ml-auto w-48">Save</x-primary-button>
+                        </div>
                         </form>
 
                     @can('manage_users', Auth::user())
                     <form action="{{route('user.update',$user)}}" method="post" >
                         @csrf
+
+                        <div class="grid grid-cols-2 gap-4 pb-2">
                         <x-text-input hidden value="department" name="update"></x-text-input>
-                        <x-input-label for="department" class="inline">{{__('Department')}} </x-input-label >
+                        <x-input-label for="department" class="inline ml-auto my-auto">{{__('Department')}} </x-input-label >
                         <!-- <x-text-input value="{{$user->department}}" list="departments" type="text" class="bg-backdrop rounded-md"  name="department" id="department" /> -->
                         <select class="bg-backdrop rounded-md"  name="department" id="department">
                             <option value="{{$user->department}}">{{$user->department}}</option>
@@ -114,19 +128,29 @@
                             <option value="Retail">Retail</option>
                             <option value="Sales">Sales</option>
                         </select>
-                        <x-primary-button type="submit">Save</x-primary-button>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4 pb-2">
+                            <x-primary-button type="submit" class="ml-auto w-48">Save</x-primary-button>
+                        </div>
                     </form>
                     <form action="{{route('user.update',$user)}}" method="post" >
                         @csrf
+
+                        <div class="grid grid-cols-2 gap-4 pb-2">
                         <x-text-input hidden value="position" name="update"></x-text-input>
-                        <x-input-label for="position" class="inline">{{__('Position')}} </x-input-label >
+                        <x-input-label for="position" class="inline ml-auto my-auto">{{__('Position')}} </x-input-label >
                         <x-text-input value="{{$user->position}}" type="text" class="bg-backdrop rounded-md"  name="position" id="position" />
-                        <x-primary-button type="submit">Save</x-primary-button>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4 pb-2">
+                            <x-primary-button type="submit" class="ml-auto w-48">Save</x-primary-button>
+                        </div>
                     </form>
                     <form action="{{route('user.update',$user)}}" method="post" >
                         @csrf
+
+                        <div class="grid grid-cols-2 gap-4 pb-2">
                         <x-text-input hidden value="user_level" name="update"></x-text-input>
-                        <x-input-label for="user_level" class="inline">{{__('Level')}} </x-input-label >
+                        <x-input-label for="user_level" class="inline ml-auto my-auto">{{__('Level')}} </x-input-label >
                         <select class="bg-backdrop rounded-md"  name="user_level" id="user_level">
                             <option value="{{$user->user_level}}">{{$user->user_level}}</option>
                             <option value="MR">MR</option>
@@ -136,9 +160,13 @@
                             <option value="Supervisor">Supervisor</option>
                             <option value="Staff">Staff</option>
                         </select>
-                        <x-primary-button type="submit">Save</x-primary-button>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4 pb-2">
+                            <x-primary-button type="submit" class="ml-auto w-48">Save</x-primary-button>
+                        </div>
                     </form>
                     @endcan
+                    </div>
                 </div>
             </div>
 
