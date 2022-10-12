@@ -97,7 +97,7 @@
                                 <details>
                                     <summary>
                                         <a href="{{route('regDoc.view',$doc->Doc_Code)}}" class="hover:text-brand_blue">
-                                        {{$doc->Doc_Code}} : {{$doc->Doc_Name}} 
+                                        {{$doc->Doc_Code}} : {{$doc->Doc_Name}} {{$doc->Doc_FullName}} 
                                         @unless ($doc->Doc_ver===0)
                                             Rev {{$doc->Doc_ver}}
                                         @endunless

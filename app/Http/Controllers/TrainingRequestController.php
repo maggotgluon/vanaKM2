@@ -128,10 +128,18 @@ class TrainingRequestController extends Controller
         $d008 = json_encode($d008);
         $d009 = json_encode($d009);
 
+
+        $currentYear = date("Y");
+        $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
+        $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
+        
+        $countID = TrainingRequest::whereBetween('created_at',[$startYear,$endYear])->count();
+        // $docID = 'TRAIN'. date('Y').str_pad($countID+1,4,'0',STR_PAD_LEFT);
+        // dd($docID,$request->DocCode);
         //Version File
         $file = $request->file('file');
         $docver = TrainingRequest::where('Doc_Code', $request->DocCode)->count();
-        $docname = $request->DocCode;
+        $docname = 'TRAIN'. date('Y').str_pad($countID+1,4,'0',STR_PAD_LEFT);
         $NameFile = $docname . '-' . $docver;
         // dd($file);
         //Location File
@@ -222,7 +230,7 @@ class TrainingRequestController extends Controller
         // dd($request, $doc_train);
 
         $doc_train->save();
-        Log::channel('training')->info('user '. User::find($doc_train->User_id)->name .' Request '.$doc_train->Doc_Code);
+        Log::channel('training')->info( $doc_train->Doc_Code . 'requested by user '. User::find($doc_train->user_id)->name);
 
         return redirect()->route('regTraining.create')->with('success', 'Document added!');
         
@@ -281,7 +289,7 @@ class TrainingRequestController extends Controller
 
         // dd(document_request::find($add->id));
         
-
+        Log::channel('training')->info($reg_doc->Doc_Code.' '.$approve . ' by '. Auth::user()->name);
 
         //disible mail service during test
 

@@ -40,56 +40,56 @@ class DatabaseSeeder extends Seeder
         }
         fclose($csvFile);
 
-        $csvFile = fopen(base_path("database/data/docrec.csv"), "r");
-        $firstline = true;
-        while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
-            if (!$firstline) {
+        // $csvFile = fopen(base_path("database/data/docrec.csv"), "r");
+        // $firstline = true;
+        // while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
+        //     if (!$firstline) {
                 
-                \App\Models\DocumentRequest::factory()->create([
-                    'Doc_Code' => $data['1'],
-                    'Doc_Name' => $data['2'],
-                    'Doc_Type' => $data['3'],
-                    'Doc_Obj' => $data['4'],
-                    'Doc_Description' => $data['5'],
-                    'Doc_Life' =>1,
-                    'Doc_ver' => $data['7'],
-                    'Doc_StartDate' => fake()->date(),
-                    'Doc_Location' => $data['9'],
-                    'Doc_Status' =>0,
-                    'Doc_DateApprove' =>null,
-                    'User_Approve' =>null,
-                    'Doc_DateMRApprove' =>null,
-                    'User_MRApprove' =>null,
-                    'Access_Lv' =>null,
-                    'user_id' => 106
-                ]);    
-            }
-            $firstline = false;
-        }
-        fclose($csvFile);
+        //         \App\Models\DocumentRequest::factory()->create([
+        //             'Doc_Code' => $data['1'],
+        //             'Doc_Name' => $data['2'],
+        //             'Doc_Type' => $data['3'],
+        //             'Doc_Obj' => $data['4'],
+        //             'Doc_Description' => $data['5'],
+        //             'Doc_Life' =>1,
+        //             'Doc_ver' => $data['7'],
+        //             'Doc_StartDate' => fake()->date(),
+        //             'Doc_Location' => $data['9'],
+        //             'Doc_Status' =>0,
+        //             'Doc_DateApprove' =>null,
+        //             'User_Approve' =>null,
+        //             'Doc_DateMRApprove' =>null,
+        //             'User_MRApprove' =>null,
+        //             'Access_Lv' =>null,
+        //             'user_id' => 106
+        //         ]);    
+        //     }
+        //     $firstline = false;
+        // }
+        // fclose($csvFile);
 
 
-        $csvFile = fopen(base_path("database/data/trainrec.csv"), "r");
-        $firstline = true;
-        while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
-            if (!$firstline) {
-                \App\Models\TrainingRequest::factory()->create([
-                    'Doc_Code'=> $data[1],
-                    'Doc_008'=> $data[2],
-                    'Doc_009'=> $data[3],
-                    'Doc_DateApprove'=> null,
-                    'User_Approve'=> null,
-                    'Access_Lv'=> null,
+        // $csvFile = fopen(base_path("database/data/trainrec.csv"), "r");
+        // $firstline = true;
+        // while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
+        //     if (!$firstline) {
+        //         \App\Models\TrainingRequest::factory()->create([
+        //             'Doc_Code'=> $data[1],
+        //             'Doc_008'=> $data[2],
+        //             'Doc_009'=> $data[3],
+        //             'Doc_DateApprove'=> null,
+        //             'User_Approve'=> null,
+        //             'Access_Lv'=> null,
         
                     
-                    'Doc_Location'=> $data[9],
-                    'Doc_Status'=> 0,
+        //             'Doc_Location'=> $data[9],
+        //             'Doc_Status'=> 0,
         
-                    'user_id'=> 106
-                ]);    
-            }
-            $firstline = false;
-        }
-        fclose($csvFile);
+        //             'user_id'=> 106
+        //         ]);    
+        //     }
+        //     $firstline = false;
+        // }
+        // fclose($csvFile);
     }
 }

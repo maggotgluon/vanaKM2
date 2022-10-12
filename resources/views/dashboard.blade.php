@@ -39,6 +39,7 @@
                             <a href="{{route('training.view',$training->Doc_Code)}}" class="hover:text-brand_blue">
                                 {{$f008->SUBJECT}}<br>
                                 {{$user->find($training->user_id)->name}}<br>
+                                {{$user->where('staff_if',$training->staff_id)->name}}<br>
                                 {{__('Department')}} : {{$user->find($training->user_id)->department}}
                             </a>
                         </div>

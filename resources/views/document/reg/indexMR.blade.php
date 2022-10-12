@@ -40,7 +40,7 @@
                         @foreach ($documents as $document)
                         <!-- {{$document}} -->
                         <tr>
-                            <td>{{$document->Doc_Code}}:{{$document->Doc_Name}} <hr>
+                            <td>{{$document->Doc_Code}}:{{$document->Doc_Name}} {{$document->Doc_FullName}} <hr>
                                 <span>{{$document->Doc_Obj}} {{__('reason')}} {{$document->Doc_Description}}</span>
                             </td>
                             <td>{{$document->Doc_Type}}</td>
@@ -56,7 +56,7 @@
                             </td>
                             <td>{{$document->updated_at}}<br><span class="text-sm"> Create at :{{$document->created_at}}</span></td>
                             <td>
-                            <x-button href="{{asset($document->Doc_Location)}}" class="py-1 m-2 w-full block text-center" target="__blank"> View </x-button>
+                            <x-button href="{{route('regDoc.view',$document->Doc_Code)}}" class="py-1 m-2 w-full block text-center" target="__blank"> View </x-button>
                             
                             <form action="{{ route('regDoc.approve',$document->id,'approve=true') }}" method="post">
                             @csrf

@@ -14,9 +14,10 @@
                     <h2>{{ __('Request Document') }}</h2>
 
                     <hr>
-                    <form action="{{route('regDoc.create')}}" method="post" enctype="multipart/form-data" class="grid grid-cols-2 gap-2">
+                    <form action="{{route('regDoc.create')}}" method="post" enctype="multipart/form-data" 
+                    class="grid grid-cols-4 gap-2">
                         @csrf
-                        <div class="py-2 col-span-2">
+                        <div class="py-2 col-span-4">
                             
                             <x-input-label 
                                 for="date" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
@@ -28,7 +29,7 @@
                                 readonly type="date" />
 
                         </div>
-                        <div class="py-2">
+                        <div class="py-2 col-span-2">
 
                             <x-input-label 
                                 for="name" class="inline"><span class="required text-brand_orange text-xs"> * </span> 
@@ -64,7 +65,7 @@
                                 type="text" readonly/>
 
                         </div>
-                        <div class="py-2">
+                        <div class="py-2 col-span-2">
                             <x-input-label 
                                 for="departmenthead" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('Department Head')}} : 
@@ -76,25 +77,38 @@
                                 type="text" />
 
                         </div>
-                        <hr class="col-span-2">
-                        <div class="py-2">
+                        <div class="py-2 ">
                             <x-input-label 
                                 for="Doc_Name" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
                                 {{__('Document Name')}} : 
                             </x-input-label>
                             <x-text-input required
                                 name="Doc_Name" id="Doc_Name"
-                                class="" maxlength="10"
+                                class="w-full" 
                                 value="{{old('Doc_Name') }}"
                                 type="text" />
                             @error('Doc_Name')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
                             @enderror
                         </div>
+                        <div class="py-2 ">
+                            <x-input-label 
+                                for="Doc_FullName" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
+                                {{__('Document Full Name')}} : 
+                            </x-input-label>
+                            <x-text-input required
+                                name="Doc_FullName" id="Doc_FullName"
+                                class="w-full"
+                                value="{{old('Doc_FullName') }}"
+                                type="text" />
+                            @error('Doc_FullName')
+                            <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
+                            @enderror
+                        </div>
 
 
-                        <span>
-                            <label for="type"><span class="required text-brand_orange text-xs"> * </span> {{__('Document Type')}} : </label> 
+                        <span class="col-span-1">
+                            <x-input-label  for="type"><span class="required text-brand_orange text-xs"> * </span> {{__('Document Type')}} : </x-input-label > 
                             <select class="bg-backdrop rounded-md" name="type" id="type">
                                 <optgroup label="Document">
                                     <option disabled value="Document-SM">SM: System Manual</option>
@@ -134,12 +148,12 @@
                             </select>
                         </span>
 
-                        <div class="py-2">
+                        <div class="py-2 col-span-3">
                             <x-input-label for="objective" class="inline" >
                                  {{__('Objective')}} : 
                             </x-input-label>
                             <!-- <div class="flex flex-col md:flex-row justify-around flex-wrap"> -->
-                            <div class="grid grid-cols-2 grid-flow-dense">
+                            <div class="grid grid-cols-3 grid-flow-dense">
                                 <span>
                                     <x-text-input class="px-1 mx-1" type="radio" 
                                     name="objective" id="objective-1" value="ขอเอกสารใหม่" />
@@ -205,7 +219,7 @@
                             </div>
                         </div>
 
-                        <span class="flex flex-col">
+                        <span class="flex flex-col col-span-2">
                             <label for="info">  {{__('description')}} :  </label>
                             <x-textarea-input name="info" id="info" cols="30" rows="5"></x-textarea-input>
                             @error('info')
@@ -214,7 +228,7 @@
                         </span>
 
 
-                        <div class="flex flex-wrap justify-between gap-4">
+                        <div class="grid grid-cols-1 col-span-2">
                             <span class="px-4">
                                 <x-input-label 
                                     for="usedate" class="inline"> 
@@ -229,7 +243,7 @@
                             </span>
 
 
-                        <span class="px-4">
+                            <span class="px-4">
                                 <x-input-label 
                                     for="Year" class="inline"> 
                                     {{__('DocumentAge')}} : 
@@ -259,7 +273,7 @@
                         </div>
 
 
-                        <div class="flex justify-end mt-4 ">
+                        <div class="flex justify-end mt-4 col-span-4">
                             <x-primary-button>
                                 {{ __('Request Document') }}
                             </x-primary-button>
@@ -273,3 +287,30 @@
     </div>
     </div>
 </x-app-layout>
+
+
+<script type="module">
+    import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
+
+    const e=document.querySelectorAll('input');
+    e.forEach(ee => {
+        // console.log(ee.name,ee.value)
+        if(ee.type=='text' & ee.value ==''){
+            ee.value=faker.hacker.noun()
+        }
+
+        if(ee.type=='number' & ee.value ==''){
+            ee.value=faker.mersenne.rand()
+        }
+        if(ee.type=='date' & ee.value ==''){
+            dd  = faker.date.future()
+            ee.value= dd.toDateString()
+        }
+        
+    });
+
+    const e2=document.querySelectorAll('textarea');
+    e2.forEach(ee=>{
+        ee.value=faker.lorem.lines()
+    })
+</script>

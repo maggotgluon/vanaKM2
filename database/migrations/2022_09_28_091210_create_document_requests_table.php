@@ -21,7 +21,7 @@ return new class extends Migration
 
             $table->string('Doc_Type'); // type of document
             $table->string('Doc_Obj'); // register objection
-            $table->string('Doc_Description');  // register discription
+            $table->text('Doc_Description');  // register discription
             $table->integer('Doc_Life'); // document life  time 
             $table->integer('Doc_ver'); // document version
             

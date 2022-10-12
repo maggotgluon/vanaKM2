@@ -33,6 +33,7 @@ class DocumentRequestController extends Controller
         }else{
             $documents = DocumentRequest::all()->paginate(5);
         }
+
         return view('document.reg.index',['documents'=>$documents,'filter'=>$filter]);
     }
     public function allUser($filter=null){
@@ -54,6 +55,10 @@ class DocumentRequestController extends Controller
     public function view($Doc_Code){
         // dd('reg view');
         $regDoc = DocumentRequest::where('Doc_Code',$Doc_Code)->firstOrFail();   
+        
+        // $regDoc->user_id= User::find($regDoc->user_id);
+        // dd($regDoc);
+        
         return view('document.reg.show',['documents'=>$regDoc]);
     }
     public function DarForm($Doc_Code){
@@ -136,11 +141,11 @@ class DocumentRequestController extends Controller
         $docver = Document::where('Doc_Name',$request->Doc_Name)->count();
         $docname = $request->Doc_Name;
         $timestamp = Carbon::now()->getTimestamp();
-        $NameFile = $docname.'-'.$docver.'-'.$timestamp.$extension;
+        $NameFile = $docname.'-'.$docver.'-'.$timestamp.'.'.$extension;
         // dd(Carbon::now()->locale('th_TH')->toDateString());
         // dd($NameFile);
 
-        $upload_location = '/FilePDF/';
+        $upload_location = '/FilePDF/'.$docname.'/';
         $full_path = $upload_location.$NameFile;
         // dd($full_path);
 
@@ -149,6 +154,7 @@ class DocumentRequestController extends Controller
         $documents = new DocumentRequest;
         $documents->Doc_Code = $DocCode;
         $documents->Doc_Name = $request->Doc_Name;
+        $documents->Doc_FullName = $request->Doc_FullName;
         $documents->User_id = Auth::user()->id;
         $documents->Doc_Type = $request->type;
         $documents->Doc_Obj = $request->objective;
@@ -162,7 +168,7 @@ class DocumentRequestController extends Controller
         $documents->Doc_Status ='0';
 
         // loc / upload file / rename to
-        Storage::putFileAs($upload_location,$file,$docname.'-'.$docver.'.pdf');
+        Storage::putFileAs($upload_location,$file,$NameFile);
         // Storage::putFileAs($upload_location,$file,doc_name.'-'.ver);
 
         $visibility = Storage::getVisibility($upload_location);
@@ -195,9 +201,10 @@ class DocumentRequestController extends Controller
             $reg_doc->Doc_Status = '2';
 
             // $files = Storage::get($reg_doc->Doc_Location);
-            $newPath = 'storage/'.$reg_doc->Doc_Name.'.pdf';
+            $ver = Document::where('Doc_Name',$reg_doc->Doc_Name)->count()!=0?Document::where('Doc_Name',$reg_doc->Doc_Name)->firstOrFail()->Doc_ver+1:0;
+            $newPath = '/FilePDF/'.$reg_doc->Doc_Name.'/'.$reg_doc->Doc_Name.'-rev-'.$ver.'.pdf';
 
-            
+            // dd($ver);
             // dd($reg_doc->Doc_Location,$newPath,$files);
 
             $documents = Document::updateOrCreate(
@@ -209,7 +216,7 @@ class DocumentRequestController extends Controller
                     'Doc_Code' => $reg_doc->Doc_Code,
                     'Doc_Type' => $reg_doc->Doc_Type,
                     'Doc_Life' => $reg_doc->Doc_Life,
-                    'Doc_ver' => $reg_doc->Doc_ver,
+                    'Doc_ver' => $ver,
                     'Doc_Location' => $newPath,
                     'Doc_DateApprove' => now()
                 ]

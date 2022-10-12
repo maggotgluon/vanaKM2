@@ -66,7 +66,7 @@
                         @endphp
                         <!-- {{$document}} -->
                         <tr class="{{$status}}">
-                            <td>{{$document->Doc_Code}}:{{$document->Doc_Name}} <hr>
+                            <td>{{$document->Doc_Code}}:{{$document->Doc_Name}} {{$document->Doc_FullName}} <hr>
                                 <span>{{$document->Doc_Obj}} {{__('reason')}} {{$document->Doc_Description}}</span>
                             </td>
                             <td>{{$document->Doc_Type}}</td>

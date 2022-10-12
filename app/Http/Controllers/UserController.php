@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Rules\MatchOldPassword;
+
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 // use RealRashid\SweetAlert\Facades\Alert;
 class UserController extends Controller
 {
@@ -43,12 +46,15 @@ class UserController extends Controller
         // dd($selectUser->staff_id,$selectUser->userPermission);
         // $selectUser->userPermission->
         $allowance = $data->allowance==1?1:0;
+        $action = $allowance==1?'add':'removed';
         // dd($data->allowance,$allowance );
         DB::table('user_permissions')->updateOrInsert([
             'user_id' =>$user,
             'permissions_type' => $data->permissions_type,
             'parmission_name'=>$data->permission,
         ],['allowance'=>$allowance]);
+
+        Log::channel('user')->info(Auth::user()->name .' '.$action.' '.$data->permissions_type.' '.$data->permission.' of '. $selectUser->name);
         return redirect(route('user.profile',$selectUser->id))->with('success', 'Permission update!');
     }
     public function update(request $data,$user){
@@ -80,7 +86,7 @@ class UserController extends Controller
                 # code...
                 break;
         }
-        
+        Log::channel('user')->info(Auth::user()->name .' update '.$data->update.' of '. $selectUser->name);
         return redirect(route('user.profile',$selectUser->id))->with('success', 'User update!');
     }
 
@@ -100,6 +106,7 @@ class UserController extends Controller
         );
         
         User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+        Log::channel('user')->info(Auth::user()->name .' update password');
         return redirect(route('user.profile',User::find(auth()->user()->id)))->with('success', 'User update!');
     }
     
