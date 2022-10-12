@@ -37,13 +37,13 @@
                 <tr>
                   <td class="table-auto p-4   mt-4 w-1/2"><span class=" font-bold">{{__('Name')}} :</span>
                     <span>
-                      {{ Auth::user()->name }}
+                    {{$user->name}}
 
                     </span><br>
 
                     <span class="font-bold">{{__('Department')}} :</span>
                     <span>
-                      {{Auth::user()->department}}
+                    {{$user->department}} 
 
                     </span>
                   </td>
@@ -54,7 +54,8 @@
                     </span><br>
                     <span class=" font-bold">{{__('Department Head')}} : </span>
                     <span>
-                      {{Auth::user()->department_head}}
+                    {{$user->department_head}} 
+                     
                     </span>
                   </td>
                 </tr>
@@ -148,25 +149,25 @@
 
             <tbody>
               <tr>
-                <td class="table-auto border"><span class=" p-4 font-bold">{{__('Name')}} : </span>
+                <td class="table-auto border"><span class=" p-4 font-bold">{{__('Name')}} 1: </span>
                   <span>
-                    {{$DarForm->User_Approve}}
+                    {{$DarForm->User_MRApprove}}
 
                   </span><br>
                   <span class="p-4 font-bold">{{__('Date')}} : </span>
                   <span>
-                  {{$date['Date_Approve']}}
+                  {{$date['Doc_DateMRApprove']}}
 
                   </span>
                 </td>
 
                 <td class="table-auto border mt-4"><span class=" p-4 font-bold">{{__('Name')}} : </span>
                   <span>
-                  {{ Auth::user()->name }}
+                  {{$DarForm->User_Approve}}
                   </span><br>
                   <span class=" p-4 font-bold">{{__('Date')}} :</span>
                   <span>
-                    {{$date['created_at']}}
+                    {{$date['Date_Approve']}}
                   </span>
                 </td>
 

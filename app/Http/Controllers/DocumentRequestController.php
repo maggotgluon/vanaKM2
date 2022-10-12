@@ -70,19 +70,27 @@ class DocumentRequestController extends Controller
 
         $created_at =  $this->InputToDate($DarForm->created_at);
         $updated_at =  $this->InputToDate($DarForm->updated_at);
-        $Date_Approve =  $this->InputToDate($DarForm->Doc_DateApprove);
+        $Doc_DateApprove =  $this->InputToDate($DarForm->Doc_DateApprove);
+        $Doc_DateApprove =  $this->InputToDate($DarForm->Doc_DateApprove);
+        $Doc_DateMRApprove =  $this->InputToDate($DarForm->Doc_DateMRApprove);
+
         $DarForm->Doc_StartDate =  $this->InputToDate($DarForm->Doc_StartDate);
         $date = array(
-            'Date_Approve'=>$Date_Approve,
+            'Doc_DateMRApprove'=>$Doc_DateMRApprove,
+            'Date_Approve'=>$Doc_DateApprove,
             'created_at'=>$created_at,
             'updated_at'=>$updated_at
 
         );
         // dd($date);
+        $user=User::find($DarForm->user_id);
+        // dd($user);
+        // dd($date);
         // $DarReq = $this->hasone(User::class,'id',$id);
 
-        return view('document.reg.f-dar',['DarForm'=>$DarForm],['date'=>$date]
+        return view('document.reg.f-dar',['DarForm'=>$DarForm],['date'=>$date,'user'=>$user]
         // ,['DarReq'=>$DarReq]
+      
         );
     }
 
