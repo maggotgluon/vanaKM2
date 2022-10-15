@@ -20,9 +20,14 @@ class DocumentRequestController extends Controller
 {
     
     private function InputToDate($Input)
-    {
+    {  
+         if($Input!=null) {
         $Date = new Carbon($Input);
-        return date_format($Date,"d F Y");
+        $Date = date_format($Date,"d F Y");
+        }
+        else 
+         $Date = "";
+        return  $Date;
     }
 
     public function all($filter=null){
@@ -70,19 +75,27 @@ class DocumentRequestController extends Controller
 
         $created_at =  $this->InputToDate($DarForm->created_at);
         $updated_at =  $this->InputToDate($DarForm->updated_at);
-        $Date_Approve =  $this->InputToDate($DarForm->Doc_DateApprove);
+        $Doc_DateApprove =  $this->InputToDate($DarForm->Doc_DateApprove);
+        $Doc_DateMRApprove =  $this->InputToDate($DarForm->Doc_DateMRApprove);
+        // dd($Doc_DateMRApprove);
         $DarForm->Doc_StartDate =  $this->InputToDate($DarForm->Doc_StartDate);
         $date = array(
-            'Date_Approve'=>$Date_Approve,
+            
             'created_at'=>$created_at,
-            'updated_at'=>$updated_at
+            'updated_at'=>$updated_at,
+            'Doc_DateMRApprove'=>$Doc_DateMRApprove,
+            'Doc_DateApprove'=>$Doc_DateApprove
 
         );
         // dd($date);
+        $user=User::find($DarForm->user_id);
+        // dd($user);
+        // dd($date);
         // $DarReq = $this->hasone(User::class,'id',$id);
 
-        return view('document.reg.f-dar',['DarForm'=>$DarForm],['date'=>$date]
+        return view('document.reg.f-dar',['DarForm'=>$DarForm],['date'=>$date,'user'=>$user]
         // ,['DarReq'=>$DarReq]
+      
         );
     }
 
