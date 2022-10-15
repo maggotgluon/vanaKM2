@@ -140,7 +140,7 @@ class TrainingRequestController extends Controller
         $file = $request->file('file');
         $docver = TrainingRequest::where('Doc_Code', $request->DocCode)->count();
         $docname = 'TRAIN'. date('Y').str_pad($countID+1,4,'0',STR_PAD_LEFT);
-        $NameFile = $docname . '-' . $docver;
+        $NameFile = $docname . '-' . $docver.'.pdf';
         // dd($file);
         //Location File
         $upload_location = '/TrainPDF/';
