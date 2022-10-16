@@ -27,7 +27,7 @@ class TrainingRequestController extends Controller
     public function all(){
         // dd(Training::all());
         return view('training.index', [
-            'documents' => TrainingRequest::where('Doc_Status',2)->get(),
+            'documents' => TrainingRequest::where('Doc_Status',1)->get(),
         ]);
     }
     public function view($id){
@@ -259,7 +259,7 @@ class TrainingRequestController extends Controller
         $toastType = 'success';
         $toastMsg = 'Training Approved!';
         if($approve === 'approved'){
-            $reg_doc->Doc_Status = 2;
+            $reg_doc->Doc_Status = 1;
             // dd($reg_doc);
             // $documents = Training::updateOrCreate(
             //     [
@@ -284,9 +284,6 @@ class TrainingRequestController extends Controller
             // dd($documents);
             // $documents->save();
             echo 'approved';
-        }else if($approve === 'review'){
-            $reg_doc->Doc_Status = 1;
-            $toastMsg = 'Training review!';
         }else{
             $reg_doc->Doc_Status = -1;
             $reg_doc->Remark = $request->remark;
