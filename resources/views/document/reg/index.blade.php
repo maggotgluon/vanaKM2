@@ -59,7 +59,7 @@
                                                 </form>
                                                 @endif
                                             @endcan
-                                            @if($doc->Doc_Status !== 1)
+                                            @if($doc->Doc_Status == 0)
                                             <!-- route('regisApprove',$doc->id,'approve=true') -->
                                             <form action="{{ route('regDoc.approve',$doc->id,'approve=true') }}" method="post">
                                             @csrf
@@ -68,7 +68,7 @@
                                                 <x-primary-button class="bg-brand_green py-1 m-2">Approve</x-button>
                                             </form>
                                             @endif
-                                            @if($doc->Doc_Status !== -1)
+                                            @if($doc->Doc_Status == 0)
                                             <!-- route('regisApprove',$doc->id,'approve=false') -->
                                             <x-primary-button class="bg-brand_orange py-1 m-2" onclick="document.querySelector('#{{$doc->Doc_Code}}').showModal()">Reject</x-button>
 

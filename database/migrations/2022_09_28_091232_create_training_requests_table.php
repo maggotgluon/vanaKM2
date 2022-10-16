@@ -20,6 +20,8 @@ return new class extends Migration
             $table->json('Doc_009'); // Decsciption Document 009
             $table->string('Doc_DateApprove')->nullable(); //approved date
             $table->string('User_Approve')->nullable(); // who approve
+            $table->string('Doc_DateReview')->nullable(); //approved date
+            $table->string('User_Review')->nullable(); // who approve
             $table->integer('Access_Lv')->nullable(); // level of acess
 
             $table->timestamps();

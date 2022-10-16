@@ -158,7 +158,7 @@ class DocumentRequestController extends Controller
         // dd(Carbon::now()->locale('th_TH')->toDateString());
         // dd($NameFile);
 
-        $upload_location = '/FilePDF/'.$docname.'/';
+        $upload_location = '/FilePDF/req/'.$docname.'/';
         $full_path = $upload_location.$NameFile;
         // dd($full_path);
 
@@ -236,7 +236,7 @@ class DocumentRequestController extends Controller
             );
             // $documents->Doc_Location = 'public/'.$reg_doc->Doc_Name.'.pdf';
             Storage::copy($reg_doc->Doc_Location, $newPath);
-            $size = Storage::size($newPath);
+            // $size = Storage::size($newPath);
             // dd($size);
             $documents->save();
             $toastMsg = 'MR Approved!';

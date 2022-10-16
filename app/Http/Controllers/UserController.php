@@ -20,12 +20,14 @@ class UserController extends Controller
         return view('user.index',['users'=>User::all()]);
     }
     public function allFiltter(request $data){
-        if($data->department==null || $data->department=='null'){
+        $user = User::all();
+        if($data->department!=null){
+            $user = $user->where('department',$data->department);
+        }
+        if($data->level!=null){
+            $user = $user->where('user_level',$data->level);
+        }else{
             $user = User::all();
-        }else if($data->department!=null){
-            $user = User::where('department',$data->department)->get();
-        }else if($data->level!=null){
-            $user = User::where('user_level',$data->level)->get();
         }
         // dd($user);
         // alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');

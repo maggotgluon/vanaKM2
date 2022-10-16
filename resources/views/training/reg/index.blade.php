@@ -29,8 +29,9 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     
-                <div class="p-6 bg-white border-b border-gray-200 grid grid-cols-3 gap-4 ">
+                <div class="p-6 bg-white border-b border-gray-200 grid grid-cols-4 gap-4 ">
                     <x-button href="{{route('regTraining.all',1)}}">Approved</x-button>
+                    <x-button href="{{route('regTraining.all',0)}}">Review</x-button>
                     <x-button href="{{route('regTraining.all',0)}}">Pending Approved</x-button>
                     <x-button href="{{route('regTraining.all',-1)}}">Reject</x-button>
                 </div>
@@ -79,14 +80,23 @@
                                 </details>
 
                                 <span >
-                                    <span class="text-sm">Sign by :
-                                    {{Auth::user()->name}}</span>
+                                    <span class="text-sm">{{$doc->Doc_Status}}</span>
                                     <div class="flex">
+                                        @if ($doc->Doc_Status==1)
+                                        <form action="{{ route('regTraining.approve',$doc->id,'approve=true') }}" method="post">
+                                        @csrf
+                                            <input type="hidden" name="regID" value="{{$doc->id}}">
+                                            <input type="hidden" name="manage" value="approved">
+                                            <x-primary-button class="bg-brand_green py-1 m-2">Approve</x-primary-button>
+                                        </form>
+                                            
+                                        @endif
+                                        @if ($doc->Doc_Status==0)
                                     <form action="{{ route('regTraining.approve',$doc->id,'approve=true') }}" method="post">
                                     @csrf
                                         <input type="hidden" name="regID" value="{{$doc->id}}">
-                                        <input type="hidden" name="manage" value="approved">
-                                        <x-primary-button class="bg-brand_green py-1 m-2">Approve</x-primary-button>
+                                        <input type="hidden" name="manage" value="review">
+                                        <x-primary-button class="bg-brand_green py-1 m-2">Review</x-primary-button>
                                     </form>
 
                                     <x-primary-button class="bg-brand_orange py-1 m-2" onclick="document.querySelector('#{{$doc->Doc_Code}}').showModal()">Reject</x-primary-button>
@@ -106,6 +116,7 @@
                                             {{__('Dismiss')}}
                                         </x-primary-button>
                                     </dialog>
+                                        @endif
                                 </div>
                                 
                                 </span>
