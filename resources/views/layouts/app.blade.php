@@ -13,7 +13,6 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
-        @powerGridStyles
 
     </head>
     <body class="font-sans antialiased">
@@ -40,6 +39,5 @@
 
         @include('sweetalert::alert')
         @livewireScripts
-        @powerGridScripts
     </body>
 </html>

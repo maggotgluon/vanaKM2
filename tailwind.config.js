@@ -8,10 +8,6 @@ module.exports = {
         './resources/views/**/*.blade.php',
         './vendor/usernotnull/tall-toasts/config/**/*.php',
         './vendor/usernotnull/tall-toasts/resources/views/**/*.blade.php',
-
-        './app/Http/Livewire/**/*Table.php',
-        './vendor/power-components/livewire-powergrid/resources/views/**/*.php',
-        './vendor/power-components/livewire-powergrid/src/Themes/Tailwind.php'
     ],
 
     theme: {
@@ -31,8 +27,6 @@ module.exports = {
     plugins: [
         require('@tailwindcss/typography'),
         require('@tailwindcss/aspect-ratio'),
-        require('@tailwindcss/forms')({
-            strategy: 'class',
-          }),
+        require('@tailwindcss/forms'),
     ],
 };
