@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('training') }} 009
+        FM-LDS-009
         </h2>
     </x-slot>
     <span class="print:block print:absolute print:bottom-0  hidden">FM-LDS-009</span>

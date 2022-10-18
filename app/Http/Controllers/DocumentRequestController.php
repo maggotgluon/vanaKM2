@@ -88,7 +88,7 @@ class DocumentRequestController extends Controller
 
         );
         // dd($date);
-        $user=User::find($DarForm->user_id);
+        $user=User::find($DarForm->user_id); 
         // dd($user);
         // dd($date);
         // $DarReq = $this->hasone(User::class,'id',$id);
