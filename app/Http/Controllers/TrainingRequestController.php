@@ -77,8 +77,10 @@ class TrainingRequestController extends Controller
         );
 
         $user=User::find($d008->user_id);
+        $Position_Approve=User::where('name',$d008->User_Approve)->firstOrFail();
+        $MR=User::find($d008->user_id);
         // dd($user);
-        return view('training.reg.f-008', ['f008'=>$sub_d008],['D008'=>$d008,'user'=>$user,'date',$date]);
+        return view('training.reg.f-008', ['f008'=>$sub_d008],['D008'=>$d008,'user'=>$user,$date,'Position_Approve'=>$Position_Approve]);
 
     }
     public function form009($Doc_Code){ 

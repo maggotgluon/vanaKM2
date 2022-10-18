@@ -85,7 +85,7 @@
                 <div class="w-2/5">
                 <span class="font-bold " >Trained by: </span>{{$user->name }}</div>
                 <div class="w-1/3">
-                <span class="font-bold " >Position: </span>{{ Auth::user()->name }}</div>
+                <span class="font-bold " >Position: </span>{{ $user->position }}</div>
                 <div class="w-1/5">
                 <span class="font-bold " >Date: </span> {{$D008->created_at }}</div>
             </div>
@@ -103,7 +103,7 @@
                 <div class="w-2/5">
                 <span class="font-bold " >Reviewed by: </span>{{$D008->User_Approve }}</div>
                 <div class="w-1/3">
-                <span class="font-bold " >Position: </span>{{ Auth::user()->name }}</div>
+                <span class="font-bold " >Position: </span>{{ $Position_Approve->position }}</div>
                 <div class="w-1/5">
                 <span class="font-bold " >Date: </span> {{$D008->Doc_DateApprove }}</div>
             </div>
