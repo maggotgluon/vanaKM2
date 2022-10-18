@@ -9,9 +9,12 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=noto-sans-thai:wght@400;600;700&display=swap">
-        
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
+        @powerGridStyles
+
     </head>
     <body class="font-sans antialiased">
 
@@ -23,7 +26,9 @@
                 <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
+                        <x-button class="py-0" href="{{url()->previous()}}">{{__('Back')}}</x-button>
                     </div>
+
                 </header>
             @endif
 
@@ -34,5 +39,7 @@
         </div>
 
         @include('sweetalert::alert')
+        @livewireScripts
+        @powerGridScripts
     </body>
 </html>

@@ -30,7 +30,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg relative">
-                
+
                 <div class="p-6 bg-white border-b border-gray-200">
 
                 <div class="p-6 bg-white border-b border-gray-200 grid grid-cols-3 gap-4 ">
@@ -47,7 +47,7 @@
                                 <th>{{ __('Action') }}</th>
                                 <th>{{ __('Remark') }}</th>
                             </tr>
-                        
+
                         </thead>
                         <tbody>
                         @foreach ($documents as $document)
@@ -56,6 +56,8 @@
                             if($document->Doc_Status==0){
                                 $status='Pending';
                             }else if($document->Doc_Status==1){
+                                $status='Review';
+                            }else if($document->Doc_Status==2){
                                 $status='Approve';
                             }else if($document->Doc_Status==-1){
                                 $status='Reject';
@@ -68,12 +70,12 @@
                             </td>
                             <td>
                             {{$status}}
-                                
+
                             </td>
                             <td>{{$document->updated_at}}<br><span class="text-sm"> Create at :{{$document->created_at}}</span></td>
                             <td><x-button href="{{route('regTraining.view',$document->Doc_Code)}}">view</x-button></td>
                             <td>{{$document->Remark}}</td>
-                            
+
                         </tr>
                         @endforeach
                     </table>

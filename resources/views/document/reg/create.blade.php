@@ -4,7 +4,7 @@
             {{ __('Request Document') }}
         </h2>
     </x-slot>
- 
+
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -14,26 +14,26 @@
                     <h2>{{ __('Request Document') }}</h2>
 
                     <hr>
-                    <form action="{{route('regDoc.create')}}" method="post" enctype="multipart/form-data" 
+                    <form action="{{route('regDoc.create')}}" method="post" enctype="multipart/form-data"
                     class="grid grid-cols-4 gap-2">
                         @csrf
                         <div class="py-2 col-span-4">
-                            
-                            <x-input-label 
+
+                            <x-input-label
                                 for="date" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
-                                {{__('Date')}} : 
+                                {{__('Date')}} :
                             </x-input-label>
                             <x-text-input required
-                                name="date" 
+                                name="date"
                                 value="{{Carbon\Carbon::now()->toDateString()}}"
                                 readonly type="date" />
 
                         </div>
                         <div class="py-2 col-span-2">
 
-                            <x-input-label 
-                                for="name" class="inline"><span class="required text-brand_orange text-xs"> * </span> 
-                                {{__('Name')}} : 
+                            <x-input-label
+                                for="name" class="inline"><span class="required text-brand_orange text-xs"> * </span>
+                                {{__('Name')}} :
                             </x-input-label>
                             <x-text-input required
                                 name="name" id="name"
@@ -43,9 +43,9 @@
 
                         </div>
                         <div class="py-2">
-                            <x-input-label 
+                            <x-input-label
                                 for="email" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
-                                {{__('Email')}} : 
+                                {{__('Email')}} :
                             </x-input-label>
                             <x-text-input required
                                 name="email" id="email"
@@ -54,9 +54,9 @@
                                 type="email" />
                         </div>
                         <div class="py-2">
-                            <x-input-label 
+                            <x-input-label
                                 for="email" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
-                                {{__('Department')}} : 
+                                {{__('Department')}} :
                             </x-input-label>
                             <x-text-input required
                                 name="department" id="department"
@@ -66,9 +66,9 @@
 
                         </div>
                         <div class="py-2 col-span-2">
-                            <x-input-label 
+                            <x-input-label
                                 for="departmenthead" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
-                                {{__('Department Head')}} : 
+                                {{__('Department Head')}} :
                             </x-input-label>
                             <x-text-input required
                                 name="departmenthead" id="departmenthead"
@@ -78,13 +78,13 @@
 
                         </div>
                         <div class="py-2 ">
-                            <x-input-label 
+                            <x-input-label
                                 for="Doc_Name" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
-                                {{__('Document Name')}} : 
+                                {{__('Document Name')}} :
                             </x-input-label>
                             <x-text-input required
                                 name="Doc_Name" id="Doc_Name"
-                                class="w-full" 
+                                class="w-full"
                                 value="{{old('Doc_Name') }}"
                                 type="text" />
                             @error('Doc_Name')
@@ -92,9 +92,9 @@
                             @enderror
                         </div>
                         <div class="py-2 ">
-                            <x-input-label 
+                            <x-input-label
                                 for="Doc_FullName" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
-                                {{__('Document Full Name')}} : 
+                                {{__('Document Full Name')}} :
                             </x-input-label>
                             <x-text-input required
                                 name="Doc_FullName" id="Doc_FullName"
@@ -108,7 +108,7 @@
 
 
                         <span class="col-span-1">
-                            <x-input-label  for="type"><span class="required text-brand_orange text-xs"> * </span> {{__('Document Type')}} : </x-input-label > 
+                            <x-input-label  for="type"><span class="required text-brand_orange text-xs"> * </span> {{__('Document Type')}} : </x-input-label >
                             <select class="bg-backdrop rounded-md" name="type" id="type">
                                 <optgroup label="Document">
                                     <option disabled value="Document-SM">SM: System Manual</option>
@@ -150,64 +150,64 @@
 
                         <div class="py-2 col-span-3">
                             <x-input-label for="objective" class="inline" >
-                                 {{__('Objective')}} : 
+                                 {{__('Objective')}} :
                             </x-input-label>
                             <!-- <div class="flex flex-col md:flex-row justify-around flex-wrap"> -->
                             <div class="grid grid-cols-3 grid-flow-dense">
                                 <span>
-                                    <x-text-input class="px-1 mx-1" type="radio" 
+                                    <x-text-input class="px-1 mx-1" type="radio"
                                     name="objective" id="objective-1" value="ขอเอกสารใหม่" />
                                     <x-input-label for="objective-1" class="inline" selected>
-                                        ขอเอกสารใหม่ 
+                                        ขอเอกสารใหม่
                                     </x-input-label>
                                 </span>
                                 <span>
-                                    <x-text-input class="px-1 mx-1" type="radio" 
+                                    <x-text-input class="px-1 mx-1" type="radio"
                                     name="objective" id="objective-2" value="เปลี่ยนแปลง" />
                                     <x-input-label for="objective-2" class="inline">
-                                    เปลี่ยนแปลง 
+                                    เปลี่ยนแปลง
                                     </x-input-label>
                                 </span>
                                 <span>
-                                    <x-text-input class="px-1 mx-1" type="radio" 
+                                    <x-text-input class="px-1 mx-1 pointer-events-none opacity-50" type="radio"
                                     name="objective" id="objective-3" value="ขอนำเข้าเอกสารภายนอก" />
-                                    <x-input-label for="objective-3" class="inline">
-                                    ขอนำเข้าเอกสารภายนอก 
+                                    <x-input-label for="objective-3" class="inline  pointer-events-none opacity-50">
+                                    ขอนำเข้าเอกสารภายนอก
                                     </x-input-label>
                                 </span>
                                 <span>
-                                    <x-text-input class="px-1 mx-1" type="radio" 
+                                    <x-text-input class="px-1 mx-1  pointer-events-none opacity-50" type="radio"
                                     name="objective" id="objective-4" value="ขอเพิ่ม / เปลี่ยนแปลง / ยกเลิกผู้ถือครอง" />
-                                    <x-input-label for="objective-4" class="inline">
-                                    ขอเพิ่ม / เปลี่ยนแปลง / ยกเลิกผู้ถือครอง 
+                                    <x-input-label for="objective-4" class="inline  pointer-events-none opacity-50">
+                                    ขอเพิ่ม / เปลี่ยนแปลง / ยกเลิกผู้ถือครอง
                                     </x-input-label>
                                 </span>
                                 <span>
-                                    <x-text-input class="px-1 mx-1" type="radio" 
+                                    <x-text-input class="px-1 mx-1  pointer-events-none opacity-50" type="radio"
                                     name="objective" id="objective-5" value="ขอสำเนาเอกสาร" />
-                                    <x-input-label for="objective-5" class="inline">
-                                    ขอสำเนาเอกสาร 
+                                    <x-input-label for="objective-5" class="inline  pointer-events-none opacity-50">
+                                    ขอสำเนาเอกสาร
                                     </x-input-label>
                                 </span>
                                 <span>
-                                    <x-text-input class="px-1 mx-1" type="radio" 
+                                    <x-text-input class="px-1 mx-1  pointer-events-none opacity-50" type="radio"
                                     name="objective" id="objective-6" value="ขอยกเลิก" />
-                                    <x-input-label for="objective-6" class="inline">
-                                    ขอยกเลิก 
+                                    <x-input-label for="objective-6" class="inline  pointer-events-none opacity-50">
+                                    ขอยกเลิก
                                     </x-input-label>
                                 </span>
                                 <span>
-                                    <x-text-input class="px-1 mx-1" type="radio" 
+                                    <x-text-input class="px-1 mx-1  pointer-events-none opacity-50" type="radio"
                                     name="objective" id="objective-7" value="ขอทำลาย" />
-                                    <x-input-label for="objective-7" class="inline">
-                                    ขอทำลาย 
+                                    <x-input-label for="objective-7" class="inline  pointer-events-none opacity-50">
+                                    ขอทำลาย
                                     </x-input-label>
                                 </span>
                                 <span>
-                                    <x-text-input class="px-1 mx-1" type="radio" 
+                                    <x-text-input class="px-1 mx-1  pointer-events-none opacity-50" type="radio"
                                     name="objective" id="objective-8" value="อื่นๆ" />
-                                    <x-input-label for="objective-8" class="inline">
-                                    อื่นๆ 
+                                    <x-input-label for="objective-8" class="inline  pointer-events-none opacity-50">
+                                    อื่นๆ
                                     </x-input-label>
                                 </span>
                             </div>
@@ -230,11 +230,11 @@
 
                         <div class="grid grid-cols-1 col-span-2">
                             <span class="px-4">
-                                <x-input-label 
-                                    for="usedate" class="inline"> 
-                                    {{__('Effctive_Date')}} : 
+                                <x-input-label
+                                    for="usedate" class="inline">
+                                    {{__('Effctive_Date')}} :
                                 </x-input-label>
-                                <x-text-input 
+                                <x-text-input
                                     name="usedate" id="usedate"
                                     class="" maxlength="10"
                                     value="{{old( 'usedate' ,Carbon\Carbon::now()->addDay(10)->toDateString()) }}"
@@ -244,11 +244,11 @@
 
 
                             <span class="px-4">
-                                <x-input-label 
-                                    for="Year" class="inline"> 
-                                    {{__('DocumentAge')}} : 
+                                <x-input-label
+                                    for="Year" class="inline">
+                                    {{__('DocumentAge')}} :
                                 </x-input-label>
-                                <x-text-input 
+                                <x-text-input
                                     name="Year" id="Year"
                                     class="" maxlength="10"
                                     value="{{old( 'Year' ,1) }}"
@@ -257,14 +257,14 @@
                             </span>
 
                             <span class="px-4 block">
-                                <x-input-label 
+                                <x-input-label
                                     for="file" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
-                                    {{__('File')}} : 
+                                    {{__('File')}} :
                                 </x-input-label>
-                                <x-text-input 
+                                <x-text-input
                                     name="file" id="file"
                                     value="{{old( 'file') }}"
-                                    type="file"  accept=".pdf" required/> 
+                                    type="file"  accept=".pdf" required/>
 
                             </span>
                             @error('file')
@@ -306,7 +306,7 @@
             dd  = faker.date.future()
             ee.value= dd.toDateString()
         }
-        
+
     });
 
     const e2=document.querySelectorAll('textarea');

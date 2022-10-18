@@ -19,7 +19,7 @@ class TrainingRequestController extends Controller
             $Date = new Carbon($Input);
             $Date = date_format($Date,"d F Y");
             }
-            else 
+            else
              $Date = "";
             return  $Date;
     }
@@ -27,7 +27,7 @@ class TrainingRequestController extends Controller
     public function all(){
         // dd(Training::all());
         return view('training.index', [
-            'documents' => TrainingRequest::where('Doc_Status',1)->get(),
+            'documents' => TrainingRequest::where('Doc_Status',2)->get(),
         ]);
     }
     public function view($id){
@@ -49,21 +49,21 @@ class TrainingRequestController extends Controller
         return view('training.reg.index', ['documents' => $regDoc,'filter'=>$filter]);
     }
     public function allRegUser($filter=null){
-        
+
         if($filter!=null){
             $regDoc = Auth::user()->TrainingRequest->where('Doc_Status',$filter);
         }else{
             $regDoc = Auth::user()->TrainingRequest;
         }
         return view('training.reg.indexMy', ['documents' => $regDoc,'filter'=>$filter]);
-        
+
     }
     public function viewReg($id){
         return view('training.reg.show', [
             'documents' => TrainingRequest::where('Doc_Code',$id)->firstOrFail(),
         ]);
     }
-    
+
 
     public function form008($Doc_Code){
         $d008 =TrainingRequest::where('Doc_Code',$Doc_Code)->firstOrFail() ;
@@ -81,7 +81,7 @@ class TrainingRequestController extends Controller
         return view('training.reg.f-008', ['f008'=>$sub_d008],['D008'=>$d008,'user'=>$user,'date',$date]);
 
     }
-    public function form009($Doc_Code){ 
+    public function form009($Doc_Code){
         $d009 =TrainingRequest::where('Doc_Code',$Doc_Code)->firstOrFail() ;
         $d009 = json_decode($d009->Doc_009, TRUE);
         //  dd($d009);
@@ -93,7 +93,7 @@ class TrainingRequestController extends Controller
         $currentYear = date("Y");
         $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
         $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
-        
+
         $count = TrainingRequest::whereBetween('created_at',[$startYear,$endYear])->count();
 
         return view('training.reg.create',['count_train_code'=>$count,]);
@@ -145,18 +145,23 @@ class TrainingRequestController extends Controller
         $currentYear = date("Y");
         $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
         $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
-        
+
         $countID = TrainingRequest::whereBetween('created_at',[$startYear,$endYear])->count();
         // $docID = 'TRAIN'. date('Y').str_pad($countID+1,4,'0',STR_PAD_LEFT);
         // dd($docID,$request->DocCode);
         //Version File
         $file = $request->file('file');
+
+        $extension = $file->getClientOriginalExtension();
+
         $docver = TrainingRequest::where('Doc_Code', $request->DocCode)->count();
+
+        $timestamp = Carbon::now()->getTimestamp();
         $docname = 'TRAIN'. date('Y').str_pad($countID+1,4,'0',STR_PAD_LEFT);
-        $NameFile = $docname . '-' . $docver.'.pdf';
+        $NameFile = $docname . '-' . $docver.'-'.$timestamp.'.'.$extension;
         // dd($file);
         //Location File
-        $upload_location = '/TrainPDF/';
+        $upload_location = '/TrainPDF/'.$docname.'/';
         $full_path = $upload_location . $NameFile;
 
         //  dd( $full_path);
@@ -222,7 +227,7 @@ class TrainingRequestController extends Controller
 
         // // loc / upload file / rename to
         // dd($upload_location,$file,$docname,$docver);
-        Storage::putFileAs($upload_location, $file, $docname . '-' . $docver);
+        Storage::putFileAs($upload_location, $file, $NameFile);
         // Storage::putFileAs($upload_location,$file,doc_name.'-'.ver);
         $visibility = Storage::getVisibility($upload_location);
         // dd($visibility);
@@ -240,13 +245,13 @@ class TrainingRequestController extends Controller
         $doc_train->Doc_Location = $full_path;
         $doc_train->Doc_Status = '0';
 
-        
+
 
         $doc_train->save();
         Log::channel('training')->info( $doc_train->Doc_Code . 'requested by user '. User::find($doc_train->user_id)->name);
 
         return redirect()->route('regTraining.create')->with('success', 'Document added!');
-        
+
     }
 
 
@@ -259,7 +264,7 @@ class TrainingRequestController extends Controller
         $toastType = 'success';
         $toastMsg = 'Training Approved!';
         if($approve === 'approved'){
-            $reg_doc->Doc_Status = 1;
+            $reg_doc->Doc_Status = 2;
             // dd($reg_doc);
             // $documents = Training::updateOrCreate(
             //     [
@@ -280,20 +285,30 @@ class TrainingRequestController extends Controller
             //     ['email' => 'john@example.com', 'name' => 'John'],
             //     ['votes' => '2']
             // );
-            
+
             // dd($documents);
             // $documents->save();
+
+            $reg_doc->Doc_DateApprove = now();
+            $reg_doc->User_Approve = Auth::user()->id;
             echo 'approved';
+        }else if($approve === 'review'){
+            $toastMsg = 'Training Review!';
+
+            $reg_doc->Doc_DateReview = now();
+            $reg_doc->User_Review = Auth::user()->id;
+            $reg_doc->Doc_Status = 1;
         }else{
+            $reg_doc->Doc_DateReview = now();
+            $reg_doc->User_Review = Auth::user()->id;
+
             $reg_doc->Doc_Status = -1;
             $reg_doc->Remark = $request->remark;
 
             $toastMsg = 'Training rejected!';
             echo 'rejected';
         }
-        
-        $reg_doc->Doc_DateApprove = now();
-        $reg_doc->User_Approve = Auth::user()->id;
+
         $reg_doc->save();
         // dd($reg_doc->Doc_Name);
         $message = $request->manage;
@@ -301,7 +316,7 @@ class TrainingRequestController extends Controller
         // dd($add->id);
 
         // dd(document_request::find($add->id));
-        
+
         Log::channel('training')->info($reg_doc->Doc_Code.' '.$approve . ' by '. Auth::user()->name);
 
         //disible mail service during test
@@ -312,7 +327,7 @@ class TrainingRequestController extends Controller
         //     // $message->body('test');
         //     // dd($message);
         //  });
-        
+
         // dd(route::class,'regisManage');
         // return view('document.regis',[
         //     'documents'=>document_request::all(),
