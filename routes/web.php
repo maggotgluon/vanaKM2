@@ -40,6 +40,11 @@ Route::middleware(['auth'])->group(function(){
 
     })->middleware(['auth', 'verified'])->name('dashboard');
 
+    Route::prefix('view')->group(function (){
+        Route::get('level', function(){
+            return view('static.userLevel');
+        })->name('userLV'); //all doc
+    });
     Route::prefix('document')->group(function (){
 
         Route::name('document.')->group(function (){
@@ -64,13 +69,13 @@ Route::middleware(['auth'])->group(function(){
             // regDoc.create
             Route::post('/reg/create', [DocumentRequestController::class,'create'] )
             ->name('create'); //all reg doc
-            
-            Route::post('/management/{id}',  [DocumentRequestController::class,'approve','$id'] ) 
+
+            Route::post('/management/{id}',  [DocumentRequestController::class,'approve','$id'] )
             -> name('approve');
 
-            Route::get('/management/reject/{id}',  [DocumentRequestController::class,'approve','$id'] ) 
+            Route::get('/management/reject/{id}',  [DocumentRequestController::class,'approve','$id'] )
             -> name('reject');
-            Route::post('/management/reject/{id}',  [DocumentRequestController::class,'approve','$id'] ) 
+            Route::post('/management/reject/{id}',  [DocumentRequestController::class,'approve','$id'] )
             -> name('reject');
 
             // regDoc.view
@@ -84,7 +89,7 @@ Route::middleware(['auth'])->group(function(){
     });
 
     Route::prefix('training')->group(function (){
-        
+
         Route::name('training.')->group(function (){
             Route::get('/', [TrainingRequestController::class,'all'] )
             ->name('all'); //all doc
@@ -97,22 +102,22 @@ Route::middleware(['auth'])->group(function(){
             ->name('all'); //all reg doc
             Route::get('/reg/user/{filter?}', [TrainingRequestController::class,'allRegUser'] )
             ->name('allUser'); //all reg doc
-            
+
             // regDoc.createView
             Route::get('/reg/create', [TrainingRequestController::class,'createView'] )
             ->name('create'); //all reg doc
             // regDoc.create
             Route::post('/reg/create', [TrainingRequestController::class,'create'] )
             ->name('create'); //all reg doc
-            
-            Route::post('/management/{id}',  [TrainingRequestController::class,'approve','$id'] ) 
+
+            Route::post('/management/{id}',  [TrainingRequestController::class,'approve','$id'] )
             -> name('approve');
             //view regis training 008
 
             Route::get('/f008/{id}', [TrainingRequestController::class,'form008',] )
             ->name('form008');
             //view regis training 009
-            Route::get('/f009/{id}', [TrainingRequestController::class,'form009',] ) 
+            Route::get('/f009/{id}', [TrainingRequestController::class,'form009',] )
             ->name('form009');
 
             Route::get('/reg/view/{id}', [TrainingRequestController::class,'viewReg'] )
@@ -139,7 +144,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/changePassword/{id}', [UserController::class,'changePassword'] )
         ->name('changePassword'); //userProfile
 
-        
+
     });
 });
 

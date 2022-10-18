@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('Doc_Type'); // type of document
             $table->string('Doc_Obj'); // register objection
             $table->text('Doc_Description');  // register discription
-            $table->integer('Doc_Life'); // document life  time 
+            $table->integer('Doc_Life'); // document life  time
             $table->integer('Doc_ver'); // document version
-            
+
             $table->date('Doc_StartDate'); // date start use -> default today
             $table->string('Doc_Location'); // file location
             $table->integer('Doc_Status'); // status 0 pending 1 approved -1 reject
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('User_Approve')->nullable(); // who approve
             $table->date('Doc_DateMRApprove')->nullable(); //approved date
             $table->string('User_MRApprove')->nullable(); // who approve
-            $table->string('Remark')->nullable(); // who approve
+            $table->text('Remark')->nullable(); // who approve
             $table->integer('Access_Lv')->nullable(); // level of acess
             $table->timestamps();
             $table->foreignId('user_id');

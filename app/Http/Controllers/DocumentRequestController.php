@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DocumentRequest;
- 
+
 use App\Models\Document;
 use App\Models\User;
 
@@ -18,31 +18,45 @@ use Carbon\Carbon;
 
 class DocumentRequestController extends Controller
 {
-    
+
     private function InputToDate($Input)
-    {  
-         if($Input!=null) {
+    {
+        if($Input!=null) {
         $Date = new Carbon($Input);
         $Date = date_format($Date,"d F Y");
         }
-        else 
+        else
          $Date = "";
         return  $Date;
     }
 
-    public function all($filter=null){
-        // dd($user,$filter);
+    public function all($filter=0){
+        // dd($filter);
         // Gate::authorize('manage_document');
         if($filter!=null){
-            $documents = DocumentRequest::where('Doc_Status',$filter)->paginate(5);
+            $documents = DocumentRequest::where('Doc_Status',$filter)->get();
+            // dd($documents->count());
         }else{
-            $documents = DocumentRequest::all()->paginate(5);
+            $documents = DocumentRequest::all();
         }
-
+        foreach ($documents as $index => $document) {
+            # code...
+            $document->Doc_DateApprove = new Carbon($document->Doc_DateApprove);
+            $document->Doc_DateApproveT = $document->Doc_DateApprove->diffForHumans();
+            $document->Doc_DateMRApprove = new Carbon($document->Doc_DateMRApprove);
+            $document->Doc_DateMRApproveT = $document->Doc_DateMRApprove->diffForHumans();
+            $document->Doc_StartDate = new Carbon($document->Doc_StartDate);
+            $document->Doc_StartDateT = $document->Doc_StartDate->diffForHumans();
+            $document->created_at = new Carbon($document->created_at);
+            $document->created_atT = $document->created_at->diffForHumans();
+            $document->updated_at = new Carbon($document->updated_at);
+            $document->updated_atT = $document->updated_at->diffForHumans();
+        }
+        // dd($documents);
         return view('document.reg.index',['documents'=>$documents,'filter'=>$filter]);
     }
     public function allUser($filter=null){
-        
+
         if($filter!=null){
             $documents = Auth::user()->DocumentRequest->where('Doc_Status',$filter);
         }else{
@@ -55,15 +69,15 @@ class DocumentRequestController extends Controller
         return view('document.reg.indexMR',['documents'=>$documents]);
     }
     public function allFilter($filter ,$user=null){
-        
+
     }
     public function view($Doc_Code){
         // dd('reg view');
-        $regDoc = DocumentRequest::where('Doc_Code',$Doc_Code)->firstOrFail();   
-        
+        $regDoc = DocumentRequest::where('Doc_Code',$Doc_Code)->firstOrFail();
+
         // $regDoc->user_id= User::find($regDoc->user_id);
         // dd($regDoc);
-        
+
         return view('document.reg.show',['documents'=>$regDoc]);
     }
     public function DarForm($Doc_Code){
@@ -80,7 +94,7 @@ class DocumentRequestController extends Controller
         // dd($Doc_DateMRApprove);
         $DarForm->Doc_StartDate =  $this->InputToDate($DarForm->Doc_StartDate);
         $date = array(
-            
+
             'created_at'=>$created_at,
             'updated_at'=>$updated_at,
             'Doc_DateMRApprove'=>$Doc_DateMRApprove,
@@ -95,7 +109,7 @@ class DocumentRequestController extends Controller
 
         return view('document.reg.f-dar',['DarForm'=>$DarForm],['date'=>$date,'user'=>$user]
         // ,['DarReq'=>$DarReq]
-      
+
         );
     }
 
@@ -104,7 +118,7 @@ class DocumentRequestController extends Controller
         $currentYear = date("Y");
         $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
         $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
-        
+
         $count = DocumentRequest::whereBetween('created_at',[$startYear,$endYear])->count();
 
         return view('document.reg.create',['count_doc_code'=>$count,]);
@@ -113,14 +127,14 @@ class DocumentRequestController extends Controller
         //dd($request);
         //ตรวจสอบข้อมูล
         $request->validate(
-            [   
+            [
                 // 'Doc_Name'=>'required|max:10|unique:document_requests',
                 'objective'=>'required',
                 'info'=>'required',
                 'usedate'=>'required',
                 'Year'=>'required',
                 // 'file'=>'required|mimes:pdf', //|size:10mb',
-                
+
             ],
             [
                 'Doc_Name.required' => "กรุณาป้อนชื่อเอกสาร",
@@ -137,11 +151,11 @@ class DocumentRequestController extends Controller
             ]
         );
         // generate new doccode
-        
+
         $currentYear = date("Y");
         $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
         $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
-        
+
         $count = DocumentRequest::whereBetween('created_at',[$startYear,$endYear])->count();
         $DocCode = 'DAR'.date('Y').str_pad( $count+1 ,4,'0',STR_PAD_LEFT);
 
@@ -149,8 +163,8 @@ class DocumentRequestController extends Controller
         //Version File
         $file = $request->file('file');
         $extension = $file->getClientOriginalExtension();
-        
-        
+
+
         $docver = Document::where('Doc_Name',$request->Doc_Name)->count();
         $docname = $request->Doc_Name;
         $timestamp = Carbon::now()->getTimestamp();
@@ -162,8 +176,8 @@ class DocumentRequestController extends Controller
         $full_path = $upload_location.$NameFile;
         // dd($full_path);
 
-        
-        // //บันทึกข้อมูล 
+
+        // //บันทึกข้อมูล
         $documents = new DocumentRequest;
         $documents->Doc_Code = $DocCode;
         $documents->Doc_Name = $request->Doc_Name;
@@ -189,7 +203,7 @@ class DocumentRequestController extends Controller
 
 
         // gettype($request);
-        
+
         // dd( Storage::disk('local') );
         // $request->file($NameFile)->store($upload_location);
 
@@ -197,7 +211,7 @@ class DocumentRequestController extends Controller
         $documents->save();
 
         Log::channel('document')->info($documents->Doc_Code .' Create Request by '. User::find($documents->User_id)->name);
-        
+
         return redirect()->route('regDoc.create')->with('success', 'Document added!');
         // return view('document.reg.create',['users'=>Auth::user()]);
     }
@@ -218,7 +232,7 @@ class DocumentRequestController extends Controller
             $newPath = '/FilePDF/'.$reg_doc->Doc_Name.'/'.$reg_doc->Doc_Name.'-rev-'.$ver.'.pdf';
 
             // dd($ver);
-            // dd($reg_doc->Doc_Location,$newPath,$files);
+            // dd($reg_doc->Doc_StartDate);
 
             $documents = Document::updateOrCreate(
                 [
@@ -229,6 +243,7 @@ class DocumentRequestController extends Controller
                     'Doc_Code' => $reg_doc->Doc_Code,
                     'Doc_Type' => $reg_doc->Doc_Type,
                     'Doc_Life' => $reg_doc->Doc_Life,
+                    'Doc_StartDate' => $reg_doc->Doc_StartDate,
                     'Doc_ver' => $ver,
                     'Doc_Location' => $newPath,
                     'Doc_DateApprove' => now()
@@ -239,19 +254,22 @@ class DocumentRequestController extends Controller
             $size = Storage::size($newPath);
             // dd($size);
             $documents->save();
+            $reg_doc->Doc_DateMRApprove = now();
+            $reg_doc->User_MRApprove = Auth::user()->id;
             $toastMsg = 'MR Approved!';
         }else if($approve === 'approved'){
             $reg_doc->Doc_Status = '1';
+            $reg_doc->Doc_DateApprove = now();
+            $reg_doc->User_Approve = Auth::user()->id;
         }else{
             $toastType = 'warning';
+            $reg_doc->User_Approve = Auth::user()->id;
             // dd($request);
             $reg_doc->Remark = $request->remark;
             $toastMsg = 'Document '.$reg_doc->Doc_Name.' Reject!';
             $reg_doc->Doc_Status = '-1';
             // echo 'rejected';
         }
-        $reg_doc->Doc_DateApprove = now();
-        $reg_doc->User_Approve = Auth::user()->id;
         // dd($reg_doc);
         $reg_doc->save();
         // dd($reg_doc->Doc_Name);
@@ -260,7 +278,7 @@ class DocumentRequestController extends Controller
         // dd($add->id);
 
         // dd(document_request::find($add->id));
-        
+
 
 
         Log::channel('document')->info($reg_doc->Doc_Code.' update '.$approve.' by '.User::find($reg_doc->User_Approve)->name.' '.$reg_doc->Remark);
@@ -272,7 +290,7 @@ class DocumentRequestController extends Controller
         //     // $message->body('test');
         //     // dd($message);
         //  });
-        
+
         // dd(route::class,'regisManage');
         // return view('document.regis',[
         //     'documents'=>document_request::all(),

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Name') }} : {{$user->name}} 
+            {{ __('Name') }} : {{$user->name}}
         </h2>
     </x-slot>
 
@@ -17,6 +17,7 @@
                     {{__('Position')}} : {{$user->position}}<br>
                     {{__('Department Head')}} : {{$user->department_head}}<br>
                     {{__('Level')}} :  {{$user->user_level}}<br>
+                    <x-button class="py-0" href="{{route('userLV')}}">{{__('Level')}}</x-button>
                     <hr>
                 </div>
             </div>
@@ -73,7 +74,7 @@
                         <div class="grid grid-cols-1 gap-4 pb-2">
                             <x-primary-button type="submit" class="ml-auto w-48">Save</x-primary-button>
                             </div>
-                        
+
                     </form>
                 </div>
             </div>
@@ -263,8 +264,8 @@
                                 @endif
                             @endforeach
                         </div>
-                
-                        
+
+
                     </div>
             </div>
             @endcan

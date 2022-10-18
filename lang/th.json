@@ -64,7 +64,7 @@
     "Request Document":"เอกสารขึ้นทะเบียน",
     "Dar Number":"รหัสเอกสารขึ้นทะเบียน",
     "Doc Code":"รหัสเอกสาร",
-    
+
     "Department":"แผนก",
     "Department Head":"หัวหน้าแผนก",
     "Document Type":"ประเภทเอกสาร",
@@ -116,19 +116,18 @@
     "Level":"ระดับ",
     "Profile":"ข้อมูลส่วนตัว",
     "View Log":"ข้อมูลระบบ",
-  
+
     "Update Password":"เปลี่ยนรหัสผ่าน",
     "Current Password":"รหัสผ่านปัจจุบัน",
     "New Password":"รหัสผ่านใหม่",
     "Update User info":"เปลี่ยนข้อมูลส่วนตัว",
     "Update Parmission":"แก้ไขสิทธิ์",
     "Update Role":"แก้ไขหน้าที่",
-    "Show All Train approved":"เอกสารการฝึกอบรมทั้งหมด",
-    
-    "TRAINCODE":"รหัสเอกสารการฝึกอบรม"
- 
-    
-  
+    "TRAINCODE":"รหัสเอกสารการฝึกอบรม",
+    "Date Used":"วันที่บังคับใช้"
 
 
-} 
+
+
+
+}

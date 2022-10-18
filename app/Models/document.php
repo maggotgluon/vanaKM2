@@ -16,6 +16,7 @@ class Document extends Model
         'Doc_Life',
         'Doc_ver',
         'Doc_Location',
+        'Doc_StartDate',
         'Doc_DateApprove',
     ];
     public function DocumentRequest()

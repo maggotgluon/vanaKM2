@@ -19,124 +19,133 @@
             }
         }
     @endphp
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <style>
+        #table_id_length select {
+            padding-inline: 1.5rem;
+        }
+    </style>
+    <script>
+        $(document).ready( function () {
+            console.log('jqready')
+            $('#table_id').DataTable();
+        } );
+    </script>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg relative">
                 <div class="p-6 bg-white border-b border-gray-200 grid grid-cols-4 gap-4 ">
-                    <x-button href="{{route('regDoc.all',2)}}">MR Approved</x-button>
-                    <x-button href="{{route('regDoc.all',1)}}">Approved</x-button>
-                    <x-button href="{{route('regDoc.all',0)}}">Pending Approved</x-button>
-                    <x-button href="{{route('regDoc.all',-1)}}">Reject</x-button>
+                    <x-button href="{{route('regDoc.all')}}">All</x-button>
+                    <x-button href="{{route('regDoc.all',1)}}">Reviewed</x-button>
+                    <x-button href="{{route('regDoc.all',0)}}">Pending</x-button>
+                    <x-button href="{{route('regDoc.all',-1)}}">Rejected</x-button>
                 </div>
                 <div class="p-6 bg-white border-b border-gray-200">
+                    <table  id="table_id" class="display">
+                        <thead>
+                            <tr>
+                                <th> {{ __('Dar Number') }}</th>
+                                <!-- <th> {{ __('Document Type') }}</th> -->
+                                <th> {{ __('Doc Code') }}</th>
+                                <!-- <th> {{ __('Requested by (Department)') }}</th> -->
+                                <th> {{ __('Document_Status') }}</th>
+                                <!-- <th> {{ __('Review Status') }}</th> -->
+                                <!-- <th> {{ __('Approvel Status') }}</th> -->
+                                <th> {{ __('Last Update') }}</th>
+                                <th> {{ __('Action') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                    
-                    @if($documents->count()==0)
-                        <h2 class="text-xl mt-10 text-center">😀 No  {{nameFilter($filter)}}</h2>
-                    @else
-                        <h2 class="text-xl mt-10">
-                            @if ($filter==null)
-                                All 
-                            @else
-                                {{nameFilter($filter)}}
-                            @endif
-                        </h2>
-                        <ul class="border-2 border-top-none  p-4">
-                            @foreach($documents as $doc)
-                            <li class="clear-both ">
-                                @can('manage_document', Auth::user())
-                                <span class="float-right">
-                                        <div class="flex">
-                                            <!-- route('regisApprove',$doc->id,'approve=true') -->
-                                            
-                                            @can('publish_document', Auth::user())
-                                                @if($doc->Doc_Status == 1)
-                                                <form action="{{ route('regDoc.approve',$doc->id,'approve=true') }}" method="post">
-                                                @csrf
-                                                    <input type="hidden" name="regID" value="{{$doc->id}}">
-                                                    <input type="hidden" name="manage" value="mrapproved">
-                                                    <x-primary-button class="bg-brand_blue py-1 m-2">MR Approve</x-button>
-                                                </form>
-                                                @endif
-                                            @endcan
-                                            @if($doc->Doc_Status == 0)
-                                            <!-- route('regisApprove',$doc->id,'approve=true') -->
-                                            <form action="{{ route('regDoc.approve',$doc->id,'approve=true') }}" method="post">
-                                            @csrf
-                                                <input type="hidden" name="regID" value="{{$doc->id}}">
-                                                <input type="hidden" name="manage" value="approved">
-                                                <x-primary-button class="bg-brand_green py-1 m-2">Approve</x-button>
-                                            </form>
-                                            @endif
-                                            @if($doc->Doc_Status == 0)
-                                            <!-- route('regisApprove',$doc->id,'approve=false') -->
-                                            <x-primary-button class="bg-brand_orange py-1 m-2" onclick="document.querySelector('#{{$doc->Doc_Code}}').showModal()">Reject</x-button>
+                        @foreach ($documents as $document)
+                            <tr>
 
-                                            <dialog id="{{$doc->Doc_Code}}">
-                                                <p>{{$doc->Doc_Code}}</p>
-                                                <form action="{{ route('regDoc.approve',$doc->id,'approve=false') }}" method="post">
-                                                @csrf
-                                                    <input type="hidden" name="regID" value="{{$doc->id}}">
-                                                    <input type="hidden" name="manage" value="rejected">
-                                                    <x-textarea-input name="remark" class="w-full"></x-textarea-input>
-                                                    
-                                                    <x-primary-button href="{{route('regDoc.view',$doc->Doc_Code)}}" class="py-1">
-                                                        {{__('Submit')}}
-                                                    </x-primary-button>
-                                                </form>
-                                                    <x-primary-button onclick="document.querySelector('#{{$doc->Doc_Code}}').close()" class="py-1">
-                                                        {{__('Dismiss')}}
-                                                    </x-primary-button>
-                                            </dialog>
+                                <td><a href="{{route('regDoc.view',$document->Doc_Code)}}" class="hover:text-brand_blue"> {{$document->Doc_Code}} : {{$document->Doc_Type}}</a>
+                                <span class="text-sm w-full block">{{ __('Date Request') }} : {{$document->created_atT}}</span>
 
-                                            @endif
+                                <x-button href="{{route('regDoc.DarForm',$document->Doc_Code)}}" class="bg-brand_blue py-1 m-1">DAR</x-button>
+                            </td>
 
-                                        </div>
-                                </span>
+                                <td>
+                                <a href="{{route('regDoc.view',$document->Doc_Code)}}" class="hover:text-brand_blue"> {{$document->Doc_Name}} : {{$document->Doc_FullName}} Rev. {{$document->Doc_ver}}</a>
+                                    <span class="text-sm w-full block">วันที่บังคับใช้ :  {{$document->Doc_StartDateT}}</span>
+                                </td>
+                                <td>
+                                    @if ($document->Doc_Status == 2)
+                                        Approved
+                                        <span class="text-sm w-full block">{{$document->Doc_DateMRApproveT}} by {{$document->User_MRApprove}}</span>
+                                    @elseif ($document->Doc_Status == 1)
+                                        Reviewed
+                                        <span class="text-sm w-full block">{{$document->Doc_DateApproveT}} by {{$document->User_Approve}}</span>
+                                    @elseif ($document->Doc_Status == -1)
+                                        Rejected
+                                        <span class="text-sm w-full block">{{$document->updated_atT}}</span>
+                                    @else
+                                        Pending
+                                    @endif
+                                </td>
+                                <td>
+                                    {{ __('Last Update') }} : {{$document->updated_atT}}
+                                    @if ($document->Doc_DateApprove !==null && $document->User_Approve !== null)
+                                    <span class="text-sm w-full block">Review : {{$document->Doc_DateApproveT}} by {{$document->User_Approve}}</span>
+
+                                    @endif
+                                    @if ($document->Doc_DateMRApprove !==null && $document->User_MRApprove !== null)
+                                    <span class="text-sm w-full block">Approve : {{$document->Doc_DateMRApproveT}} by {{$document->User_MRApprove}}</span>
+
+                                    @endif
+                                </td>
+                                <td>
+                                @can('publish_document', Auth::user())
+                                    @if($document->Doc_Status == 1)
+                                    <form action="{{ route('regDoc.approve',$document->id,'approve=true') }}" method="post">
+                                    @csrf
+                                        <input type="hidden" name="regID" value="{{$document->id}}">
+                                        <input type="hidden" name="manage" value="mrapproved">
+                                        <x-primary-button class="bg-brand_blue py-1 m-1 w-full">MR Approve</x-button>
+                                    </form>
+                                    @endif
+                                @if($document->Doc_Status == 0)
+                                <!-- route('regisApprove',$document->id,'approve=true') -->
+                                <form action="{{ route('regDoc.approve',$document->id,'approve=true') }}" method="post">
+                                @csrf
+                                    <input type="hidden" name="regID" value="{{$document->id}}">
+                                    <input type="hidden" name="manage" value="approved">
+                                    <x-primary-button class="bg-brand_green py-1 m-1 w-full">Approve</x-button>
+                                </form>
+                                @endif
+                                <!-- if($document->Doc_Status == 0) -->
+                                <!-- route('regisApprove',$document->id,'approve=false') -->
+                                <x-primary-button class="bg-brand_orange py-1 m-1 w-full" onclick="document.querySelector('#{{$document->Doc_Code}}').showModal()">Reject</x-button>
+
+                                <dialog id="{{$document->Doc_Code}}">
+                                    <p>{{$document->Doc_Code}}</p>
+                                    <form action="{{ route('regDoc.approve',$document->id,'approve=false') }}" method="post">
+                                    @csrf
+                                        <input type="hidden" name="regID" value="{{$document->id}}">
+                                        <input type="hidden" name="manage" value="rejected">
+                                        <x-textarea-input name="remark" class="w-full"></x-textarea-input>
+
+                                        <x-primary-button href="{{route('regDoc.view',$document->Doc_Code)}}" class="py-1">
+                                            {{__('Submit')}}
+                                        </x-primary-button>
+                                    </form>
+                                        <x-primary-button onclick="document.querySelector('#{{$document->Doc_Code}}').close()" class="py-1">
+                                            {{__('Dismiss')}}
+                                        </x-primary-button>
+                                </dialog>
+
+                                <!-- endif -->
+
                                 @endcan
-                                <details>
-                                    <summary>
-                                        <a href="{{route('regDoc.view',$doc->Doc_Code)}}" class="hover:text-brand_blue">
-                                        {{$doc->Doc_Code}} : {{$doc->Doc_Name}} {{$doc->Doc_FullName}} 
-                                        @unless ($doc->Doc_ver===0)
-                                            Rev {{$doc->Doc_ver}}
-                                        @endunless
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
 
-                                        </a>
-                                    </summary>
-                                    <p>
-                                        {{$doc->Doc_Type}}
-                                    </p>
-                                    <p>
-                                        {{$doc->Doc_Obj}} {{__('reason')}} {{$doc->Doc_Description}}
-                                    </p>
-                                    <p>
-                                        upload by :
-                                        {{Auth::user()->name}}
-                                    </p>
-                                
-                                    <span class="text-sm ">last update {{$doc->updated_at}}</span> 
-                                    <br>
-                                    <x-button href="{{route('regDoc.view',$doc->Doc_Code)}}" class="py-1">
-                                        {{__('view Requested document')}}
-                                    </x-button>
-                                    
-                                    <x-button href="{{route('regDoc.DarForm',$doc->Doc_Code)}}" class="py-1">
-                                        {{__('view dar')}}
-                                    </x-button>
-                                
-                                </details>
-                            <!-- {{$doc}} -->
-                            </li>
-                                
-                            @endforeach
-                        </ul>
-                        <span class="m-4">
-                            {{ $documents->links() }}
-                        </span>
-                    @endif
-                        <hr>
-                        
+                    </table>
                 </div>
             </div>
         </div>

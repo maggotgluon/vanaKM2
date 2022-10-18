@@ -8,6 +8,10 @@ module.exports = {
         './resources/views/**/*.blade.php',
         './vendor/usernotnull/tall-toasts/config/**/*.php',
         './vendor/usernotnull/tall-toasts/resources/views/**/*.blade.php',
+
+        './app/Http/Livewire/**/*Table.php',
+        './vendor/power-components/livewire-powergrid/resources/views/**/*.php',
+        './vendor/power-components/livewire-powergrid/src/Themes/Tailwind.php'
     ],
 
     theme: {
@@ -20,13 +24,15 @@ module.exports = {
                 brand_green:'#36B553',
                 brand_orange:'#F7941D',
                 brand_yellow:'#FFDE17'
-            }   
+            }
         },
     },
 
     plugins: [
         require('@tailwindcss/typography'),
         require('@tailwindcss/aspect-ratio'),
-        require('@tailwindcss/forms')
+        require('@tailwindcss/forms')({
+            strategy: 'class',
+          }),
     ],
 };
