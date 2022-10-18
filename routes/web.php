@@ -9,6 +9,8 @@ use App\Models\Document;
 use App\Models\TrainingRequest;
 use App\Models\User;
 
+use Illuminate\Support\Carbon;
+
 
 // use Livewire\Component;
 // use Usernotnull\Toast\Concerns\WireToast;
@@ -34,8 +36,54 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/dashboard', function () {
 
         $user = User::all();
-        $documents = Document::all();
-        $trainings = TrainingRequest::where('Doc_Status',1)->get();
+        // $documents = Document::all();
+        $now = new Carbon();
+        $documents = Document::where('Doc_StartDate','<=',$now)->get();
+        foreach ($documents as $index => $document) {
+            # code...
+            $created_at=new Carbon($document->created_at);
+            $document->created_atC=$created_at;
+            $document->created_atT=$created_at->diffForHumans();
+            $updated_at=new Carbon($document->updated_at);
+            $document->updated_atC=$updated_at;
+            $document->updated_atT=$updated_at->diffForHumans();
+            $Doc_StartDate=new Carbon($document->Doc_StartDate);
+            $document->Doc_StartDateC=$Doc_StartDate;
+            $document->Doc_StartDateT=$Doc_StartDate->diffForHumans();
+            $Doc_DateApprove=new Carbon($document->Doc_DateApprove);
+            $document->Doc_DateApproveC=$Doc_DateApprove;
+            $document->Doc_DateApproveT=$Doc_DateApprove->diffForHumans();
+        }
+        $trainings = TrainingRequest::where('Doc_Status',2)->get();
+
+        foreach ($trainings as $index => $training) {
+            $training->Doc_008 = json_decode($training->Doc_008);
+            $training->Doc_009 = json_decode($training->Doc_009);
+            // $training->Doc_DateApprove
+            $Doc_DateApprove=new Carbon($training->Doc_DateApprove);
+            $training->Doc_DateApproveC=$Doc_DateApprove;
+            $training->Doc_DateApproveT=$Doc_DateApprove->diffForHumans();
+
+            // $training->Doc_DateReview
+            $Doc_DateReview=new Carbon($training->Doc_DateReview);
+            $training->Doc_DateReviewC=$Doc_DateReview;
+            $training->Doc_DateReviewT=$Doc_DateReview->diffForHumans();
+
+            $training->User_Approve = $training->User_Approve==null?null:User::find($training->User_Approve);
+
+            $training->User_Review = $training->User_Review == null?null:User::find($training->User_Review);
+
+            $training->user_id = $training->user_id == null?null:User::find($training->user_id);
+
+            $created_at=new Carbon($training->created_at);
+            $training->created_atC=$created_at;
+            $training->created_atT=$created_at->diffForHumans();
+            $updated_at=new Carbon($training->updated_at);
+            $training->updated_atC=$updated_at;
+            $training->updated_atT=$updated_at->diffForHumans();
+
+        }
+        // dd($trainings[0]);
         return view('dashboard',['user'=>$user,'documents'=>$documents,'trainings'=>$trainings]);
 
     })->middleware(['auth', 'verified'])->name('dashboard');
