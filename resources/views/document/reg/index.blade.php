@@ -75,10 +75,10 @@
                                 <td>
                                     @if ($document->Doc_Status == 2)
                                         Approved
-                                        <span class="text-sm w-full block">{{$document->Doc_DateMRApproveT}} by {{$document->User_MRApprove}}</span>
+                                        <span class="text-sm w-full block">{{$document->Doc_DateMRApproveT}}<br>by {{$document->User_MRApprove->name}}</span>
                                     @elseif ($document->Doc_Status == 1)
                                         Reviewed
-                                        <span class="text-sm w-full block">{{$document->Doc_DateApproveT}} by {{$document->User_Approve}}</span>
+                                        <span class="text-sm w-full block">{{$document->Doc_DateApproveT}} <br>by {{$document->User_Approve->name}}</span>
                                     @elseif ($document->Doc_Status == -1)
                                         Rejected
                                         <span class="text-sm w-full block">{{$document->updated_atT}}</span>
@@ -89,11 +89,11 @@
                                 <td>
                                     {{ __('Last Update') }} : {{$document->updated_atT}}
                                     @if ($document->Doc_DateApprove !==null && $document->User_Approve !== null)
-                                    <span class="text-sm w-full block">Review : {{$document->Doc_DateApproveT}} by {{$document->User_Approve}}</span>
+                                    <span class="text-sm w-full block">Review : {{$document->Doc_DateApproveT}} <br>by {{$document->User_Approve->name}}</span>
 
                                     @endif
                                     @if ($document->Doc_DateMRApprove !==null && $document->User_MRApprove !== null)
-                                    <span class="text-sm w-full block">Approve : {{$document->Doc_DateMRApproveT}} by {{$document->User_MRApprove}}</span>
+                                    <span class="text-sm w-full block">Approve : {{$document->Doc_DateMRApproveT}} <br>by {{$document->User_MRApprove->name}}</span>
 
                                     @endif
                                 </td>

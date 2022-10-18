@@ -41,18 +41,20 @@ class DocumentRequestController extends Controller
         }
         foreach ($documents as $index => $document) {
             # code...
-            $document->Doc_DateApprove = new Carbon($document->Doc_DateApprove);
-            $document->Doc_DateApproveT = $document->Doc_DateApprove->diffForHumans();
-            $document->Doc_DateMRApprove = new Carbon($document->Doc_DateMRApprove);
-            $document->Doc_DateMRApproveT = $document->Doc_DateMRApprove->diffForHumans();
-            $document->Doc_StartDate = new Carbon($document->Doc_StartDate);
-            $document->Doc_StartDateT = $document->Doc_StartDate->diffForHumans();
-            $document->created_at = new Carbon($document->created_at);
-            $document->created_atT = $document->created_at->diffForHumans();
-            $document->updated_at = new Carbon($document->updated_at);
-            $document->updated_atT = $document->updated_at->diffForHumans();
+            $Doc_DateApprove = new Carbon($document->Doc_DateApprove);
+            $document->Doc_DateApproveT = $Doc_DateApprove->diffForHumans();
+            $Doc_DateMRApprove = new Carbon($document->Doc_DateMRApprove);
+            $document->Doc_DateMRApproveT = $Doc_DateMRApprove->diffForHumans();
+            $Doc_StartDate = new Carbon($document->Doc_StartDate);
+            $document->Doc_StartDateT = $Doc_StartDate->diffForHumans();
+            $created_at = new Carbon($document->created_at);
+            $document->created_atT = $created_at->diffForHumans();
+            $updated_at = new Carbon($document->updated_at);
+            $document->updated_atT = $updated_at->diffForHumans();
+
+            $document->User_Approve = $document->User_Approve==null?null:User::find($document->User_Approve);
+            $document->User_MRApprove = $document->User_MRApprove==null?null:User::find($document->User_MRApprove);
         }
-        // dd($documents);
         return view('document.reg.index',['documents'=>$documents,'filter'=>$filter]);
     }
     public function allUser($filter=null){
@@ -102,7 +104,7 @@ class DocumentRequestController extends Controller
 
         );
         // dd($date);
-        $user=User::find($DarForm->user_id); 
+        $user=User::find($DarForm->user_id);
         // dd($user);
         // dd($date);
         // $DarReq = $this->hasone(User::class,'id',$id);
