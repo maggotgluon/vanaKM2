@@ -260,6 +260,11 @@ class DocumentRequestController extends Controller
         // dd($documents);
         $documents->save();
 
+        $details = [
+            'title'=>$DocCode.'has been request',
+            'body'=>'please visit KM system form more infomation'
+        ];
+        Mail::to('ruttaphong.w@vananava.com')->send(new NotifyMail($details));
 
         Log::channel('document')->info($documents->Doc_Code .' Create Request by '. User::find($documents->User_id)->name);
 
@@ -327,8 +332,13 @@ class DocumentRequestController extends Controller
         $message = $request->manage;
         // echo $add->manage;
         // dd($add->id);
+        $details = [
+            'title'=>'test email',
+            'body'=>'infomation'
+        ];
+        Mail::to('ruttaphong.w@vananava.com')->send(new NotifyMail($details));
 
-        // dd(document_request::find($add->id));
+        // dd($details);
 
 
 
