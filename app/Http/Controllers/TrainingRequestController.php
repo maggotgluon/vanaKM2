@@ -11,6 +11,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
 use Carbon\Carbon;
+use DragonCode\Support\Facades\Helpers\Arr;
+
 class TrainingRequestController extends Controller
 {
     private function InputToDate($Input)
@@ -69,18 +71,23 @@ class TrainingRequestController extends Controller
         $d008 =TrainingRequest::where('Doc_Code',$Doc_Code)->firstOrFail() ;
         $sub_d008 = json_decode($d008->Doc_008, TRUE);
         $Doc_DateApprove =  $this->InputToDate($d008->Doc_DateApprove);
-        $Doc_DateMRApprove =  $this->InputToDate($d008->Doc_DateMRApprove);
+        $Doc_DateReview =  $this->InputToDate($d008->Doc_DateReview);
+        $created_at =  $this->InputToDate($d008->created_at);
+// dd( $Doc_DateReview );
+    
+     
+            $user=User::find($d008->user_id);
+            $Position_Approve=User::where('name',$d008->User_Approve)->firstOrFail();
+            $Position_Review=User::where('name',$d008->User_Review)->firstOrFail();
+            
 
-        $date = array(
-            'Doc_DateMRApprove'=>$Doc_DateMRApprove,
-            'Doc_DateApprove'=>$Doc_DateApprove
+        $positions = array (
+            'user_position'=>$user->position,
+            'Approve_position'=>$Position_Approve->position,
+            'Review_position'=> $Position_Review->position
         );
-
-        $user=User::find($d008->user_id);
-        $Position_Approve=User::where('name',$d008->User_Approve)->firstOrFail();
-        $MR=User::find($d008->user_id);
-        // dd($user);
-        return view('training.reg.f-008', ['f008'=>$sub_d008],['D008'=>$d008,'user'=>$user,$date,'Position_Approve'=>$Position_Approve]);
+        // dd($Position_Approve);
+        return view('training.reg.f-008', ['f008'=>$sub_d008],['created_at'=>$created_at,'Doc_DateReview'=>$Doc_DateReview,'Doc_DateApprove'=>$Doc_DateApprove,'D008'=>$d008,'user'=>$user,'positions'=>$positions]);
 
     }
     public function form009($Doc_Code){
@@ -96,7 +103,7 @@ class TrainingRequestController extends Controller
         $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
         $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
 
-        $count = TrainingRequest::whereBetween('created_at',[$startYear,$endYear])->count();
+        $count = TrainingRequest::whereBetween('created_at',[$startYear,$endYear])->count(); 
 
         return view('training.reg.create',['count_train_code'=>$count,]);
     }
