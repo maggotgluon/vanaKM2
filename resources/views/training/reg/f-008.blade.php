@@ -85,27 +85,27 @@
                 <div class="w-2/5">
                 <span class="font-bold " >Trained by: </span>{{$user->name }}</div>
                 <div class="w-1/3">
-                <span class="font-bold " >Position: </span>{{ $user->position }}</div>
+                <span class="font-bold " >Position: </span>{{$positions['user_position']}}</div>
                 <div class="w-1/5">
-                <span class="font-bold " >Date: </span> {{$D008->created_at }}</div>
+                <span class="font-bold " >Date: </span> {{$created_at }}</div>
             </div>
 
             <div class=" flex justify-self-start gap-2 w-full px-2 py-1">
                 <div class="w-2/5">
-                <span class="font-bold " >Acknowledge by: </span>MR >name </div>
+                <span class="font-bold " >Acknowledge by: </span>{{$D008->User_Review }}</div>
                 <div class="w-1/3">
-                <span class="font-bold " >Position: </span>MR</div>
+                <span class="font-bold " >Position: </span>{{ $positions['Review_position'] }}</div>
                 <div class="w-1/5">
-                <span class="font-bold " >Date: </span> MR DATE APPOVRE</div>
+                <span class="font-bold " >Date: </span>{{ $Doc_DateApprove  }}  </div> 
             </div>
 
             <div class=" flex justify-self-start gap-2 w-full px-2 py-1">
                 <div class="w-2/5">
                 <span class="font-bold " >Reviewed by: </span>{{$D008->User_Approve }}</div>
                 <div class="w-1/3">
-                <span class="font-bold " >Position: </span>{{ $Position_Approve->position }}</div>
+                <span class="font-bold " >Position: </span> {{ $positions['Approve_position'] }}</div>
                 <div class="w-1/5">
-                <span class="font-bold " >Date: </span> {{$D008->Doc_DateApprove }}</div>
+                <span class="font-bold " >Date: </span>{{$Doc_DateReview}} </div>
             </div>
         
     </div>
