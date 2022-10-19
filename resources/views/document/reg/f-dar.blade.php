@@ -3,6 +3,8 @@
     <h2 class="font-semibold text-xl text-gray-800 leading-tight print:hidden ">
       {{ __('DAR FROM') }}
     </h2>
+        <hr>
+        <x-button class="py-0" href="{{url()->previous()}}">{{__('Back')}}</x-button>
   </x-slot>
   <span class="print:block print:absolute print:bottom-0  hidden">FM-DCC-001</span>
   <span class="print:block print:absolute print:bottom-0  print:right-0 hidden">Rev. 00 : 19.01.2015 </span>
@@ -15,17 +17,17 @@
         <div class="p-6 bg-white border-b border-gray-200">
 
         <button onclick="window.print();" class=" z-10 block  float-right rounded-lg ring p-1 ring-blue-600 bg-blue-500 font-bold text-white  print:hidden  "> PRINT </button>
-          
+
 
           <div id="FM-LDS-009" class="">
-         
+
 
             <h2 class=" z-20 text-2xl mb-4  font-bold text-center">
               DOCUMENT ACTION REQUEST</h2>
               <h2 class="text-2xl mb-4 font-bold text-center">
               ใบแจ้งขอดำเนินการด้านเอกสาร</h2>
-              
-            
+
+
 
 
             <table class="md:table-auto p-4  w-full mt-4">
@@ -44,7 +46,7 @@
 
                     <span class="font-bold">{{__('Department')}} :</span>
                     <span>
-                    {{$user->department}} 
+                    {{$user->department}}
 
                     </span>
                   </td>
@@ -55,8 +57,8 @@
                     </span><br>
                     <span class=" font-bold">{{__('Department Head')}} : </span>
                     <span>
-                    {{$user->department_head}} 
-                     
+                    {{$user->department_head}}
+
                     </span>
                   </td>
                 </tr>
@@ -124,7 +126,7 @@
               </div>
               <div class="w-1/6 float-right ">
                   <div>
-                  <span class=" font-bold">{{__('Attachment')}} : </span> 
+                  <span class=" font-bold">{{__('Attachment')}} : </span>
                    @php
                   $Attachment= $DarForm->Doc_Location ? "YES" :"N/A"
                    @endphp

@@ -25,7 +25,7 @@
                 <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
-                        <x-button class="py-0" href="{{url()->previous()}}">{{__('Back')}}</x-button>
+                        <!-- <x-button class="py-0" href="{{url()->previous()}}">{{__('Back')}}</x-button> -->
                     </div>
 
                 </header>

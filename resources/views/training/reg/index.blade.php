@@ -55,10 +55,6 @@
 
                         @foreach ($documents as $document)
 
-                            @php
-                            $f008 = json_decode($document->Doc_008);
-                            $f009 = json_decode($document->Doc_009);
-                            @endphp
                             <tr>
 
                                 <td>
@@ -66,11 +62,12 @@
                                 <details>
                                     <summary>
                                     <a href="{{route('regTraining.view',$document->Doc_Code)}}" class="hover:text-brand_blue">
-                                    {{$document->Doc_Code}} : {{$f008->SUBJECT}}
+                                    {{$document->Doc_Code}} : {{$document->Doc_008->SUBJECT}}
                                     </a>
-                                    <span class="text-sm w-full block">{{ __('Date Request') }} : {{$document->created_at}}</span>
+                                    <span class="text-sm w-full block">{{ __('Date Request') }} : {{$document->created_atT}}</span>
 
                                     </summary>
+                                <span class="text-sm w-full block">{{ __('Request By') }} : {{$document->user_id->name}}</span>
                                     <div class="flex gap-4">
                                         <x-button href="{{route('regTraining.view',$document->Doc_Code)}}" class="py-1">
                                             {{__('view Requested Training')}}
@@ -102,13 +99,13 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {{ __('Last Update') }} : {{$document->updated_at}}
+                                    {{ __('Last Update') }} : {{$document->updated_atT}}
                                     @if ($document->Doc_DateReview !==null && $document->User_Review !== null)
-                                    <span class="text-sm w-full block">Review : {{$document->Doc_DateReview}} by {{$document->User_Review}}</span>
+                                    <span class="text-sm w-full block group relative isolate z-10">Review : {{$document->Doc_DateReviewT}} <span class="absolute pointer-events-none z-10 top-full -left-1/2 w-max p-2 bg-white transition-all delay-500 duration-500 opacity-0 translate-y-16 group-hover:opacity-100 group-hover:translate-y-0">by {{$document->User_Review->name}}</span></span>
 
                                     @endif
                                     @if ($document->Doc_DateApprove !==null && $document->User_Approve !== null)
-                                    <span class="text-sm w-full block">Approve : {{$document->Doc_DateApprove}} by {{$document->User_Approve}}</span>
+                                    <span class="text-sm w-full block group relative isolate">Approve : {{$document->Doc_DateApproveT}} <span class="absolute pointer-events-none z-10 top-full -left-1/2 w-max p-2 bg-white transition-all delay-500 duration-500 opacity-0 translate-y-16 group-hover:opacity-100 group-hover:translate-y-0">by {{$document->User_Approve->name}}</span></span>
 
                                     @endif
                                 </td>

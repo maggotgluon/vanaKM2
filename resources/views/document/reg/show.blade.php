@@ -24,6 +24,8 @@
         <span class="text-sm {{nameFilter($documents->Doc_Status)}}">
             {{nameFilter($documents->Doc_Status)}}
         </span>
+        <hr>
+        <x-button class="py-0" href="{{url()->previous()}}">{{__('Back')}}</x-button>
     </x-slot>
 
     <div class="py-12">
@@ -78,7 +80,7 @@
                     @endif
 
                     @endcan
-                    <x-button href="{{route('regDoc.DarForm',$documents->Doc_Code)}}" class="bg-brand_blue py-1 m-2">DAR</x-button>
+                    <x-button href="{{route('regDoc.DarForm',$documents->Doc_Code)}}" target="__blank" class="bg-brand_blue py-1 m-2">DAR</x-button>
                 </div>
                     <p>
                         {{$documents->Doc_Type}}
@@ -88,17 +90,23 @@
 
                         </p>
                     <p>
-                    upload by : {{$documents->user_id}}
+                    upload by : {{$documents->user_id->name}}
                     </p>
                     <span class="text-sm ">created_at  {{$documents->created_at}}</span>
                     <p>
-                        Approved by : {{$documents->User_Approve}}
+                        Reviewed by : {{$documents->User_Approve->name}}
                     </p>
-                    <span class="text-sm ">last update {{$documents->updated_at}}</span>
+                    <span class="text-sm ">Date {{$documents->Doc_DateApprove}}</span>
 
                     <br>
                     <span class="text-sm {{nameFilter($documents->Doc_Status)}}">
                         {{$documents->Doc_Location}}
+                    </span>
+
+                    <br>
+
+                    <span class="text-sm {{nameFilter($documents->Doc_Status)}}">
+                        <!-- {{$documents}} -->
                     </span>
 
                     <!-- {{ $documents }} -->

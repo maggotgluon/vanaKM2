@@ -42,10 +42,10 @@
                         <thead>
                             <tr>
                                 <th>{{ __('Doc Code') }}</th>
-                                <th>{{ __('Document_Status') }}</th>
-                                <th>{{ __('Date') }}</th>
-                                <th>{{ __('Action') }}</th>
-                                <th>{{ __('Remark') }}</th>
+                                <th class="w-1/12">{{ __('Document_Status') }}</th>
+                                <th class="w-1/6">{{ __('Date') }}</th>
+                                <th class="w-1/12">{{ __('Action') }}</th>
+                                <th class="w-1/6">{{ __('Remark') }}</th>
                             </tr>
 
                         </thead>
@@ -65,14 +65,13 @@
                         @endphp
                         <!-- {{$document}} -->
                         <tr class="{{$status}}">
-                            <td>{{$document->Doc_Code}}:{{$document->Doc_Name}} <hr>
-                                <span>{{$document->Doc_Obj}} {{__('reason')}} {{$document->Doc_Description}}</span>
+                            <td>{{$document->Doc_Code}}:{{$document->Doc_008->SUBJECT}}
                             </td>
                             <td>
                             {{$status}}
 
                             </td>
-                            <td>{{$document->updated_at}}<br><span class="text-sm"> Create at :{{$document->created_at}}</span></td>
+                            <td>{{$document->updated_atT}}<br><span class="text-sm"> Create at :{{$document->created_atT}}</span></td>
                             <td><x-button href="{{route('regTraining.view',$document->Doc_Code)}}">view</x-button></td>
                             <td>{{$document->Remark}}</td>
 

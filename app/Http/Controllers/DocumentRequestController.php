@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Mail;
+// use Mail;
+use App\Mail\NotifyMail;
+
 class DocumentRequestController extends Controller
 {
 
@@ -30,21 +34,20 @@ class DocumentRequestController extends Controller
         return  $Date;
     }
 
-    public function all($filter=0){
-        // dd($filter);
-        // Gate::authorize('manage_document');
-        if($filter!=null){
-            $documents = DocumentRequest::where('Doc_Status',$filter)->get();
-            // dd($documents->count());
-        }else{
-            $documents = DocumentRequest::all();
-        }
+    public function processDocumensRequest($documents){
         foreach ($documents as $index => $document) {
             # code...
-            $Doc_DateApprove = new Carbon($document->Doc_DateApprove);
-            $document->Doc_DateApproveT = $Doc_DateApprove->diffForHumans();
-            $Doc_DateMRApprove = new Carbon($document->Doc_DateMRApprove);
-            $document->Doc_DateMRApproveT = $Doc_DateMRApprove->diffForHumans();
+            // dd($document);
+            if($document->Doc_DateApprove!=null){
+                $Doc_DateApprove = new Carbon($document->Doc_DateApprove);
+                $document->Doc_DateApproveT = $Doc_DateApprove->diffForHumans();
+            }
+            if($document->Doc_DateMRApprove!=null){
+                $Doc_DateMRApprove = new Carbon($document->Doc_DateMRApprove);
+                $document->Doc_DateMRApproveT = $Doc_DateMRApprove->diffForHumans();
+            }
+
+
             $Doc_StartDate = new Carbon($document->Doc_StartDate);
             $document->Doc_StartDateT = $Doc_StartDate->diffForHumans();
             $created_at = new Carbon($document->created_at);
@@ -55,7 +58,49 @@ class DocumentRequestController extends Controller
             $document->User_Approve = $document->User_Approve==null?null:User::find($document->User_Approve);
             $document->User_MRApprove = $document->User_MRApprove==null?null:User::find($document->User_MRApprove);
         }
-        return view('document.reg.index',['documents'=>$documents,'filter'=>$filter]);
+        return $documents;
+
+    }
+    public function processDocumen($document){
+            # code...
+        // dd($document);
+        if($document->Doc_DateApprove!=null){
+            $Doc_DateApprove = new Carbon($document->Doc_DateApprove);
+            $document->Doc_DateApproveT = $Doc_DateApprove->diffForHumans();
+        }
+        if($document->Doc_DateMRApprove!=null){
+            $Doc_DateMRApprove = new Carbon($document->Doc_DateMRApprove);
+            $document->Doc_DateMRApproveT = $Doc_DateMRApprove->diffForHumans();
+        }
+
+
+        $Doc_StartDate = new Carbon($document->Doc_StartDate);
+        $document->Doc_StartDateT = $Doc_StartDate->diffForHumans();
+        $created_at = new Carbon($document->created_at);
+        $document->created_atT = $created_at->diffForHumans();
+        $updated_at = new Carbon($document->updated_at);
+        $document->updated_atT = $updated_at->diffForHumans();
+
+        $document->user_id = $document->user_id==null?null:User::find($document->user_id);
+        $document->User_Approve = $document->User_Approve==null?null:User::find($document->User_Approve);
+        $document->User_MRApprove = $document->User_MRApprove==null?null:User::find($document->User_MRApprove);
+
+        return $document;
+
+    }
+
+    public function all($filter=0){
+        // dd($filter);
+        // Gate::authorize('manage_document');
+        if($filter!=null){
+            $documents = DocumentRequest::where('Doc_Status',$filter)->get();
+            // dd($documents->count());
+        }else{
+            $documents = DocumentRequest::all();
+        }
+        $pdocuments = $this->processDocumensRequest($documents);
+        // dd($pdocuments);
+        return view('document.reg.index',['documents'=>$pdocuments,'filter'=>$filter]);
     }
     public function allUser($filter=null){
 
@@ -64,11 +109,13 @@ class DocumentRequestController extends Controller
         }else{
             $documents = Auth::user()->DocumentRequest;
         }
-        return view('document.reg.indexMy',['documents'=>$documents]);
+        $pdocuments = $this->processDocumensRequest($documents);
+        return view('document.reg.indexMy',['documents'=>$pdocuments]);
     }
     public function allMR($filter=null){
         $documents = DocumentRequest::where('Doc_Status',1)->get();
-        return view('document.reg.indexMR',['documents'=>$documents]);
+        $pdocuments = $this->processDocumensRequest($documents);
+        return view('document.reg.indexMR',['documents'=>$pdocuments]);
     }
     public function allFilter($filter ,$user=null){
 
@@ -79,8 +126,9 @@ class DocumentRequestController extends Controller
 
         // $regDoc->user_id= User::find($regDoc->user_id);
         // dd($regDoc);
+        $pdocuments = $this->processDocumen($regDoc);
 
-        return view('document.reg.show',['documents'=>$regDoc]);
+        return view('document.reg.show',['documents'=>$pdocuments]);
     }
     public function DarForm($Doc_Code){
         // dd('reg DarForm');
@@ -109,7 +157,7 @@ class DocumentRequestController extends Controller
         // dd($date);
         // $DarReq = $this->hasone(User::class,'id',$id);
 
-        return view('document.reg.f-dar',['DarForm'=>$DarForm],['date'=>$date,'user'=>$user]
+        return view('document.reg.p-dar',['DarForm'=>$DarForm],['date'=>$date,'user'=>$user]
         // ,['DarReq'=>$DarReq]
 
         );
@@ -170,7 +218,7 @@ class DocumentRequestController extends Controller
         $docver = Document::where('Doc_Name',$request->Doc_Name)->count();
         $docname = $request->Doc_Name;
         $timestamp = Carbon::now()->getTimestamp();
-        $NameFile = $docname.'-'.$docver.'-'.$timestamp.'.'.$extension;
+        $NameFile = $DocCode.'-'.$docname.'-'.$docver.'.'.$extension;
         // dd(Carbon::now()->locale('th_TH')->toDateString());
         // dd($NameFile);
 
@@ -212,6 +260,7 @@ class DocumentRequestController extends Controller
         // dd($documents);
         $documents->save();
 
+
         Log::channel('document')->info($documents->Doc_Code .' Create Request by '. User::find($documents->User_id)->name);
 
         return redirect()->route('regDoc.create')->with('success', 'Document added!');
@@ -231,7 +280,7 @@ class DocumentRequestController extends Controller
 
             // $files = Storage::get($reg_doc->Doc_Location);
             $ver = Document::where('Doc_Name',$reg_doc->Doc_Name)->count()!=0?Document::where('Doc_Name',$reg_doc->Doc_Name)->firstOrFail()->Doc_ver+1:0;
-            $newPath = '/FilePDF/'.$reg_doc->Doc_Name.'/'.$reg_doc->Doc_Name.'-rev-'.$ver.'.pdf';
+            $newPath = '/FilePDF/master/'.$reg_doc->Doc_Name.'-rev-'.$ver.'.pdf';
 
             // dd($ver);
             // dd($reg_doc->Doc_StartDate);
