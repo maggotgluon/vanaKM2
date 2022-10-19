@@ -1,4 +1,4 @@
-<x-app-layout >
+<x-print-layout>
     <x-slot name="header" >
         <h2 class="font-semibold text-xl text-gray-800 leading-tight  print:hidden">
         FM-LDS-008
@@ -113,4 +113,4 @@
     </div>
     </div></div></div></div>
 
-</x-app-layout>
+</x-print-layout>

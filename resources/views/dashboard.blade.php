@@ -29,52 +29,42 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    Document
+            @if ($documents->count() > 0 )
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 bg-white border-b border-gray-200">
+                        Document
+                        <table id="table_document" class="display">
+                            <thead>
+                                <tr>
+                                    <th> {{ __('Dar Number') }}</th>
+                                    <th class="w-1/6"> {{ __('Document Type') }}</th>
+                                    <th class="w-2/6"> {{ __('Date') }}</th>
+                                    <th class="w-1/6"> {{ __('View_Document') }}</th>
+                                </tr>
 
-                    <div class="grid grid-cols-3">
-                    @foreach ($documents as $document)
-                        <div>
-                            <a href="{{route('document.view',$document->Doc_Code)}}" class="hover:text-brand_blue">
-                                {{$document->Doc_Name}}
-                                <br>
-                            </a>
-                            <span class="text-sm ">update {{$document->updated_at}}</span> <hr>
-                        </div>
+                            </thead>
+                            <tbody>
+                            @foreach ($documents as $document)
+                            <!-- {{$document}} -->
+                            <tr class="">
+                                <td>
+                                    <a href="{{route('document.view',$document->Doc_Code)}}" class="hover:text-brand_blue">
+                                    {{$document->Doc_Name}} {{$document->Doc_FullName}}
+                                    </a>
+                                </td>
+                                <td>{{$document->Doc_Type}}</td>
 
-                    @endforeach
-                    </div>
-
-                    <table id="table_document" class="display">
-                        <thead>
-                            <tr>
-                                <th> {{ __('Dar Number') }}</th>
-                                <th class="w-1/6"> {{ __('Document Type') }}</th>
-                                <th class="w-2/6"> {{ __('Date') }}</th>
-                                <th class="w-1/6"> {{ __('View_Document') }}</th>
+                                <td>{{$document->Doc_StartDateT}}</td>
+                                <td><x-button href="{{route('document.view',$document->Doc_Code)}}" class="py-1 m-1">view</x-button></td>
                             </tr>
-
-                        </thead>
-                        <tbody>
-                        @foreach ($documents as $document)
-                        <!-- {{$document}} -->
-                        <tr class="">
-                            <td>
-                                <a href="{{route('document.view',$document->Doc_Code)}}" class="hover:text-brand_blue">
-                                {{$document->Doc_Name}} {{$document->Doc_FullName}}
-                                </a>
-                            </td>
-                            <td>{{$document->Doc_Type}}</td>
-
-                            <td>{{$document->Doc_StartDateT}}</td>
-                            <td><x-button href="{{route('document.view',$document->Doc_Code)}}" class="py-1 m-1">view</x-button></td>
-                        </tr>
-                        @endforeach
-                    </table>
+                            @endforeach
+                        </table>
+                    </div>
                 </div>
-            </div>
 
+            @endif
+
+            @if ($trainings->count() > 0 )
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     Training
@@ -104,6 +94,7 @@
 
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </x-app-layout>

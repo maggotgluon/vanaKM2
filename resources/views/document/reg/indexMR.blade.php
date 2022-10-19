@@ -33,13 +33,13 @@
                             <tr>
                                 <th> {{ __('Dar Number') }}</th>
                                 <!-- <th> {{ __('Document Type') }}</th> -->
-                                <th> {{ __('Doc Code') }}</th>
+                                <th class="w-1/6"> {{ __('Doc Code') }}</th>
                                 <!-- <th> {{ __('Requested by (Department)') }}</th> -->
-                                <th> {{ __('Document_Status') }}</th>
+                                <th class="w-1/6"> {{ __('Document_Status') }}</th>
                                 <!-- <th> {{ __('Review Status') }}</th> -->
                                 <!-- <th> {{ __('Approvel Status') }}</th> -->
-                                <th> {{ __('Last Update') }}</th>
-                                <th> {{ __('Action') }}</th>
+                                <th class="w-1/6"> {{ __('Last Update') }}</th>
+                                <th class="w-1/6"> {{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,7 +48,7 @@
                             <tr>
 
                                 <td><a href="{{route('regDoc.view',$document->Doc_Code)}}" class="hover:text-brand_blue"> {{$document->Doc_Code}} : {{$document->Doc_Type}}</a>
-                                <span class="text-sm w-full block">{{ __('Date Request') }} : {{$document->created_at}}</span></td>
+                                <span class="text-sm w-full block">{{ __('Date Request') }} : {{$document->created_atT}}</span></td>
 
                                 <td>
                                 <a href="{{route('regDoc.view',$document->Doc_Code)}}" class="hover:text-brand_blue"> {{$document->Doc_Name}} : {{$document->Doc_FullName}} Rev. {{$document->Doc_ver}}</a>
@@ -57,25 +57,25 @@
                                 <td>
                                     @if ($document->Doc_Status == 2)
                                         Approved
-                                        <span class="text-sm w-full block">{{$document->Doc_DateMRApprove}} by {{$document->User_MRApprove}}</span>
+                                        <span class="text-sm w-full block group relative isolate z-10">{{$document->Doc_DateMRApproveT}}<span class="absolute pointer-events-none z-10 top-full -left-1/2 w-max p-2 bg-white transition-all delay-500 duration-500 opacity-0 translate-y-16 group-hover:opacity-100 group-hover:translate-y-0"> by {{$document->User_MRApprove->name}}</span></span>
                                     @elseif ($document->Doc_Status == 1)
                                         Reviewed
-                                        <span class="text-sm w-full block">{{$document->Doc_DateApprove}} by {{$document->User_Approve}}</span>
+                                        <span class="text-sm w-full block group relative isolate z-10">{{$document->Doc_DateApproveT}}<span class="absolute pointer-events-none z-10 top-full -left-1/2 w-max p-2 bg-white transition-all delay-500 duration-500 opacity-0 translate-y-16 group-hover:opacity-100 group-hover:translate-y-0"> by {{$document->User_Approve->name}}</span></span>
                                     @elseif ($document->Doc_Status == -1)
                                         Rejected
-                                        <span class="text-sm w-full block">{{$document->updated_at}} <br> {{$document->Remark}}</span>
+                                        <span class="text-sm w-full block group relative isolate z-10">{{$document->updated_atT}} <span class="absolute pointer-events-none z-10 top-full -left-1/2 w-max p-2 bg-white transition-all delay-500 duration-500 opacity-0 translate-y-16 group-hover:opacity-100 group-hover:translate-y-0"> {{$document->Remark}}</span></span>
                                     @else
                                         Pending
                                     @endif
                                 </td>
                                 <td>
-                                    {{ __('Last Update') }} : {{$document->updated_at}}
+                                    {{ __('Last Update') }} :<br> {{$document->updated_atT}}
                                     @if ($document->Doc_DateApprove !==null && $document->User_Approve !== null)
-                                    <span class="text-sm w-full block">Review : {{$document->Doc_DateApprove}} by {{$document->User_Approve}}</span>
+                                    <span class="text-sm w-full block group relative isolate z-10">Review : {{$document->Doc_DateApproveT}}<span class="absolute pointer-events-none z-10 top-full -left-1/2 w-max p-2 bg-white transition-all delay-500 duration-500 opacity-0 translate-y-16 group-hover:opacity-100 group-hover:translate-y-0"> by {{$document->User_Approve->name}}</span></span>
 
                                     @endif
                                     @if ($document->Doc_DateMRApprove !==null && $document->User_MRApprove !== null)
-                                    <span class="text-sm w-full block">Approve : {{$document->Doc_DateMRApprove}} by {{$document->User_MRApprove}}</span>
+                                    <span class="text-sm w-full block group relative isolate z-10">Approve : {{$document->Doc_DateMRApproveT}}<span class="absolute pointer-events-none z-10 top-full -left-1/2 w-max p-2 bg-white transition-all delay-500 duration-500 opacity-0 translate-y-16 group-hover:opacity-100 group-hover:translate-y-0"> by {{$document->User_MRApprove->name}}</span></span>
 
                                     @endif
                                 </td>

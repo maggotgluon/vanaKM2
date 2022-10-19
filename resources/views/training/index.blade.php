@@ -46,18 +46,14 @@
                         @foreach ($documents as $document)
                         <!-- {{$document}} -->
 
-                        @php
-                            $f008 = json_decode($document->Doc_008);
-                            $f009 = json_decode($document->Doc_009);
-                        @endphp
                         <tr class="m-1">
-                            <td><a href="{{route('training.view',$document->Doc_Code)}}">
-                            {{$f008->SUBJECT}}
-                            <br>
-                        </a> <hr>
+                            <td>
+                                <a href="{{route('training.view',$document->Doc_Code)}}">
+                                    {{$document->Doc_008->SUBJECT}}
+                                </a>
                             </td>
 
-                            <td><span class="text-sm ">update {{$document->updated_at}}</span></td>
+                            <td><span class="text-sm ">update {{$document->updated_atT}}</span></td>
                             <td><x-button href="{{route('training.view',$document->Doc_Code)}}" class="py-1 m-1">view</x-button></td>
                         </tr>
                         @endforeach

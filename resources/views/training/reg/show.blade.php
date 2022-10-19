@@ -1,13 +1,12 @@
 <x-app-layout>
-    @php
-        $f008 = json_decode($documents->Doc_008);
-        $f009 = json_decode($documents->Doc_009);
-    @endphp
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{$f008->SUBJECT}}
+            {{$documents->Doc_008->SUBJECT}}
         </h2>
         <span class="text-sm"></span>
+        <hr>
+        <x-button class="py-0" href="{{url()->previous()}}">{{__('Back')}}</x-button>
     </x-slot>
 
     <div class="py-12">
@@ -53,8 +52,8 @@
                         <!-- endif -->
                     </div>
                     <p>
-                        {{$f008->starttraindate}} - {{$f008->endtraindate}}
-                        ({{$f008->starttraintime}} - {{$f008->endtraintime}})
+                        {{$documents->Doc_008->starttraindate}} - {{$documents->Doc_008->endtraindate}}
+                        ({{$documents->Doc_008->starttraintime}} - {{$documents->Doc_008->endtraintime}})
                     </p>
 
                     <span class="text-sm ">last update {{$documents->updated_at}}</span>

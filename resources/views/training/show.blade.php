@@ -1,12 +1,10 @@
 <x-app-layout>
-    @php
-        $f008 = json_decode($documents->Doc_008);
-        $f009 = json_decode($documents->Doc_009);
-    @endphp
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{$f008->SUBJECT}}
+            {{$documents->Doc_008->SUBJECT}}
         </h2>
+        <x-button class="py-0" href="{{url()->previous()}}">{{__('Back')}}</x-button>
     </x-slot>
 
     <div class="py-12">
@@ -14,11 +12,11 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200 flex flex-col">
                     <p>
-                        {{$f008->starttraindate}} - {{$f008->endtraindate}}
-                        ({{$f008->starttraintime}} - {{$f008->endtraintime}})
+                        {{$documents->Doc_008->starttraindate}} - {{$documents->Doc_008->endtraindate}}
+                        ({{$documents->Doc_008->starttraintime}} - {{$documents->Doc_008->endtraintime}})
                     </p>
-                    <span class="text-sm ">last update {{$documents->updated_at}}</span> 
-                    
+                    <span class="text-sm ">last update {{$documents->updated_at}}</span>
+
                     <!-- <embed src="{{asset('img'.$documents->Doc_Location)}}" width="100%" height="400px" showPageControls=false showAnnotationTools=false dockPageControls=false showLeftHandPanel=false/> -->
                     <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
                     <div class="flex gap-4 items-center">
@@ -28,7 +26,7 @@
                         <x-primary-button id="next">Next</x-primary-button>
                         <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
                     </div>
-                    
+                    {{asset($documents->Doc_Location)}}
                     <canvas id="the-canvas" width="100%"></canvas>
                     <hr>
                     <script src="https://unpkg.com/downloadjs@1.4.7"></script>
@@ -87,7 +85,7 @@
                 rotate: degrees(60),
             })
         }
-      
+
         /********************** Print Metadata **********************/
 
         console.log('Title:', pdfDoc.getTitle());
@@ -116,10 +114,10 @@
         function showPDF (file,canvasContainer){
             // Loaded via <script> tag, create shortcut to access PDF.js exports.
             var pdfjsLib = window['pdfjs-dist/build/pdf'];
-    
+
             // The workerSrc property shall be specified.
             pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
-    
+
             var pdfDoc = null,
                 pageNum = 1,
                 pageRendering = false,
@@ -127,7 +125,7 @@
                 scale = 5,
                 canvas = document.getElementById(canvasContainer),
                 ctx = canvas.getContext('2d');
-    
+
             /**
              * Get page info from document, resize canvas accordingly, and render page.
              * @param num Page number.
@@ -139,14 +137,14 @@
                     var viewport = page.getViewport({scale: scale});
                     canvas.height = viewport.height;
                     canvas.width = viewport.width;
-    
+
                     // Render PDF page into canvas context
                     var renderContext = {
                         canvasContext: ctx,
                         viewport: viewport
                     };
                     var renderTask = page.render(renderContext);
-    
+
                     // Wait for rendering to finish
                     renderTask.promise.then(function() {
                     pageRendering = false;
@@ -156,13 +154,13 @@
                         pageNumPending = null;
                     }
                     });
-    
+
                 });
-    
+
                 // Update page counters
                 document.getElementById('page_num').textContent = num;
             }
-    
+
             /**
              * If another page rendering in progress, waits until the rendering is
              * finised. Otherwise, executes rendering immediately.
@@ -174,7 +172,7 @@
                     renderPage(num);
                 }
             }
-    
+
             /**
              * Displays previous page.
              */
@@ -186,7 +184,7 @@
                 queueRenderPage(pageNum);
                 }
                 document.getElementById('prev').addEventListener('click', onPrevPage);
-    
+
                 /**
                  * Displays next page.
                  */
@@ -198,15 +196,15 @@
                 queueRenderPage(pageNum);
             }
             document.getElementById('next').addEventListener('click', onNextPage);
-    
-    
+
+
             /**
              * Asynchronously downloads PDF.
              */
             pdfjsLib.getDocument(file).promise.then(function(pdfDoc_) {
                 pdfDoc = pdfDoc_;
                 document.getElementById('page_count').textContent = pdfDoc.numPages;
-    
+
                 // Initial/first page rendering
                 renderPage(pageNum);
             });
@@ -235,7 +233,7 @@
                 rotate: degrees(-45),
             })
         }
-      
+
         /********************** Print Metadata **********************/
 
         console.log('Save');
@@ -255,16 +253,16 @@
         // const blobUrl = URL.createObjectURL(blob);
         // // document.querySelector('#frame').src = blobUrl;
         // // console.log()
-        
+
         // showPDF(blobUrl,'the-canvas')
 
         // function showPDF (file,canvasContainer){
         //     // Loaded via <script> tag, create shortcut to access PDF.js exports.
         //     var pdfjsLib = window['pdfjs-dist/build/pdf'];
-    
+
         //     // The workerSrc property shall be specified.
         //     pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
-    
+
         //     var pdfDoc = null,
         //         pageNum = 1,
         //         pageRendering = false,
@@ -272,7 +270,7 @@
         //         scale = 5,
         //         canvas = document.getElementById(canvasContainer),
         //         ctx = canvas.getContext('2d');
-    
+
         //     /**
         //      * Get page info from document, resize canvas accordingly, and render page.
         //      * @param num Page number.
@@ -284,14 +282,14 @@
         //             var viewport = page.getViewport({scale: scale});
         //             canvas.height = viewport.height;
         //             canvas.width = viewport.width;
-    
+
         //             // Render PDF page into canvas context
         //             var renderContext = {
         //                 canvasContext: ctx,
         //                 viewport: viewport
         //             };
         //             var renderTask = page.render(renderContext);
-    
+
         //             // Wait for rendering to finish
         //             renderTask.promise.then(function() {
         //             pageRendering = false;
@@ -301,13 +299,13 @@
         //                 pageNumPending = null;
         //             }
         //             });
-    
+
         //         });
-    
+
         //         // Update page counters
         //         document.getElementById('page_num').textContent = num;
         //     }
-    
+
         //     /**
         //      * If another page rendering in progress, waits until the rendering is
         //      * finised. Otherwise, executes rendering immediately.
@@ -319,7 +317,7 @@
         //             renderPage(num);
         //         }
         //     }
-    
+
         //     /**
         //      * Displays previous page.
         //      */
@@ -331,7 +329,7 @@
         //         queueRenderPage(pageNum);
         //         }
         //         document.getElementById('prev').addEventListener('click', onPrevPage);
-    
+
         //         /**
         //          * Displays next page.
         //          */
@@ -343,15 +341,15 @@
         //         queueRenderPage(pageNum);
         //     }
         //     document.getElementById('next').addEventListener('click', onNextPage);
-    
-    
+
+
         //     /**
         //      * Asynchronously downloads PDF.
         //      */
         //     pdfjsLib.getDocument(file).promise.then(function(pdfDoc_) {
         //         pdfDoc = pdfDoc_;
         //         document.getElementById('page_count').textContent = pdfDoc.numPages;
-    
+
         //         // Initial/first page rendering
         //         renderPage(pageNum);
         //     });
@@ -359,11 +357,11 @@
         return pdfBytes
     }
 
-</script>  
+</script>
 
 <script type="text/javascript">
     // const file = "{{asset($documents->Doc_Location)}}",
     //       canvasContainer = 'the-canvas'
     // showPDF(file,canvasContainer);
-    
-</script>  
+
+</script>

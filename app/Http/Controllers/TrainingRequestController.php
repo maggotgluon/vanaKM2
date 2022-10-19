@@ -24,16 +24,88 @@ class TrainingRequestController extends Controller
             return  $Date;
     }
     //
+    public function processTrainingRequest($trainings){
+        foreach ($trainings as $index => $training) {
+            # code...
+
+            $training->Doc_008 = json_decode($training->Doc_008);
+            $training->Doc_009 = json_decode($training->Doc_009);
+
+            if($training->Doc_DateApprove!=null){
+                $Doc_DateApprove = new Carbon($training->Doc_DateApprove);
+                $training->Doc_DateApproveC = $Doc_DateApprove;
+                $training->Doc_DateApproveT = $Doc_DateApprove->diffForHumans();
+                $training->User_Approve = User::find($training->User_Approve);
+
+            }
+            if($training->Doc_DateReview!=null){
+                $Doc_DateReview = new Carbon($training->Doc_DateReview);
+                $training->Doc_DateReviewC = $Doc_DateReview;
+                $training->Doc_DateReviewT = $Doc_DateReview->diffForHumans();
+                $training->User_Review = User::find($training->User_Review);
+            }
+
+            $created_at = new Carbon($training->created_at);
+            $training->created_atC = $created_at;
+            $training->created_atT = $created_at->diffForHumans();
+
+            $updated_at = new Carbon($training->updated_at);
+            $training->updated_atC = $updated_at;
+            $training->updated_atT = $updated_at->diffForHumans();
+
+
+            $training->user_id = User::find($training->user_id);
+        }
+        // dd($trainings);
+        return $trainings;
+    }
+    public function processTraining($training){
+        // dd($training->id);
+
+        $training->Doc_008 = json_decode($training->Doc_008);
+        $training->Doc_009 = json_decode($training->Doc_009);
+
+        if($training->Doc_DateApprove!=null){
+            $Doc_DateApprove = new Carbon($training->Doc_DateApprove);
+            $training->Doc_DateApproveC = $Doc_DateApprove;
+            $training->Doc_DateApproveT = $Doc_DateApprove->diffForHumans();
+            $training->User_Approve = User::find($training->User_Approve);
+
+        }
+        if($training->Doc_DateReview!=null){
+            $Doc_DateReview = new Carbon($training->Doc_DateReview);
+            $training->Doc_DateReviewC = $Doc_DateReview;
+            $training->Doc_DateReviewT = $Doc_DateReview->diffForHumans();
+            $training->User_Review = User::find($training->User_Review);
+        }
+
+        $created_at = new Carbon($training->created_at);
+        $training->created_atC = $created_at;
+        $training->created_atT = $created_at->diffForHumans();
+
+        $updated_at = new Carbon($training->updated_at);
+        $training->updated_atC = $updated_at;
+        $training->updated_atT = $updated_at->diffForHumans();
+
+
+        $training->user_id = User::find($training->user_id);
+
+        return $training;
+    }
+
     public function all(){
         // dd(Training::all());
-        return view('training.index', [
-            'documents' => TrainingRequest::where('Doc_Status',2)->get(),
-        ]);
+        $training = TrainingRequest::where('Doc_Status',2)->get();
+        $training = $this->processTrainingRequest($training);
+        return view('training.index', ['documents' => $training,]);
     }
     public function view($id){
         // dd($id);
+        $training = TrainingRequest::where('Doc_Code',$id)->firstOrFail();
+        $training = $this->processTraining($training);
+
         return view('training.show', [
-            'documents' => TrainingRequest::where('Doc_Code',$id)->firstOrFail(),
+            'documents' => $training,
         ]);
     }
 
@@ -41,11 +113,12 @@ class TrainingRequestController extends Controller
     public function allReg($filter=null){
 
         if($filter!=null){
-            $regDoc = TrainingRequest::where('Doc_Status',$filter)->paginate(5);
+            $regDoc = TrainingRequest::where('Doc_Status',$filter)->get();
         }else{
-            $regDoc = TrainingRequest::all()->paginate(5);
+            $regDoc = TrainingRequest::all();
         }
 
+        $regDoc = $this->processTrainingRequest($regDoc);
         return view('training.reg.index', ['documents' => $regDoc,'filter'=>$filter]);
     }
     public function allRegUser($filter=null){
@@ -55,12 +128,16 @@ class TrainingRequestController extends Controller
         }else{
             $regDoc = Auth::user()->TrainingRequest;
         }
+
+        $regDoc = $this->processTrainingRequest($regDoc);
         return view('training.reg.indexMy', ['documents' => $regDoc,'filter'=>$filter]);
 
     }
     public function viewReg($id){
+        $training = TrainingRequest::where('Doc_Code',$id)->firstOrFail();
+        $training = $this->processTraining($training);
         return view('training.reg.show', [
-            'documents' => TrainingRequest::where('Doc_Code',$id)->firstOrFail(),
+            'documents' => $training,
         ]);
     }
 
@@ -160,10 +237,10 @@ class TrainingRequestController extends Controller
 
         $timestamp = Carbon::now()->getTimestamp();
         $docname = 'TRAIN'. date('Y').str_pad($countID+1,4,'0',STR_PAD_LEFT);
-        $NameFile = $docname . '-' . $docver.'-'.$timestamp.'.'.$extension;
+        $NameFile = $docname . '-' . $docver.'-'.$request->SUBJECT.'.'.$extension;
         // dd($file);
         //Location File
-        $upload_location = '/TrainPDF/'.$docname.'/';
+        $upload_location = '/TrainPDF/'.$request->SUBJECT.'/';
         $full_path = $upload_location . $NameFile;
 
         //  dd( $full_path);

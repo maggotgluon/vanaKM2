@@ -65,7 +65,7 @@
                                 <td><a href="{{route('regDoc.view',$document->Doc_Code)}}" class="hover:text-brand_blue"> {{$document->Doc_Code}} : {{$document->Doc_Type}}</a>
                                 <span class="text-sm w-full block">{{ __('Date Request') }} : {{$document->created_atT}}</span>
 
-                                <x-button href="{{route('regDoc.DarForm',$document->Doc_Code)}}" class="bg-brand_blue py-1 m-1">DAR</x-button>
+                                <x-button href="{{route('regDoc.DarForm',$document->Doc_Code)}}" target="_blank" class="bg-brand_blue py-1 m-1">DAR</x-button>
                             </td>
 
                                 <td>
@@ -75,13 +75,13 @@
                                 <td>
                                     @if ($document->Doc_Status == 2)
                                         Approved
-                                        <span class="text-sm w-full block">{{$document->Doc_DateMRApproveT}}<br>by {{$document->User_MRApprove->name}}</span>
+                                        <span class="text-sm w-full block group relative isolate z-10">{{$document->Doc_DateMRApproveT}}<span class="absolute pointer-events-none z-10 top-full -left-1/2 w-max p-2 bg-white transition-all delay-500 duration-500 opacity-0 translate-y-16 group-hover:opacity-100 group-hover:translate-y-0">by {{$document->User_MRApprove->name}}</span></span>
                                     @elseif ($document->Doc_Status == 1)
                                         Reviewed
-                                        <span class="text-sm w-full block">{{$document->Doc_DateApproveT}} <br>by {{$document->User_Approve->name}}</span>
+                                        <span class="text-sm w-full block group relative isolate z-10">{{$document->Doc_DateApproveT}} <span class="absolute pointer-events-none z-10 top-full -left-1/2 w-max p-2 bg-white transition-all delay-500 duration-500 opacity-0 translate-y-16 group-hover:opacity-100 group-hover:translate-y-0">by {{$document->User_Approve->name}}</span></span>
                                     @elseif ($document->Doc_Status == -1)
                                         Rejected
-                                        <span class="text-sm w-full block">{{$document->updated_atT}}</span>
+                                        <span class="text-sm w-full block relative isolate z-10">{{$document->updated_atT}}</span>
                                     @else
                                         Pending
                                     @endif
@@ -89,11 +89,11 @@
                                 <td>
                                     {{ __('Last Update') }} : {{$document->updated_atT}}
                                     @if ($document->Doc_DateApprove !==null && $document->User_Approve !== null)
-                                    <span class="text-sm w-full block">Review : {{$document->Doc_DateApproveT}} <br>by {{$document->User_Approve->name}}</span>
+                                    <span class="text-sm w-full block group relative isolate z-10">Review : {{$document->Doc_DateApproveT}} <span class="absolute pointer-events-none z-10 top-full -left-1/2 w-max p-2 bg-white transition-all delay-500 duration-500 opacity-0 translate-y-16 group-hover:opacity-100 group-hover:translate-y-0">by {{$document->User_Approve->name}}</span></span>
 
                                     @endif
                                     @if ($document->Doc_DateMRApprove !==null && $document->User_MRApprove !== null)
-                                    <span class="text-sm w-full block">Approve : {{$document->Doc_DateMRApproveT}} <br>by {{$document->User_MRApprove->name}}</span>
+                                    <span class="text-sm w-full block group relative isolate">Approve : {{$document->Doc_DateMRApproveT}} <span class="absolute pointer-events-none z-10 top-full -left-1/2 w-max p-2 bg-white transition-all delay-500 duration-500 opacity-0 translate-y-16 group-hover:opacity-100 group-hover:translate-y-0">by {{$document->User_MRApprove->name}}</span></span>
 
                                     @endif
                                 </td>
