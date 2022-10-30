@@ -150,13 +150,13 @@ class TrainingRequestController extends Controller
         $Doc_DateApprove =  $this->InputToDate($d008->Doc_DateApprove);
         $Doc_DateReview =  $this->InputToDate($d008->Doc_DateReview);
         $created_at =  $this->InputToDate($d008->created_at);
-// dd( $Doc_DateReview );
-    
-     
-            $user=User::find($d008->user_id);
-            $Position_Approve=User::where('name',$d008->User_Approve)->firstOrFail();
-            $Position_Review=User::where('name',$d008->User_Review)->firstOrFail();
-            
+        // dd( $Doc_DateReview );
+
+
+        $user=User::find($d008->user_id);
+        $Position_Approve=User::where('name',$d008->User_Approve)->firstOrFail();
+        $Position_Review=User::where('name',$d008->User_Review)->firstOrFail();
+
 
         $positions = array (
             'user_position'=>$user->position,
@@ -180,7 +180,7 @@ class TrainingRequestController extends Controller
         $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
         $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
 
-        $count = TrainingRequest::whereBetween('created_at',[$startYear,$endYear])->count(); 
+        $count = TrainingRequest::whereBetween('created_at',[$startYear,$endYear])->count();
 
         return view('training.reg.create',['count_train_code'=>$count,]);
     }

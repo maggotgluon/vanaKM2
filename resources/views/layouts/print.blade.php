@@ -74,22 +74,25 @@
                 <img src="{{asset('img/logo.jpeg')}}" alt="">
             </span>
 
-            <span class="float-right">
-                @if (isset($name))
-                    {{ $name }}
-                @endif
+            <span class="float-right text-right">
+                Printed by {{Auth::user()->name}} ( {{Auth::user()->staff_id}} )<br> Date : {{Carbon\Carbon::now()->toDateString()}}
             </span>
         </header>
         <main class="content-block">
             {{ $slot }}
         </main>
         <footer class="hidden print:block">
-            <span class="float-left">@if (isset($name))
-                {{ $name }}
-            @endif
+            <span class="float-left">
+                @if (isset($name))
+                    {{ $name }}
+                @endif
             </span>
 
-            <span class="float-right text-right">Printed by {{Auth::user()->name}} ( {{Auth::user()->staff_id}} )<br> Date : {{Carbon\Carbon::now()->toDateString()}}</span>
+            <span class="float-right ">
+                @if (isset($rev))
+                    {{ $rev }}
+                @endif
+            </span>
         </footer>
         </div>
         @livewireScripts

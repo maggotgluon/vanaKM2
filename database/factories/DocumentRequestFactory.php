@@ -18,20 +18,21 @@ class DocumentRequestFactory extends Factory
     {
         return [
             //
-            'Doc_Code' =>fake()->name(),
+            'Doc_Code' =>'DAR2022'.fake()->biasedNumberBetween(1000,9000),
             'Doc_Name' =>fake()->name(),
-            'Doc_Type' =>fake()->name(),
-            'Doc_Obj' =>fake()->name(),
-            'Doc_Description' =>fake()->name(),
-            'Doc_Life' =>1,
+            'Doc_FullName' =>fake()->name(),
+            'Doc_Type' =>'Document-DS_KM',
+            'Doc_Obj' =>'ขอเอกสารใหม่',
+            'Doc_Description' =>fake()->sentence(3),
+            'Doc_Life' =>fake()->biasedNumberBetween(1,5),
             'Doc_ver' =>0,
-            'Doc_StartDate' => now(),
-            'Doc_Location' =>'/FilePDF/IDT-002-0',
+            'Doc_StartDate' => fake()->dateTimeBetween('-10 week', '-1 week'),
+            'Doc_Location' =>'/FilePDF/Mock/mock.pdf',
             'Doc_Status' =>0,
-            'Doc_DateApprove' =>0,
+            'Doc_DateApprove' =>null,
             'User_Approve' =>null,
             'Access_Lv' =>null,
-            'user_id' =>106
+            'user_id' =>fake()->biasedNumberBetween(1,200)
         ];
     }
 }

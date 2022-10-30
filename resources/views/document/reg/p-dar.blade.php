@@ -1,6 +1,9 @@
 <x-print-layout>
     <x-slot name="name">
-        {{ __('FM-DCC-01 Rev.00 19.01.2015') }}
+        {{ __('FM-DCC-01') }}
+    </x-slot>
+    <x-slot name="rev">
+        {{ __('Rev.00 19.01.2015') }}
     </x-slot>
     <div id="FM-LDS-009" class="">
 

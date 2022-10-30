@@ -93,9 +93,11 @@
                     upload by : {{$documents->user_id->name}}
                     </p>
                     <span class="text-sm ">created_at  {{$documents->created_at}}</span>
+                    @isset($documents->User_Approve->name)
                     <p>
                         Reviewed by : {{$documents->User_Approve->name}}
                     </p>
+                    @endisset
                     <span class="text-sm ">Date {{$documents->Doc_DateApprove}}</span>
 
                     <br>
