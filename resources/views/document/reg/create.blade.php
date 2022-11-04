@@ -241,8 +241,6 @@
                                     min="{{Carbon\Carbon::now()->addDay(10)->toDateString()}}"
                                     type="date" />
                             </span>
-
-tisan
                             <span class="px-4">
                                 <x-input-label
                                     for="Year" class="inline">
@@ -268,6 +266,21 @@ tisan
 
                             </span>
                             @error('file')
+                            <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
+                            @enderror
+
+                            <span class="px-4 block">
+                                <x-input-label
+                                    for="fileRAW" class="inline"> <span class="required text-brand_orange text-xs"> * </span>
+                                    {{__('File Raw')}} :
+                                </x-input-label>
+                                <x-text-input
+                                    name="fileRAW" id="fileRAW"
+                                    value="{{old( 'file') }}"
+                                    type="file"  accept=".doc,.docx,.xls,.xlsx" required/>
+
+                            </span>
+                            @error('fileRAW')
                             <span class="text-blue-800 bg-red-300 p-2 m-2 rounded-full ">{{$message}}</span>
                             @enderror
                         </div>

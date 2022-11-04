@@ -21,10 +21,11 @@ class UserController extends Controller
     }
     public function allFiltter(request $data){
         $user = User::all();
+
         if($data->department!=null){
             $user = $user->where('department',$data->department);
-        }
-        if($data->level!=null){
+            // dd($user);
+        }else if($data->level!=null){
             $user = $user->where('user_level',$data->level);
         }else{
             $user = User::all();
@@ -42,7 +43,7 @@ class UserController extends Controller
     }
 
     public function permission($user,request $data,){
-        // update permission of given user with option 
+        // update permission of given user with option
         // return dd($user,$data->permission,$data->allowance);
         $selectUser = user::find($user);
         // dd($selectUser->staff_id,$selectUser->userPermission);
@@ -94,22 +95,22 @@ class UserController extends Controller
 
     public function changePassword(Request $request)
     {
-        
+
          $request->validate([
             'current_password' => ['required',new MatchOldPassword],
             'new_password' => ['required'],
             'new_confirm_password' => ['same:new_password'],
         ],[
-            
+
             'current_password' => 'password missmatch',
             'new_password' => 'password require',
             'new_confirm_password' => 'new password missmatch',
         ]
         );
-        
+
         User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
         Log::channel('user')->info(Auth::user()->name .' update password');
         return redirect(route('user.profile',User::find(auth()->user()->id)))->with('success', 'User update!');
     }
-    
+
 }

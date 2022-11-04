@@ -20,8 +20,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
-            $table->uuid('staff_id')->unique(); //VNxxx 
-            
+            $table->uuid('staff_id')->unique(); //VNxxx
+
             $table->string('department')->nullable(); //department name
             $table->string('department_head')->nullable(); //hod name list
             $table->string('position')->nullable(); //department name

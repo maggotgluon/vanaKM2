@@ -219,6 +219,10 @@ class DocumentRequestController extends Controller
         $docname = $request->Doc_Name;
         $timestamp = Carbon::now()->getTimestamp();
         $NameFile = $DocCode.'-'.$docname.'-'.$docver.'.'.$extension;
+
+        $fileRAW = $request->file('fileRAW');
+        $extensionRAW = $file->getClientOriginalExtension();
+        $NameFileRAW = $DocCode.'-'.$docname.'-'.$docver.'.'.$extensionRAW;
         // dd(Carbon::now()->locale('th_TH')->toDateString());
         // dd($NameFile);
 
@@ -246,6 +250,7 @@ class DocumentRequestController extends Controller
 
         // loc / upload file / rename to
         Storage::putFileAs($upload_location,$file,$NameFile);
+        Storage::putFileAs($upload_location,$fileRAW,$NameFileRAW);
         // Storage::putFileAs($upload_location,$file,doc_name.'-'.ver);
 
         $visibility = Storage::getVisibility($upload_location);
