@@ -94,10 +94,11 @@
                             <x-responsive-nav-link :href="route('regTraining.allUser')" :active="request()->routeIs('regTraining.allUser')">
                                     {{ __('My Presentation') }}
                             </x-responsive-nav-link>
-
-                            <x-responsive-nav-link :href="route('regTraining.all')" :active="request()->routeIs('regTraining.all')">
-                                    {{ __('Training Management') }}
-                            </x-responsive-nav-link>
+                            @can('manage_trainDocument')
+                                <x-responsive-nav-link :href="route('regTraining.all')" :active="request()->routeIs('regTraining.all')">
+                                        {{ __('Training Management') }}
+                                </x-responsive-nav-link>
+                            @endcan
                         </x-slot>
 
                     </x-dropdown-nav>
@@ -215,7 +216,7 @@
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
-            
+
             <x-responsive-nav-link :href="route('user.profile',Auth::user())" :active="request()->routeIs('user.profile')">
                 {{ Auth::user()->name }}
             </x-responsive-nav-link>

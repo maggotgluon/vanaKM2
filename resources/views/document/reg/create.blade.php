@@ -302,7 +302,7 @@
 </x-app-layout>
 
 
-<script type="module">
+<!-- <script type="module">
     import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
 
     const e=document.querySelectorAll('input');
@@ -326,4 +326,4 @@
     e2.forEach(ee=>{
         ee.value=faker.lorem.lines()
     })
-</script>
+</script> -->
