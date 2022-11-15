@@ -163,11 +163,11 @@ class TrainingRequestForm extends Component
         $save = $newTrainingRequest->save();
 
         if ($save) {
-            $TCC = Auth::user();//User::where('user_level',4)->get();
-            $ACC = Auth::user();//User::where('user_level',3)->where('department',Auth::user()->department)->get();
+            $TCC = User::where('user_level',4)->get();
+            // $ACC = User::where('user_level',3)->where('department',Auth::user()->department)->get();
             // dd($TCC,$ACC);
             Mail::to($TCC)
-                ->cc($ACC)
+                // ->cc($ACC)
                 ->send(new NotifyMailTraining($newTrainingRequest));
             $this->notification()->send([
                 'title'       => $req_code . ' ' . $name . ' has beem request.',

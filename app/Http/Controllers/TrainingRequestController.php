@@ -190,8 +190,9 @@ class TrainingRequestController extends Controller
                 $trainingRequest->user_review = Auth::user()->id;
                 break;
             case '2':
-                $TCC = Auth::user();//User::find($trainingRequest->user_id);
-                $ACC = Auth::user();//User::where('user_level',3)->where('department',Auth::user()->department)->get();
+
+                $TCC = User::find($trainingRequest->staff_id);
+                $ACC = User::where('user_level',3)->where('department',Auth::user()->department)->get();
                 // dd($TCC,$ACC);
                 Mail::to($TCC)
                     ->cc($ACC)
@@ -201,12 +202,15 @@ class TrainingRequestController extends Controller
                 $trainingRequest->user_approve = Auth::user()->id;
                 break;
             case '-1':
-                $TCC = Auth::user();//User::find($trainingRequest->user_id);
-                $ACC = Auth::user();//User::where('user_level',3)->where('department',Auth::user()->department)->get();
+
+                // dd($request->remark);
+                $TCC = User::find($trainingRequest->staff_id);
+                $ACC = User::where('user_level',3)->where('department',Auth::user()->department)->get();
                 // dd($TCC,$ACC);
                 Mail::to($TCC)
                     ->cc($ACC)
                     ->send(new NotifyMailTraining($trainingRequest));
+
                 $trainingRequest->training_dateReview = $now->toDateTime();
                 $trainingRequest->remark = $request->remark;
                 break;

@@ -12,6 +12,7 @@ use Livewire\WithFileUploads;
 use WireUi\Traits\Actions;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
+use App\Models\User;
 
 class DocumentRequestForm extends Component
 {
@@ -106,7 +107,12 @@ class DocumentRequestForm extends Component
 
         if($save){
 
-            Mail::to('ruttaphong.w@vananava.com')->send(new NotifyMail($newDocumentRequest));
+            $TCC = User::where('user_level',6)->get();
+            // $ACC = User::where('user_level',3)->where('department',Auth::user()->department)->get();
+            // dd($TCC,$ACC);
+            Mail::to($TCC)
+                // ->cc($ACC)
+                ->send(new NotifyMail($newDocumentRequest));
             $this->notification()->send([
                 'title'       => $req_code.' '.$name.' has beem request.',
                 'description' => 'Please wait for response',

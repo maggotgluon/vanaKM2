@@ -293,11 +293,22 @@ class DocumentRequestController extends Controller
                 $newDocument->pdf_location=$newPath;
                 $newDocument->save();
 
-                Mail::to('ruttaphong.w@vananava.com')->send(new NotifyMail($documentRequest));
+
+                $TCC = User::find($documentRequest->staff_id);
+                $ACC = User::where('user_level',3)->where('department',Auth::user()->department)->get();
+                // dd($TCC,$ACC);
+                Mail::to($TCC)
+                    ->cc($ACC)
+                    ->send(new NotifyMail($documentRequest));
                 break;
             case '-1':
                 // dd($request->remark);
-                Mail::to('ruttaphong.w@vananava.com')->send(new NotifyMail($documentRequest));
+                $TCC = User::find($documentRequest->staff_id);
+                $ACC = User::where('user_level',3)->where('department',Auth::user()->department)->get();
+                // dd($TCC,$ACC);
+                Mail::to($TCC)
+                    ->cc($ACC)
+                    ->send(new NotifyMail($documentRequest));
                 $documentRequest->req_dateReview = $now;
                 $documentRequest->req_remark = $request->remark;
                 break;
