@@ -1,200 +1,202 @@
-No,name,email,StaffID,department,position,user_level,department_head,Department Head Name
-1,Natha Jamasevi,,VN002,Executive Office,General Manager,MR,VN002,Natha Jamasevi
-2,Passakorn Maneeprasert,,VN004,Admissions,Senior Park Manager,Manager,VN004,Passakorn Maneeprasert
-3,Suthichai Jai-ou,,VN005,Food and Beverage,Food and Beverage Manager,Manager,VN005,Suthichai Jai-ou
-4,Taweesub Limkometkul,,VN006,Human Resources,Senior Human Resources Manager,Manager,VN006,Taweesub Limkometkul
-5,Wantanee Embamrung,,VN011,Human Resources,Learning & Development Manager,Manager,VN006,Taweesub Limkometkul
-6,Suwat Jearanai,,VN016,IT,Senior IT Manager,Manager,VN016,Suwat Jearanai
-7,Supachai Wanton,,VN025,Food and Beverage,Kitchen Supervisor,Supervisor,VN005,Suthichai Jai-ou
-8,Tipsuda Tanutvaranon,,VN026,Retail,Retail Manager,Manager,VN026,Tipsuda Tanutvaranon
-9,Khemjira Srilee,,VN034,Finance,Senior Purchasing Supervisor,Supervisor,VN423,Arisa Thonglor
-10,Monthol Rodsuan,,VN035,IT,Software Application Assistant Manager,Assistant Manager,VN016,Suwat Jearanai
-11,Kasinee Ruckchom,,VN036,Human Resources,Acting Human Resources Executive,Supervisor,VN006,Taweesub Limkometkul
-12,Sarankon Siravitchchaiyakorn,,VN048,Food and Beverage,Kitchen Supervisor,Supervisor,VN005,Suthichai Jai-ou
-13,Narinput Sirivitchaiyakorn,,VN050,Food and Beverage,Cashier,Staff,VN005,Suthichai Jai-ou
-14,Direk Mokkapun,,VN060,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-15,Thanakan Khamphakhun,,VN072,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-16,Wirawut Rodphon,,VN075,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-17,Piyawadee Suwannachat,,VN076,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-18,Piyavadee Sukboonsap,,VN077,Park Service,Executive Housekeeper,Staff,VN004,Passakorn Maneeprasert
-19,Suphannee Khuanpa,,VN079,Food and Beverage,Food and Beverage Admin,Staff,VN005,Suthichai Jai-ou
-20,Sanit Buakaeo,,VN093,Operations,Team Leader Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-21,Chonlathal Boonchana,,VN116,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-22,Pawares Srithongsang,,VN119,Operations,Team Leader Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-23,Winai Aiamram,,VN124,Food and Beverage,Bar Supervisor/Swim up,Supervisor,VN005,Suthichai Jai-ou
-24,Nasini Waiyaburi,,VN127,Sales,Event Manager,Supervisor,VN173,Tip-arpa Kaewnoi
-25,Sorajak Butsuwan,,VN145,Food and Beverage,Chef De Patie,Manager,VN005,Suthichai Jai-ou
-26,Lois Nichole Robbins,,VN151,Operations,Director of Operations,Director,VN513,Nutthaphon Thiamthat
-27,Somkid Aiamsamarng,,VN160,Operations,Lifeguard,Director,VN513,Nutthaphon Thiamthat
-28,Tip-arpa Kaewnoi,,VN173,Sales,Sales Manager,Staff,VN173,Tip-arpa Kaewnoi
-29,Wanlaya Kunlaboon,,VN181,Food and Beverage,Senior Bartender,Manager,VN005,Suthichai Jai-ou
-30,Sulisa Pitaksa,,VN185,Human Resources,Training Coordinator,Supervisor,VN006,Taweesub Limkometkul
-31,Sarayutt Eakram,,VN204,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-32,Chesta Piwchaum,,VN207,Operations,Acting Team Leader Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-33,Mana Tabsee,,VN208,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-34,Sontaya Daengpadab,,VN210,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-35,Nirat Suksee,,VN221,Admissions,Guest Service Manager,Staff,VN004,Passakorn Maneeprasert
-36,Yuttapong Wongkruejai,,VN223,Operations,Lifeguard,Manager,VN513,Nutthaphon Thiamthat
-37,Panthong Paocharoen,,VN224,Executive Office,Personal Assistant to GM & Project Coordinator,Assistant Manager,VN127,Nasini Waiyaburi
-38,Kulthida Photong,,VN225,Admissions,Ticketing Staff,Assistant Manager,VN004,Passakorn Maneeprasert
-39,Orachorn Sripetch,,VN228,Operations,Operations Admin,Staff,VN513,Nutthaphon Thiamthat
-40,Thippawan Numthip,,VN242,Sales,Operator Staff,Staff,VN173,Tip-arpa Kaewnoi
-41,Phonphrm Sakunni,,VN243,Admissions,Senior Ticketing,Supervisor,VN004,Passakorn Maneeprasert
-42,Tiwaporn Yuanteng,,VN244,IT,IT Support,Supervisor,VN016,Suwat Jearanai
-43,Kitti Inthrasoon,,VN245,IT,Senior IT Support,Supervisor,VN016,Suwat Jearanai
-44,Amphol Promsurin,,VN254,Operations,Lifeguard,Supervisor,VN513,Nutthaphon Thiamthat
-45,Suwanan Phuangsuwan,,VN255,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-46,Sumeth Wimanthong,,VN259,Operations,Team Leader Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-47,Montakan Saimongkol,,VN263,Human Resources,Acting Senior TQM Supervisor,Supervisor,VN006,Taweesub Limkometkul
-48,Prayoot Ploykluen,,VN269,Engineering,Senior Technician,Supervisor,VN273,Watchara GlinMe
-49,Naiyana Pualkasem,,VN271,Admissions,Senior Ticketing,Supervisor,VN004,Passakorn Maneeprasert
-50,Watchara GlinMe,,VN273,Engineering,Chief Engineer,Supervisor,VN273,Watchara GlinMe
-51,Kanlayanamas Ousabai,,VN286,Finance,Assistant Director of Finance,Manager,VN423,Arisa Thonglor
-52,Manatsanan Sakul-ure,,VN294,Sales,Sales Manager,Manager,VN173,Tip-arpa Kaewnoi
-53,Phawini Saengsom,,VN298,Park Service,Park Service,Manager,VN004,Passakorn Maneeprasert
-54,Tosaporn Pantu,,VN303,Engineering,Technician,Staff,VN273,Watchara GlinMe
-55,Adisorn Lapsongphol,,VN304,Engineering,Assistant to Director of Engineering,Manager,VN273,Watchara GlinMe
-56,Noppadon Naenkaew,,VN308,Engineering,Technician,Manager,VN273,Watchara GlinMe
-57,Thanaksaporn Phung-ngam,,VN311,Food and Beverage,Senior Cashier,Supervisor,VN005,Suthichai Jai-ou
-58,Chonlatorn Porung,,VN315,Finance,Senior Accountant,Supervisor,VN423,Arisa Thonglor
-59,Chintana Pankong,,VN316,Food and Beverage,Cashier/Fisherman,Supervisor,VN005,Suthichai Jai-ou
-60,Venus Sangmanee,,VN317,Executive Office,Executive Driver,Staff,VN127,Nasini Waiyaburi
-61,Apisit Permjarean,,VN322,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-62,Niwat Phuangkasaen,,VN323,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-63,Sathukarn Sombun,,VN325,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-64,Santichai Doungklang,,VN327,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-65,Ruangtiwa Aeamsamang,,VN328,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-66,Kamol Yaiyong,,VN329,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-67,Trup Homhaul,,VN330,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-68,Priyakun Srinopkun,,VN331,Engineering,Director of Engineering,Director,VN273,Watchara GlinMe
-69,Jeeranun Kludthong,,VN332,Human Resources,Acting Human Resources Supervisor,Supervisor,VN006,Taweesub Limkometkul
-70,Kunthong Kamluemuang,,VN333,Park Service,Park Service,Supervisor,VN004,Passakorn Maneeprasert
-71,Cholticha Aemoat,,VN342,Food and Beverage,Bartendy,Staff,VN005,Suthichai Jai-ou
-72,Werasak Sangjung,,VN343,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-73,Supaporn Suksri,,VN345,Laundry,Laundry Attendant,Staff,VN077,Piyavadee Sukboonsap
-74,Amnat Kliangmonthin,,VN346,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-75,Tanachai Kaewchan,,VN348,Food and Beverage,Helper/Kios,Staff,VN005,Suthichai Jai-ou
-76,Suwicha Tongkeaw,,VN349,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-77,Kriangkri Somrat,,VN351,Admissions,Golf Cart Driver,Staff,VN004,Passakorn Maneeprasert
-78,Nantavat Sillapasorn,,VN352,Food and Beverage,Helper,Staff,VN005,Suthichai Jai-ou
-79,Kanokwan Rungrueang,,VN353,Food and Beverage,Bartendy,Staff,VN005,Suthichai Jai-ou
-80,Chaipichaet Boonnithi,,VN354,Food and Beverage,Waiter,Staff,VN005,Suthichai Jai-ou
-81,Rangsan Sangnak,,VN357,IT,IT Support,Staff,VN016,Suwat Jearanai
-82,Aree Pimsuk,,VN359,Finance,Cost Control,Staff,VN423,Arisa Thonglor
-83,Jamras Mana,,VN360,Laundry,Laundry Attendant,Staff,VN077,Piyavadee Sukboonsap
-84,Chompoo Chantrasa,,VN361,Admissions,Ticketing Staff,Staff,VN004,Passakorn Maneeprasert
-85,Mutjarin Namkhampa,,VN364,Sales,Director of Sales & Marketing,Director,VN173,Tip-arpa Kaewnoi
-86,Thanapon Yaibumrung,,VN367,Laundry,Laundry Attendant,Director,VN077,Piyavadee Sukboonsap
-87,Werayut Gaewphanngarm,,VN368,Laundry,Laundry Attendant,Staff,VN077,Piyavadee Sukboonsap
-88,Sawittree Bainium,,VN372,Finance,Income Auditor,Staff,VN423,Arisa Thonglor
-89,Pakamart Gatemanee,,VN386,Admissions,Ticketing Staff,Staff,VN004,Passakorn Maneeprasert
-90,Nukul Kwankaew,,VN389,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-91,Supaporn Nakboon,,VN390,Admissions,Ticketing Staff,Staff,VN004,Passakorn Maneeprasert
-92,Prayoon On-ket,,VN397,Park Service,Park Service,Staff,VN004,Passakorn Maneeprasert
-93,Tularrak Thongrungplew,,VN400,Marketing,MKT Coordinator,Staff,VN446,Vatcharapong Klangtumnium
-94,Thanomjit Nommensen,,VN402,Park Service,Park Service,Staff,VN004,Passakorn Maneeprasert
-95,Chaiwat Ausuwan,,VN411,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-96,Patsakon Laksri,,VN412,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-97,Chaimongkon Suwanvara,,VN414,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-98,Piyapong srinava,,VN416,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-99,Sayomphon Wongnoi,,VN417,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-100,Tapana Wetprasit,,VN418,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-101,Tapakorn Wesprasit,,VN419,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-102,Supachai Dangtae,,VN420,Admissions,Golf Cart Driver,Staff,VN004,Passakorn Maneeprasert
-103,Arisa Thonglor,,VN423,Finance,Assistant Chief Accountant,Manager,VN423,Arisa Thonglor
-104,Sarisa Charechai,,VN425,Marketing,Social Media Admin,Assistant Manager,VN446,Vatcharapong Klangtumnium
-105,Somphot Yaemmueang,,VN426,Food and Beverage,Commis Chef,Staff,VN005,Suthichai Jai-ou
-106,Ruttaphong Worachartudomphong,,VN433,IT,Senior Developer,Supervisor,VN016,Suwat Jearanai
-107,Chaiyakorn Rodrak,,VN443,Marketing,Digital Marketing Manager,Staff,VN446,Vatcharapong Klangtumnium
-108,Waraporn Krongsuklert,,VN445,Sales,Sales Coordinator,Supervisor,VN173,Tip-arpa Kaewnoi
-109,Vatcharapong Klangtumnium,,VN446,Marketing,Senior Marketing and Communication Manager,Manager,VN446,Vatcharapong Klangtumnium
-110,Thanathip Namuang,,VN447,Marketing,Graphic Designer,Staff,VN446,Vatcharapong Klangtumnium
-111,Kidja Limpatiyakorn,,VN449,Operations,Lifeguard,Manager,VN513,Nutthaphon Thiamthat
-112,Chakkit Kongwongsa,,VN450,Engineering,Technician,Staff,VN273,Watchara GlinMe
-113,Saroj Poolnin,,VN453,Laundry,Park Service,Staff,VN077,Piyavadee Sukboonsap
-114,Rattana Ngamnoi,,VN456,Laundry,Senior Laundry Attendant,Supervisor,VN077,Piyavadee Sukboonsap
-115,Akkarapol Chandee,,VN465,Engineering,Technician,Staff,VN273,Watchara GlinMe
-116,Apilax Nusan,,VN467,Operations,Lifeguard,Supervisor,VN513,Nutthaphon Thiamthat
-117,Piyapong Aemaot,,VN468,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-118,Thawatchai Khunsawat,,VN469,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-119,Baifern Kaewpinthong,,VN470,Finance,Account Receivable,Staff,VN423,Arisa Thonglor
-120,Rattiya Nankhongnaep,,VN473,Park Service,Park Service,Staff,VN004,Passakorn Maneeprasert
-121,Jutharat Khantapheat,,VN476,Finance,Purchasing Manager,Manager,VN423,Arisa Thonglor
-122,Supaporn Sakultana,,VN478,Finance,Account Payable,Staff,VN423,Arisa Thonglor
-123,Namkhang Kaewsai,,VN483,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-124,Poompittaya Aeimboon,,VN487,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-125,Pasakorn Sawangamporn,,VN490,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-126,Saysunee khunkaew,,VN493,Food and Beverage,Cashier/Fisherman,Staff,VN005,Suthichai Jai-ou
-127,Sawapob Prajongsai,,VN494,Marketing,Senior Graphic Designer,Supervisor,VN446,Vatcharapong Klangtumnium
-128,Patwapa Panajaradkoon,,VN495,Sales,Event Staff,Staff,VN173,Tip-arpa Kaewnoi
-129,Sasima Rungrote,,VN496,Sales,Reservation Supervisor,Supervisor,VN173,Tip-arpa Kaewnoi
-130,Poramin Maneewong,,VN498,Food and Beverage,Waiter/Foodcourt,Staff,VN005,Suthichai Jai-ou
-131,Nuttha Phorueng,,VN500,Sales,Assistant Sales Manager,Assistant Manager,VN173,Tip-arpa Kaewnoi
-132,Kanchana Koedsri,,VN502,Park Service,Park Service,Staff,VN004,Passakorn Maneeprasert
-133,Sutiphong Homsombat,,VN503,Park Service,Park Service,Staff,VN004,Passakorn Maneeprasert
-134,Vimonrut Naykorn,,VN504,Retail,Retail Staff,Staff,VN026,Tipsuda Tanutvaranon
-135,Rattana Vongbutta,,VN505,Retail,Retail Staff,Staff,VN026,Tipsuda Tanutvaranon
-136,Nutthakorn Sarnjan,,VN507,Food and Beverage,Helper,Staff,VN005,Suthichai Jai-ou
-137,Pongsak Aiemaek,,VN508,Food and Beverage,Helper,Staff,VN005,Suthichai Jai-ou
-138,Chanada Mitdhampithaks,,VN509,Admissions,Ticketing Staff,Staff,VN004,Passakorn Maneeprasert
-139,Vanvisa Jan-Eang,,VN510,Marketing,Assistant Marketing Communication Manager,Assistant Manager,VN446,Vatcharapong Klangtumnium
-140,Theeradech Sintharom,,VN511,Engineering,Technician,Staff,VN273,Watchara GlinMe
-141,Chawanun Niyom,,VN512,Retail,Retail Staff,Staff,VN026,Tipsuda Tanutvaranon
-142,Nutthaphon Thiamthat,,VN513,Operations,Operations Assistant Manager,Assistant Manager,VN513,Nutthaphon Thiamthat
-143,Warisa Chaisorn,,VN514,Retail,Senior Retail Staff,Supervisor,VN026,Tipsuda Tanutvaranon
-144,Suwanan Duangkaew,,VN515,Food and Beverage,Wairtess/Izakaya,Staff,VN005,Suthichai Jai-ou
-145,Rerkchai Phiwkhum,,VN516,Engineering,Technician,Staff,VN273,Watchara GlinMe
-146,Chatchay Kongkachuay,,VN517,Engineering,Senior Technician,Supervisor,VN273,Watchara GlinMe
-147,Sommai Jantho,,VN518,Laundry,Laundry Supervisor,Supervisor,VN077,Piyavadee Sukboonsap
-148,Pattapong Khampoi,,VNC496,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-149,Phonphot Sriprem,,VNC497,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-150,Nutthanan Chantawong,,VNC498,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-151,Sontaya Wongbutta,,VNC504,Laundry,Laundry Attendant,Staff,VN077,Piyavadee Sukboonsap
-152,Chakrawut Liamnak,,VNC505,Food and Beverage,Helper/Cleaner,Staff,VN005,Suthichai Jai-ou
-153,Sumalee Apathip,,VNC506,Park Service,Park Service,Staff,VN004,Passakorn Maneeprasert
-154,Varagron Bumnetthpun,,VNC507,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-155,Pipatpong Meksaeng,,VNC508,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-156,Thanakon Kethom,,VNC509,Food and Beverage,Helper,Staff,VN005,Suthichai Jai-ou
-157,Nakon Talalak,,VNC510,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-158,Thanadon Peawon,,VNC512,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-159,Arpakorn Thongruen,,VNC513,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-160,Datbodin Chiewprecha,,VNC514,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-161,Sunin Kongsri,,VNC515,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-162,Sorrawich Subsomboon,,VNC516,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-163,Ariya Khumrod,,VNC517,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-164,Cheewin Tahong,,VNC518,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-165,Pitsanu Suntiwong,,VNC519,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-166,Warintorn Aiamsamarng,,VNC523,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-167,Tanapon Srimungpan,,VNC524,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-168,Tunyaphat Kaensa,,VNC525,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-169,Supakrit Arparattanakhun,,VNC526,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-170,Thanawat Nueayen,,VNC528,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-171,Wasinee Peungsungwal,,VNC529,Laundry,Laundry Attendant,Staff,VN077,Piyavadee Sukboonsap
-172,Papanin Khongthongkaew,,VNC530,Food and Beverage,Helper,Staff,VN005,Suthichai Jai-ou
-173,Jaruwan Kumyong,,VNC531,Finance,Purchasing Officer,Staff,VN423,Arisa Thonglor
-174,Kittiwadee Nilseeon,,VNC532,Food and Beverage,Helper/Izakaya,Staff,VN005,Suthichai Jai-ou
-175,Issarawan U-ngren,,VNC533,Food and Beverage,Wairtess/Izakaya,Staff,VN005,Suthichai Jai-ou
-176,Danai Phongdee,,VNC534,Laundry,Laundry Driver,Staff,VN077,Piyavadee Sukboonsap
-177,Nattaporn Boonsong,,VNC535,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-178,Komkrit Thumka,,VNC536,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-179,Phuthiphong Ainprung,,VNC537,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-180,Adison Somtrakul,,VNC538,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-181,Jirasin Ainrueang,,VNC539,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-182,Tanarat Silawon,,VNC540,Food and Beverage,Helper/Pizza,Staff,VN005,Suthichai Jai-ou
-183,Khwanjai Chomsuwan,,VNC541,Food and Beverage,Helper/Fisherman,Staff,VN005,Suthichai Jai-ou
-184,Nanthawat Butthorgthim,,VNC542,Food and Beverage,Helper(หน้าร้าน),Staff,VN005,Suthichai Jai-ou
-185,Thara Sakunboonprasert,,VNC543,Food and Beverage,Waitress(บาร์น้ำ),Staff,VN005,Suthichai Jai-ou
-186,Baworn Kaewkerd,,VNC545,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-187,Nuttapot Obcheuy,,VNC546,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-188,Pusit Sinturak,,VNC547,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-189,Nopphon Sriprem,,VNC548,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-190,Varisara Malaiket,,VNC549,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-191,Kittiphon Pumphet,,VNC550,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-192,Matus Peungjor,,VNC551,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-193,Chotthanin Kittiwatchareerat,,VNC552,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-194,Suphakit Ainprung,,VNC553,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-195,Thanyawut Rup-an,,VNC554,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-196,Khunpan Kesonbua,,VNC555,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-197,Supakorn Kittinutthakul,,VNC556,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-198,Nitinai Jansingkorn,,VNC557,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
-199,Tepparit Sinturak,,VNC558,Operations,Lifeguard,Staff,VN513,Nutthaphon Thiamthat
+No,name,email,StaffID,department,position,user_level,department_head,,,
+1,Natha Jamasevi,natha.j@vananava.com,VN002,Executive Office,General Manager,7,1,,,
+2,Passakorn Maneeprasert,passakorn.m@vananava.com,VN004,Admissions,Senior Park Manager,3,2,,,
+3,Suthichai Jai-ou,suthichai.j@vananava.com,VN005,Food and Beverage,Food and Beverage Manager,3,3,,,
+4,Taweesub Limkometkul,taweesub.l@vananava.com,VN006,Human Resources,Cluster Senior Human Resources Manager,3,4,,,
+5,Wantanee Embamrung,wantanee.e@vananava.com,VN011,Human Resources,Cluster Learning & Development Manager,5,5,,,
+6,Suwat Jearanai,suwat.j@vananava.com,VN016,IT,Cluster Assistant Director of Information Technology,3,6,,,
+7,Supachai Wanton,,VN025,Food and Beverage,Kitchen Supervisor,2,3,,,
+8,Tipsuda Tanutvaranon,tipsuda.t@vananava.com,VN026,Retail,Cluster Retail Manager,3,2,,,
+9,Khemjira Srilee,purchasing@vananava.com,VN034,Finance,Senior Purchasing Supervisor,2,118,,,
+10,Monthol Rodsuan,monthol.r@vananava.com,VN035,IT,Software Application Manager,3,6,,,
+11,Kasinee Ruckchom,kasinee.r@vananava.com,VN036,Human Resources,Human Resources Executive,2,4,,,
+12,Sarankon Siravitchchaiyakorn,,VN048,Food and Beverage,Kitchen Supervisor,2,3,,,
+13,Narinput Sirivitchaiyakorn,,VN050,Food and Beverage,Cashier,1,3,,,
+14,Direk Mokkapun,,VN060,Operations,Lifeguard,1,137,,,
+15,Thanakan Khamphakhun,,VN072,Operations,Lifeguard,1,137,,,
+16,Wirawut Rodphon,,VN075,Operations,Team Leader Lifeguard,2,137,,,
+17,Piyawadee Suwannachat,,VN076,Operations,Lifeguard,1,137,,,
+18,Piyavadee Sukboonsap,piyawedee.s@vananava.com,VN077,Housekeeping,Senior Executive Housekeeper,3,2,,,
+19,Suphannee Khuanpa,fbadmin@vananava.com,VN079,Food and Beverage,Food and Beverage Admin,2,3,,,
+20,Sanit Buakaeo,,VN093,Operations,Lifeguard Supervisor,2,137,,,
+21,Chonlathal Boonchana,,VN116,Operations,Lifeguard,1,137,,,
+22,Pawares Srithongsang,operations@vananava.com,VN119,Operations,Lifeguard Supervisor,2,137,,,
+23,Winai Aiamram,,VN124,Food and Beverage,Bar Supervisor/Swim up,2,3,,,
+24,Nasini Waiyaburi,nasini.w@vananava.com,VN127,Sales,Senior Event Manager,3,83,,,
+25,Sorajak Butsuwan,,VN145,Food and Beverage,Chef De Patie,2,3,,,
+26,Lois Nichole Robbins,lois.r@vananava.com,VN151,Operations,Cluster Director of Operations,3,26,,,
+27,Somkid Aiamsamarng,,VN160,Operations,Lifeguard,1,137,,,
+28,Tip-arpa Kaewnoi,tiparpa.k@vananava.com,VN173,Sales,Cluster Senior Sales Manager,3,83,,,
+29,Wanlaya Kunlaboon,,VN181,Food and Beverage,Senior Bartender,2,3,,,
+30,Sulisa Pitaksa,training@vananava.com,VN185,Human Resources,Training Supervisor,4,5,,,
+31,Sarayutt Eakram,,VN204,Operations,Team Leader Lifeguard,2,137,,,
+32,Chesta Piwchaum,,VN207,Operations,Lifeguard Supervisor,2,137,,,
+33,Mana Tabsee,,VN208,Operations,Lifeguard,1,137,,,
+34,Sontaya Daengpadab,,VN210,Operations,Lifeguard,1,137,,,
+35,Nirat Suksee,gsa@vananava.com,VN221,Admissions,Guest Service Manager,3,2,,,
+36,Yuttapong Wongkruejai,,VN223,Operations,Lifeguard,1,137,,,
+37,Panthong Paocharoen,panthong.p@vananava.com,VN224,Executive Office,Personal Assistant to GM & Project Coordinator,2,1,,,
+38,Kulthida Photong,,VN225,Admissions,Ticketing Staff,1,2,,,
+39,Thippawan Numthip,,VN242,Sales,Telephone Operator /Reservation,1,28,,,
+40,Phonphrom Sakunni,ticketing@vananava.com,VN243,Admissions,Ticketing Supervisor,2,2,,,
+41,Tiwaporn Yuanteng,itsupport@vananava.com,VN244,IT,IT Support,2,6,,,
+42,Kitti Inthrasoon,kitti.i@vananava.com,VN245,IT,IT Support  Supervisor,2,6,,,
+43,Amphol Promsurin,,VN254,Operations,Lifeguard,1,137,,,
+44,Suwanan Phuangsuwan,,VN255,Operations,Lifeguard,1,137,,,
+45,Sumeth Wimanthong,,VN259,Operations,Lifeguard,1,137,,,
+46,Montakarn Saimongkol,montakarn.s@vananava.com,VN263,Human Resources,Assistant Total Quality Management Manager,6,5,,,
+47,Prayoot Ploykluen,,VN269,Engineering,Senior Technician,2,49,,,
+48,Naiyana Pualkasem,,VN271,Admissions,Ticketing Supervisor,2,2,,,
+49,Watchara Glinmalee,watchara.g@vananava.com,VN273,Engineering,Senior Chief Engineer,3,67,,,
+50,Kanlayanamas Ousabai,kanlayanamas.o@vananava.com,VN286,Finance,Cluster Assistant Director of Finance,3,50,,,
+51,Manatsanan Sakul-ure,manatsanan.s@vananava.com,VN294,Sales,Sales Manager,3,83,,,
+52,Phawini Saengsom,,VN298,Housekeeping,Park Service,1,18,,,
+53,Tosaporn Pantu,,VN303,Engineering,Technician,1,49,,,
+54,Adisorn Lapsongphol,adisorn.l@vananava.com,VN304,Engineering,Assistant to Director of Engineering,2,49,,,
+55,Noppadon Naenkaew,,VN308,Engineering,Technician,1,49,,,
+56,Thanaksaporn Phung-ngam,,VN311,Food and Beverage,Restaurant Supervisor,2,3,,,
+57,Chonlatorn Porung,chonlatorn.p@vananava.com,VN315,Finance,Senior Accountant,2,50,,,
+58,Chintana Pankong,,VN316,Food and Beverage,Cashier/Fisherman,1,3,,,
+59,Venus Sangmanee,,VN317,Executive Office,Executive Driver,1,1,,,
+60,Apisit Permjarean,,VN322,Operations,Lifeguard,1,137,,,
+61,Niwat Phuangkasaen,,VN323,Operations,Lifeguard,1,137,,,
+62,Sathukarn Sombun,,VN325,Operations,Lifeguard,1,137,,,
+63,Santichai Doungklang,,VN327,Operations,Lifeguard,1,137,,,
+64,Ruangtiwa Aeamsamang,,VN328,Operations,Lifeguard,1,137,,,
+65,Kamol Yaiyong,,VN329,Operations,Lifeguard,1,137,,,
+66,Trup Homhaul,,VN330,Operations,Lifeguard,1,137,,,
+67,Priyakun Srinopkun,priyakun.s@vananava.com,VN331,Engineering,Cluster Director of Engineering,3,67,,,
+68,Jeeranun Kludthong,hr@vananava.com,VN332,Human Resources,Human Resources  Supervisor,2,4,,,
+69,Kunthong Kamluemuang,,VN333,Housekeeping,Park Service,1,18,,,
+70,Cholticha Aemoat,,VN342,Food and Beverage,Bartendy,1,3,,,
+71,Werasak Sangjung,,VN343,Operations,Lifeguard,1,137,,,
+72,Supaporn Suksri,,VN345,Laundry,Laundry  Attendant,1,18,,,
+73,Amnat Kliangmonthin,,VN346,Operations,Lifeguard,1,137,,,
+74,Tanachai Kaewchan,,VN348,Food and Beverage,Commis II,1,3,,,
+75,Suwicha Tongkeaw,,VN349,Operations,Lifeguard,1,137,,,
+76,Kriangkri Somrat,,VN351,Admissions,Golf Cart Driver,1,2,,,
+77,Nantavat Sillapasorn,,VN352,Food and Beverage,Helper,1,3,,,
+78,Kanokwan Rungrueang,,VN353,Food and Beverage,Bartendy,1,3,,,
+79,Chaipichaet Boonnithi,,VN354,Food and Beverage,Senior Waiter,2,3,,,
+80,Aree Pimsuk,cost@vananava.com,VN359,Finance,Cost Control,2,50,,,
+81,Jamras Mana,,VN360,Laundry,Checker,2,18,,,
+82,Chompoo Chantrasa,,VN361,Admissions,Ticketing Staff,1,2,,,
+83,Mutjarin Namkhampa,mutjarin.n@vananava.com,VN364,Sales,Cluster Director of Sales & Marketing,3,83,,,
+84,Thanapon Yaibumrung,,VN367,Laundry,Laundry  Attendant,1,18,,,
+85,Werayut Gaewphanngarm,,VN368,Laundry,Laundry  Attendant,1,18,,,
+86,Sawittree Bainium,income@vananava.com,VN372,Finance,Income Auditor,2,50,,,
+87,Pakamart Gatemanee,,VN386,Admissions,Ticketing Staff,1,2,,,
+88,Nukul Kwankaew,,VN389,Operations,Lifeguard,1,137,,,
+89,Nalinlada Wirakransiri,,VN390,Admissions,Ticketing Staff,1,2,,,
+90,Tularrak Thongrungplew,tularrak.t@vananava.com,VN400,Marketing,Social Media Coordinator,2,106,,,
+91,Thanomjit Nommensen,,VN402,Housekeeping,Park Service,1,18,,,
+92,Chaiwat Ausuwan,,VN411,Operations,Lifeguard,1,137,,,
+93,Patsakon Laksri,,VN412,Operations,Lifeguard,1,137,,,
+94,Chaimongkon Suwanvara,,VN414,Operations,Lifeguard,1,137,,,
+95,Piyapong srinava,,VN416,Operations,Lifeguard,1,137,,,
+96,Sayomphon Wongnoi,,VN417,Operations,Lifeguard,1,137,,,
+97,Tapana Wetprasit,,VN418,Operations,Lifeguard,1,137,,,
+98,Tapakorn Wesprasit,,VN419,Operations,Lifeguard,1,137,,,
+99,Supachai Dangtae,,VN420,Admissions,Golf Cart Driver,1,2,,,
+100,Arisa Thonglor,arisa.t@vananava.com,VN423,Finance,Chief Accountant,3,50,,,
+101,Sarisa Chaechay,sarisa.c@vananava.com,VN425,Marketing,Digital Marketing Supervisor,2,106,,,
+102,Somphot Yaemmueang,,VN426,Food and Beverage,Commis I,2,3,,,
+103,Ruttaphong Worachartudomphong,ruttaphong.w@vananava.com,VN433,IT,Senior Developer,2,6,,,
+104,Chaiyakorn Rodrak,chaiyakorn.r@vananava.com,VN443,Marketing,Digital Marketing Manager,3,106,,,
+105,Waraporn Krongsuklert,sales@vananava.com,VN445,Sales,Sales Coordinator,2,83,,,
+106,Vatcharapong Klangtumnium,vatcharapong.k@vananava.com,VN446,Marketing,Cluster Senior Marketing and Communication Manager,3,106,,,
+107,Thanathip Namuang,thanathip.n@vananava.com,VN447,Marketing,Graphic Designer,2,106,,,
+108,Kidja Limpatiyakorn,,VN449,Operations,Lifeguard,1,137,,,
+109,Chakkit Kongwongsa,,VN450,Engineering,Technician,1,49,,,
+110,Saroj Poolnin,saroj.p@vananava.com,VN453,Laundry,Assistant Laundry Manager,2,18,,,
+111,Rattana Ngamnoi,,VN456,Laundry,Senior Laundry  Attendant,2,18,,,
+112,Akkarapol Chandee,,VN465,Engineering,Technician,1,49,,,
+113,Apilax Nusan,,VN467,Operations,Lifeguard,1,137,,,
+114,Piyapong Aemaot,,VN468,Operations,Lifeguard,1,137,,,
+115,Thawatchai Khunsawat,,VN469,Operations,Lifeguard,1,137,,,
+116,Baifern Kaewpinthong,ar@vananava.com,VN470,Finance,Account Receivable,2,50,,,
+117,Rattiya Nankhongnaep,laundry@vananava.com,VN473,Housekeeping,Housekeeping Supervisor,2,18,,,
+118,Jutharat Khantapheat,jutharat.k@vananava.com,VN476,Finance,Cluster Purchasing Manager,3,50,,,
+119,Supaporn Sakultana,ap@vananava.com,VN478,Finance,Account Payable,2,50,,,
+120,Namkhang Kaewsai,,VN483,Operations,Lifeguard,1,137,,,
+121,Poompittaya Aeimboon,,VN487,Operations,Lifeguard,1,137,,,
+122,Pasakorn Sawangamporn,,VN490,Operations,Lifeguard,1,137,,,
+123,Sawapob Prajongsai,sawapob.p@vananava.com,VN494,Marketing,Senior Graphic Designer,2,106,,,
+124,Patwapa Panajaradkoon,event@vananava.com,VN495,Sales,Event Staff,1,24,,,
+125,Sasima Rungrote,reservation@vananava.com,VN496,Sales,Reservation Supervisor,2,28,,,
+126,Poramin Maneewong,,VN498,Food and Beverage,Waiter/Foodcourt,1,3,,,
+127,Nuttha Phorueng,nuttha.p@vananava.com,VN500,Sales,Assistant Sales Manager,2,83,,,
+128,Kanchana Koedsri,,VN502,Housekeeping,Park Service,1,18,,,
+129,Sutiphong Homsombat,,VN503,Housekeeping,Park Service,1,18,,,
+130,Vimonrut Naykorn,,VN504,Retail,Retail Staff,1,8,,,
+131,Rattana Vongbutta,,VN505,Retail,Retail Staff,1,8,,,
+132,Nutthakorn Sarnjan,,VN507,Food and Beverage,Helper/Izakaya,1,3,,,
+133,Pongsak Aiemaek,,VN508,Food and Beverage,Helper,1,3,,,
+134,Vanvisa Jan-Eang,vanvisa.j@vananava.com,VN510,Marketing,Assistant Marketing Communication Manager,2,106,,,
+135,Theeradech Sintharom,,VN511,Engineering,Technician,1,49,,,
+136,Chawanun Niyom,,VN512,Retail,Retail Staff,1,8,,,
+137,Nutthaphon Thiamthat,natthaphol.t@vananava.com,VN513,Operations,Operations Assistant Manager,3,26,,,
+138,Warisa Chaisorn,retail@vananava.com,VN514,Retail,Senior Retail Staff,2,8,,,
+139,Suwanan Duangkaew,,VN515,Food and Beverage,Wairtess/Izakaya,1,3,,,
+140,Rerkchai Phiwkhum,,VN516,Engineering,Technician,1,49,,,
+141,Chatchay Kongkachuay,,VN517,Engineering,Senior Technician,1,49,,,
+142,Sommai Jantho,,VN518,Laundry,Laundry Supervisor,2,18,,,
+143,Rewadee Pho-Ob,rewadee.p@vananava.com,VN519,Sales,Assistant Sales Manager,2,83,,,
+144,Wirinya Sringarm,,VN520,Admissions,Ticketing Staff,1,2,,,
+145,Worawan Worapanyapong,,VN521,Retail,Retail Staff,1,8,,,
+146,Lamdaun Sriraksa,,VN522,Housekeeping,Park Service,1,18,,,
+147,Rinwara Suntorn,,VN523,Laundry,Laundry  Admin,2,18,,,
+148,Papanin Khongthongkaew,,VN524,Food and Beverage,Helper,1,3,,,
+149,Pattapong Khampoi,,VNC496,Operations,Lifeguard,1,137,,,
+150,Phonphot Sriprem,,VNC497,Operations,Lifeguard,1,137,,,
+151,Nutthanan Chantawong,,VNC498,Operations,Lifeguard,1,137,,,
+152,Sontaya Wongbutta,,VNC504,Laundry,Laundry  Attendant,1,18,,,
+153,Sumalee Apathip,,VNC506,Housekeeping,Park Service,1,18,,,
+154,Varagron Bumnetthpun,,VNC507,Operations,Lifeguard,1,137,,,
+155,Pipatpong Meksaeng,,VNC508,Operations,Lifeguard,1,137,,,
+156,Thanakon Kethom,,VNC509,Food and Beverage,Helper,1,3,,,
+157,Nakon Talalak,,VNC510,Operations,Lifeguard,1,137,,,
+158,Thanadon Peawon,,VNC512,Operations,Lifeguard,1,137,,,
+159,Arpakorn Thongruen,,VNC513,Operations,Lifeguard,1,137,,,
+160,Datbodin Chiewprecha,,VNC514,Operations,Lifeguard,1,137,,,
+161,Sorrawich Subsomboon,,VNC516,Operations,Lifeguard,1,137,,,
+162,Ariya Khumrod,,VNC517,Operations,Lifeguard,1,137,,,
+163,Cheewin Tahong,,VNC518,Operations,Lifeguard,1,137,,,
+164,Warintorn Aiamsamarng,,VNC523,Operations,Lifeguard,1,137,,,
+165,Tanapon Srimungpan,,VNC524,Operations,Lifeguard,1,137,,,
+166,Tunyaphat Kaensa,,VNC525,Operations,Lifeguard,1,137,,,
+167,Thanawat Nueayen,,VNC528,Operations,Lifeguard,1,137,,,
+168,Wasinee Peungsungwal,,VNC529,Laundry,Laundry Attendant,1,18,,,
+169,Jaruwan Kumyong,,VNC531,Finance,Purchasing Officer,1,118,,,
+170,Kittiwadee Nilseeon,,VNC532,Food and Beverage,Helper/Izakaya,1,3,,,
+171,Issarawan U-ngren,,VNC533,Food and Beverage,Wairtess/Izakaya,1,3,,,
+172,Danai Phongdee,,VNC534,Laundry,Laundry  Driver,1,18,,,
+173,Nattaporn Boonsong,,VNC535,Operations,Lifeguard,1,137,,,
+174,Komkrit Thumka,,VNC536,Operations,Lifeguard,1,137,,,
+175,Phuthiphong Ainprung,,VNC537,Operations,Lifeguard,1,137,,,
+176,Adison Somtrakul,,VNC538,Operations,Lifeguard,1,137,,,
+177,Khwanjai Chomsuwan,,VNC541,Food and Beverage,Helper/Fisherman,1,3,,,
+178,Nanthawat Butthorgthim,,VNC542,Food and Beverage,Helper(หน้าร้าน),1,3,,,
+179,Thara Sakunboonprasert,,VNC543,Food and Beverage,Waitress(บาร์น้ำ),1,3,,,
+180,Baworn Kaewkerd,,VNC545,Operations,Lifeguard,1,137,,,
+181,Nuttapot Obcheuy,,VNC546,Operations,Lifeguard,1,137,,,
+182,Pusit Sinturak,,VNC547,Operations,Lifeguard,1,137,,,
+183,Nopphon Sriprem,,VNC548,Operations,Lifeguard,1,137,,,
+184,Varisara Malaiket,,VNC549,Operations,Lifeguard,1,137,,,
+185,Kittiphon Pumphet,,VNC550,Operations,Lifeguard,1,137,,,
+186,Matus Peungjor,,VNC551,Operations,Lifeguard,1,137,,,
+187,Chotthanin Kittiwatchareerat,,VNC552,Operations,Lifeguard,1,137,,,
+188,Suphakit Ainprung,,VNC553,Operations,Lifeguard,1,137,,,
+189,Thanyawut Rup-an,,VNC554,Operations,Lifeguard,1,137,,,
+190,Khunpan Kesonbua,,VNC555,Operations,Lifeguard,1,137,,,
+191,Nitinai Jansingkorn,,VNC557,Operations,Lifeguard,1,137,,,
+192,Tepparit Sinturak,,VNC558,Operations,Lifeguard,1,137,,,
+193,Nalinee Kuruwasri,,VNC559,Operations,Lifeguard,1,137,,,
+194,Sudarat Opoun,,VNC560,Food and Beverage,Bartendy (Foodcourt),1,3,,,
+195,Venus Bunphun,,VNC561,Food and Beverage,Helper/Pizza,1,3,,,
+196,Aorapin Oodsee,,VNC562,Food and Beverage,Helper/Kiosk,1,3,,,
+197,Narongkon Prachammueang,,VNC564,Operations,Lifeguard,1,137,,,
+198,Noppawit Donwicha,,VNC566,Operations,Lifeguard,1,137,,,
+199,Jirapong Middee,,VNC567,Operations,Lifeguard,1,137,,,
+,Saharat Ingpanuwong,,VNC568,Operations,Lifeguard,1,137,,,
+,Kritsada Kanil,,VNC569,Operations,Lifeguard,1,137,,,

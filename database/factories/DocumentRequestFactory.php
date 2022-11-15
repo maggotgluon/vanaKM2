@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Document_Request>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
 class DocumentRequestFactory extends Factory
 {
@@ -18,21 +18,29 @@ class DocumentRequestFactory extends Factory
     {
         return [
             //
-            'Doc_Code' =>'DAR2022'.fake()->biasedNumberBetween(1000,9000),
-            'Doc_Name' =>fake()->name(),
-            'Doc_FullName' =>fake()->name(),
-            'Doc_Type' =>'Document-DS_KM',
-            'Doc_Obj' =>'ขอเอกสารใหม่',
-            'Doc_Description' =>fake()->sentence(3),
-            'Doc_Life' =>fake()->biasedNumberBetween(1,5),
-            'Doc_ver' =>0,
-            'Doc_StartDate' => fake()->dateTimeBetween('-10 week', '-1 week'),
-            'Doc_Location' =>'/FilePDF/Mock/mock.pdf',
-            'Doc_Status' =>0,
-            'Doc_DateApprove' =>null,
-            'User_Approve' =>null,
-            'Access_Lv' =>null,
-            'user_id' =>fake()->biasedNumberBetween(1,200)
+            'req_code'=>$this->faker->unique()->numerify('DAR2022####'),
+
+            'req_obj'=>$this->faker->randomElement(['create','modify']),
+            'req_description'=>$this->faker->paragraph(),
+            'req_status'=>$this->faker->numberBetween(0,0),
+            'req_remark'=>null,
+            'access_Lv'=>null,
+
+            'req_dateReview'=>null,
+            'user_review'=>null,
+            'req_dateApprove'=>null,
+            'user_approve'=>null,
+
+            'doc_code'=>$this->faker->unique()->numerify('ITD-###'),
+            'doc_name'=>$this->faker->word(),
+            'doc_type'=>'DS',
+            'doc_life'=>$this->faker->numberBetween(1,10),
+            'doc_ver'=>0,
+            'pdf_location'=>'FilePDF/doc/mock/data.pdf',
+            'doc_location'=>'FilePDF/doc/mock/data.docx',
+            'doc_startDate'=>$this->faker->dateTimeBetween('-20 days','+20 days'),
+            'created_at'=>$this->faker->dateTimeBetween('-60 days','-1 days'),
+            'user_id'=>$this->faker->numberBetween(1,200),
         ];
     }
 }

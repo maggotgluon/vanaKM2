@@ -1,19 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentRequestController;
 use App\Http\Controllers\TrainingRequestController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Models\Document;
+use App\Models\DocumentRequest;
 use App\Models\TrainingRequest;
-use App\Models\User;
-
-use Illuminate\Support\Carbon;
-
-
-// use Livewire\Component;
-// use Usernotnull\Toast\Concerns\WireToast;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,170 +24,124 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::middleware(['auth'])->group(function(){
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+    ])->group(function(){
 
     Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
-        $user = User::all();
-        // $documents = Document::all();
-        $now = new Carbon();
-        $documents = Document::where('Doc_StartDate','<=',$now)->get();
-        foreach ($documents as $index => $document) {
-            # code...
-            $created_at=new Carbon($document->created_at);
-            $document->created_atC=$created_at;
-            $document->created_atT=$created_at->diffForHumans();
-            $updated_at=new Carbon($document->updated_at);
-            $document->updated_atC=$updated_at;
-            $document->updated_atT=$updated_at->diffForHumans();
-            $Doc_StartDate=new Carbon($document->Doc_StartDate);
-            $document->Doc_StartDateC=$Doc_StartDate;
-            $document->Doc_StartDateT=$Doc_StartDate->diffForHumans();
-            $Doc_DateApprove=new Carbon($document->Doc_DateApprove);
-            $document->Doc_DateApproveC=$Doc_DateApprove;
-            $document->Doc_DateApproveT=$Doc_DateApprove->diffForHumans();
-        }
-        $trainings = TrainingRequest::where('Doc_Status',2)->get();
+    // document
+    Route::name('document.')->prefix('document')->group(function (){
+        Route::get('/', [DocumentController::class,'index'] )
+        ->name('index'); //all doc
+        Route::name('request.')->prefix('request')->group(function (){
+            Route::get('/create', [DocumentRequestController::class,'create'] )
+                ->name('form'); //single doc
+            Route::post('/create', [DocumentRequestController::class,'store'] )
+                ->name('store'); //single doc
 
-        foreach ($trainings as $index => $training) {
-            $training->Doc_008 = json_decode($training->Doc_008);
-            $training->Doc_009 = json_decode($training->Doc_009);
-            // $training->Doc_DateApprove
-            $Doc_DateApprove=new Carbon($training->Doc_DateApprove);
-            $training->Doc_DateApproveC=$Doc_DateApprove;
-            $training->Doc_DateApproveT=$Doc_DateApprove->diffForHumans();
+            Route::post('/updateStatus', [DocumentRequestController::class,'updateStatus'] )
+                ->name('updateStatus'); //single doc
 
-            // $training->Doc_DateReview
-            $Doc_DateReview=new Carbon($training->Doc_DateReview);
-            $training->Doc_DateReviewC=$Doc_DateReview;
-            $training->Doc_DateReviewT=$Doc_DateReview->diffForHumans();
+            Route::get('/download/{id}',[DocumentRequestController::class,'download'])
+            ->name('download'); //single doc
 
-            $training->User_Approve = $training->User_Approve==null?null:User::find($training->User_Approve);
+            Route::get('/view/dar/{id}', [DocumentRequestController::class,'showDar'] )
+            ->name('showDar'); //single doc
 
-            $training->User_Review = $training->User_Review == null?null:User::find($training->User_Review);
+            Route::get('/view/{id}', [DocumentRequestController::class,'show'] )
+            ->name('show'); //single doc
 
-            $training->user_id = $training->user_id == null?null:User::find($training->user_id);
 
-            $created_at=new Carbon($training->created_at);
-            $training->created_atC=$created_at;
-            $training->created_atT=$created_at->diffForHumans();
-            $updated_at=new Carbon($training->updated_at);
-            $training->updated_atC=$updated_at;
-            $training->updated_atT=$updated_at->diffForHumans();
-
-        }
-        // dd($trainings[0]);
-        return view('dashboard',['user'=>$user,'documents'=>$documents,'trainings'=>$trainings]);
-
-    })->middleware(['auth', 'verified'])->name('dashboard');
-
-    Route::prefix('view')->group(function (){
-        Route::get('level', function(){
-            return view('static.userLevel');
-        })->name('userLV'); //all doc
-    });
-    Route::prefix('document')->group(function (){
-
-        Route::name('document.')->group(function (){
-            Route::get('/', [DocumentController::class,'all'] )
+            Route::get('/{user?}', [DocumentRequestController::class,'index'] )
             ->name('all'); //all doc
-            Route::get('/{id}', [DocumentController::class,'view'] )
-            ->name('view'); //single doc
         });
+        Route::get('/download/{id}', [DocumentController::class,'download'] )
+        ->name('download'); //single doc
+        Route::get('/{id}', [DocumentController::class,'show'] )
+        ->name('show'); //single doc
 
-        Route::name('regDoc.')->group(function (){
-            // regDoc.all
-            Route::get('/reg/all/{filter?}', [DocumentRequestController::class,'all'] )
-            ->name('all'); //all reg doc
-            // regDoc.all
-            Route::get('/reg/user/{filter?}/', [DocumentRequestController::class,'allUser'] )
-            ->name('allUser'); //all reg doc
-            Route::get('/reg/MR/{filter?}', [DocumentRequestController::class,'allMR'] )
-            ->name('allMR'); //all reg doc
-            // regDoc.createView
-            Route::get('/reg/create', [DocumentRequestController::class,'createView'] )
-            ->name('create'); //all reg doc
-            // regDoc.create
-            Route::post('/reg/create', [DocumentRequestController::class,'create'] )
-            ->name('create'); //all reg doc
-
-            Route::post('/management/{id}',  [DocumentRequestController::class,'approve','$id'] )
-            -> name('approve');
-
-            Route::get('/management/reject/{id}',  [DocumentRequestController::class,'approve','$id'] )
-            -> name('reject');
-            Route::post('/management/reject/{id}',  [DocumentRequestController::class,'approve','$id'] )
-            -> name('reject');
-
-            // regDoc.view
-            Route::get('/reg/dar/{id}', [DocumentRequestController::class,'view'] )
-            ->name('view'); //single reg doc
-
-            // regDoc.Dar
-            Route::get('/f-dar/{id}', [DocumentRequestController::class,'DarForm',] )
-            ->name('DarForm');
-        });
     });
+    // training
+    Route::name('training.')->prefix('training')->group(function (){
+        Route::get('/', [TrainingRequestController::class,'published'] )
+        ->name('index'); //all doc
 
-    Route::prefix('training')->group(function (){
+        Route::name('request.')->prefix('request')->group(function (){
+            Route::get('/create', [TrainingRequestController::class,'create'] )
+                ->name('form'); //single doc
+            Route::post('/create', [TrainingRequestController::class,'store'] )
+                ->name('store'); //single doc
 
-        Route::name('training.')->group(function (){
-            Route::get('/', [TrainingRequestController::class,'all'] )
+            Route::post('/updateStatus', [TrainingRequestController::class,'updateStatus'] )
+                ->name('updateStatus'); //single doc
+
+            Route::get('/download/{id}',[TrainingRequestController::class,'download'])
+            ->name('download'); //single doc
+
+            Route::get('/view/LDS008/{id}', [TrainingRequestController::class,'show_LDS008'] )
+            ->name('show_008'); //single doc
+            Route::get('/view/LDS009/{id}', [TrainingRequestController::class,'show_LDS009'] )
+            ->name('show_009'); //single doc
+
+            Route::get('/view/{id}', [TrainingRequestController::class,'show'] )
+            ->name('show'); //single doc
+
+
+            Route::get('/{user?}', [TrainingRequestController::class,'index'] )
             ->name('all'); //all doc
-            Route::get('/view/{id}', [TrainingRequestController::class,'view'] )
-            ->name('view'); //single doc
         });
 
-        Route::name('regTraining.')->group(function (){
-            Route::get('/reg/all/{filter?}', [TrainingRequestController::class,'allReg'] )
-            ->name('all'); //all reg doc
-            Route::get('/reg/user/{filter?}', [TrainingRequestController::class,'allRegUser'] )
-            ->name('allUser'); //all reg doc
+        Route::get('/download/{id}', [TrainingRequestController::class,'download'] )
+        ->name('download'); //single doc
+        Route::get('/{id}', [TrainingRequestController::class,'showPublished'] )
+        ->name('show'); //single doc
 
-            // regDoc.createView
-            Route::get('/reg/create', [TrainingRequestController::class,'createView'] )
-            ->name('create'); //all reg doc
-            // regDoc.create
-            Route::post('/reg/create', [TrainingRequestController::class,'create'] )
-            ->name('create'); //all reg doc
-
-            Route::post('/management/{id}',  [TrainingRequestController::class,'approve','$id'] )
-            -> name('approve');
-            //view regis training 008
-
-            Route::get('/f008/{id}', [TrainingRequestController::class,'form008',] )
-            ->name('form008');
-            //view regis training 009
-            Route::get('/f009/{id}', [TrainingRequestController::class,'form009',] )
-            ->name('form009');
-
-            Route::get('/reg/view/{id}', [TrainingRequestController::class,'viewReg'] )
-            ->name('view'); //single reg doc
-        });
     });
+    // post
+    Route::name('post.')->prefix('post')->group(function (){
 
+    });
+    // user
     Route::name('user.')->prefix('user')->group(function (){
+        Route::get('/', [UserController::class,'index'] )
+        ->name('index'); //all doc
+        Route::post('/', [UserController::class,'search'] )
+        ->name('search'); //all doc
 
-        Route::get('/', [UserController::class,'all'] )
-        ->name('manage'); //userManage
-        Route::post('/', [UserController::class,'allFiltter'] )
-        ->name('allFilter'); //userManage
-
-        Route::get('/{id}', [UserController::class,'profile'] )
-        ->name('profile'); //userProfile
-
-        Route::post('/update/{id}', [UserController::class,'update'] )
-        ->name('update'); //userProfile
-
+        Route::get('/create', [UserController::class,'create'] )
+        ->name('create'); //all doc
+        Route::post('/register', [UserController::class,'register'] )
+        ->name('register'); //all doc
         Route::post('/permission/{id}', [UserController::class,'permission'] )
-        ->name('permission'); //userProfile
+        ->name('permission'); //all doc
 
-        Route::post('/changePassword/{id}', [UserController::class,'changePassword'] )
-        ->name('changePassword'); //userProfile
+        Route::get('/{id}', [UserController::class,'show'] )
+        ->name('show'); //all doc
 
-
+        Route::post('/update/{id?}', [UserController::class,'store'] )
+        ->name('update'); //all doc
     });
 });
 
-require __DIR__.'/auth.php';
+Route::get('/email/doc',function(){
+    $moc = DocumentRequest::get()->random(1);
+    $moc = DocumentRequestController::tranformData($moc[0]);
+    return view('mail.notify',['data'=>$moc]);
+
+});
+
+Route::get('/email/train',function(){
+    $moc = TrainingRequest::get()->random(1);
+    $moc = TrainingRequestController::tranformData($moc[0]);
+    return view('mail.notifyTraining',['data'=>$moc]);
+
+});
+
+// Route::fallback(function() {
+//     return "You're message goes here!";
+// });

@@ -3,9 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 
-use App\Models\userPermission;
+use Illuminate\Support\Facades\Gate;
 use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,134 +26,179 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // // Should return TRUE or FALSE
+        //
         Gate::define('edit_document', function(User $user) {
             // can upload KM request
-            
-            boo:$can=false;
-            
-            foreach($user->userPermission as $permission){
-                if($permission->parmission_name=='edit_document'&$permission->allowance==1){
-                    $can=true;
-                    // return $can;
-                }
 
-                if($permission->parmission_name=='admin'&$permission->allowance==1){
-                    $can=true;
-                    // return $can;
-                }
-            }
-            
-            if($user->user_level=='Supervisor'||$user->user_level=='Assistant Manager'||$user->user_level=='Manager'||$user->user_level=='Director'||$user->user_level=='MR'){
-                $can=true;
-                // return $can;
-            }
-            return $user->staff_id == 'VN433' | $can;
+            boo:$can=false;
+            // dd($user->user_level);
+            // $can = $user->user_level == 5?false:true;
+            // 2,3,4,5,6,7,99
+            $can = $user->user_level >= 2 || $user->user_level == 99||$user->permissions->where('allowance',1)->contains('parmission_name','admin');
+
+            // foreach($user->permissions as $permission){
+            //     if($permission->parmission_name=='edit_document'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+
+            //     if($permission->parmission_name=='admin'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+            // }
+
+            // if($user->user_level=='Supervisor'||$user->user_level=='Assistant Manager'||$user->user_level=='Manager'||$user->user_level=='Director'||$user->user_level=='MR'){
+            //     $can=true;
+            //     // return $can;
+            // }
+            return $can;
         });
         Gate::define('edit_trainDocument', function(User $user) {
             // can upload Training request
             boo:$can=false;
-            foreach($user->userPermission as $permission){
-                if($permission->parmission_name=='edit_trainDocument'&$permission->allowance==1){
-                    $can=true;
-                    // return $can;
-                }
-                if($permission->parmission_name=='admin'&$permission->allowance==1){
-                    $can=true;
-                    // return $can;
-                }
-            }
+            // 2,3,4,5,6,7,99
 
-            if($user->user_level=='Supervisor'||$user->user_level=='Assistant Manager'||$user->user_level=='Manager'||$user->user_level=='Director'||$user->user_level=='MR'){
-                $can=true;
-                // return $can;
-            }
-            return $user->staff_id == 'VN433' | $can;
+            $can = $user->user_level >= 2 || $user->user_level == 99||$user->permissions->where('allowance',1)->contains('parmission_name','admin');
+            // foreach($user->permissions as $permission){
+            //     if($permission->parmission_name=='edit_trainDocument'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+            //     if($permission->parmission_name=='admin'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+            // }
+
+            // if($user->user_level=='Supervisor'||$user->user_level=='Assistant Manager'||$user->user_level=='Manager'||$user->user_level=='Director'||$user->user_level=='MR'){
+            //     $can=true;
+            //     // return $can;
+            // }
+            return $can;
         });
 
-        // management level 
-        Gate::define('manage_document', function(User $user) {
+        // management level
+        Gate::define('review_document', function(User $user) {
             // can manage KM request
             boo:$can=false;
-            foreach($user->userPermission as $permission){
-                if($permission->parmission_name=='manage_document'&$permission->allowance==1){
-                    $can=true;
-                    // return $can;
-                }
-                if($permission->parmission_name=='admin'&$permission->allowance==1){
-                    $can=true;
-                    // return $can;
-                }
-            }
-            return $user->staff_id == 'VN433' | $can;
+            // 6,7
+            $can = $user->user_level == 6 || $user->user_level == 99||$user->permissions->where('allowance',1)->contains('parmission_name','admin');
+            // foreach($user->permissions as $permission){
+            //     if($permission->parmission_name=='review_document'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+            //     if($permission->parmission_name=='admin'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+            // }
+            return $can;
         });
-        Gate::define('manage_trainDocument', function(User $user) {
+        Gate::define('review_trainDocument', function(User $user) {
             // can manage Training request
             boo:$can=false;
-            foreach($user->userPermission as $permission){
-                if($permission->parmission_name=='manage_trainDocument'&$permission->allowance==1){
-                    $can=true;
-                    // return $can;
-                }
-                if($permission->parmission_name=='admin'&$permission->allowance==1){
-                    $can=true;
-                    // return $can;
-                }
-            }
-            return $user->staff_id == 'VN433' | $can;
+            // 4,5
+            $can = $user->user_level == 4 || $user->user_level == 99||$user->permissions->where('allowance',1)->contains('parmission_name','admin');
+            // foreach($user->permissions as $permission){
+            //     if($permission->parmission_name=='review_trainDocument'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+            //     if($permission->parmission_name=='admin'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+            // }
+            return $can;
         });
         Gate::define('manage_users', function(User $user) {
             // can manage user row/permission
             boo:$can=false;
-            foreach($user->userPermission as $permission){
-                if($permission->parmission_name=='manage_users'&$permission->allowance==1){
-                    $can=true;
-                    // return $can;
-                }
-                if($permission->parmission_name=='admin'&$permission->allowance==1){
-                    $can=true;
-                    // return $can;
-                }
-            }
-            return $user->staff_id == 'VN433' | $can;
+            // 4,6
+            $can = $user->user_level == 4 || $user->user_level == 6 || $user->user_level == 99||$user->permissions->where('allowance',1)->contains('parmission_name','admin');
+            // foreach($user->permissions as $permission){
+            //     if($permission->parmission_name=='manage_users'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+            //     if($permission->parmission_name=='admin'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+            // }
+            return  $can;
         });
 
         // MD level
         Gate::define('publish_document', function(User $user) {
             // can Approved KM request (MD)
+
             boo:$can=false;
-            foreach($user->userPermission as $permission){
-                if($permission->parmission_name=='publish_document'&$permission->allowance==1){
-                    $can=true;
-                    // return $can;
-                }
-                if($permission->parmission_name=='admin'&$permission->allowance==1){
-                    $can=true;
-                    // return $can;
-                }
-            }
-            if($user->user_level=='MR'){
-                $can=true;
-                // return $can;
-            }
-            return $user->staff_id == 'VN433' | $can;
+            $can = $user->user_level == 7 || $user->user_level == 99||$user->permissions->where('allowance',1)->contains('parmission_name','admin');
+            // foreach($user->permissions as $permission){
+            //     if($permission->parmission_name=='publish_document'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+            //     if($permission->parmission_name=='admin'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+            // }
+            // if($user->user_level=='MR'){
+            //     $can=true;
+            //     // return $can;
+            // }
+            return $can;
+        });
+        // MD level
+        Gate::define('publish_trainDocument', function(User $user) {
+            // can Approved KM request (MD)
+
+            boo:$can=false;
+            $can = $user->user_level == 5 || $user->user_level == 99||$user->permissions->where('allowance',1)->contains('parmission_name','admin');
+            // foreach($user->permissions as $permission){
+            //     if($permission->parmission_name=='publish_document'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+            //     if($permission->parmission_name=='admin'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+            // }
+            // if($user->user_level=='MR'){
+            //     $can=true;
+            //     // return $can;
+            // }
+            return $can;
         });
 
+
+        Gate::define('reject_document', function(User $user){
+            boo:$can=false;
+            $can = $user->user_level == 4 || $user->user_level == 6 || $user->user_level == 99|| $user->permissions->where('allowance',1)->contains('parmission_name','admin');
+            return $can;
+        });
 
         Gate::define('view_log', function(User $user) {
             // can manage user row/permission
             boo:$can=false;
-            foreach($user->userPermission as $permission){
-                if($permission->parmission_name=='view_log'&$permission->allowance==1){
-                    $can=true;
-                    // return $can;
-                }
-                if($permission->parmission_name=='admin'&$permission->allowance==1){
-                    $can=true;
-                    // return $can;
-                }
-            }
-            return $user->staff_id == 'VN433' | $can;
+
+            $can = $user->user_level == 4 || $user->user_level == 6 || $user->user_level == 99||$user->permissions->where('allowance',1)->contains('parmission_name','admin');
+            // foreach($user->permissions as $permission){
+            //     if($permission->parmission_name=='view_log'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+            //     if($permission->parmission_name=='admin'&$permission->allowance==1){
+            //         $can=true;
+            //         // return $can;
+            //     }
+            // }
+            return $can;
         });
     }
 }

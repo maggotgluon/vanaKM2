@@ -2,115 +2,115 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use App\Rules\MatchOldPassword;
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-// use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
-    public function all($filter = null, request $data=null){
-        // dd($data);
-        // alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');
-        return view('user.index',['users'=>User::all()]);
-    }
-    public function allFiltter(request $data){
-        $user = User::all();
+    //
 
-        if($data->department!=null){
-            $user = $user->where('department',$data->department);
+    public function index(){
+        $users = User::all();
+        if(request()->department){
+            $users = $users->where('department',request()->department);
+        }
+        if(request()->user_level){
+            $users = $users->where('user_level',request()->user_level);
+        }
+        $users = $users->toQuery()->reorder('user_level','desc')->get();
+        if(request()->id){
+            $users = $users->toQuery()->reorder('staff_id',request()->id)->get();
+        }
+
+        return view('user.index',['users'=>$users->paginate(15)]);
+    }
+    public function search(Request $key){
+        // dd($key->search);
+        // dd($key->fullUrlWithQuery(['department'=>'department']));
+        $users = User::where('name','like','%'.$key->search.'%')
+                ->orWhere('staff_id', 'like','%'.$key->search.'%')
+                ->orWhere('email', 'like','%'.$key->search.'%')
+                ->orWhere('position', 'like','%'.$key->search.'%')
+                ->orWhere('department', 'like','%'.$key->search.'%')
+                    ->get();
+
+        return view('user.index',['users'=>$users->paginate(15)]);
+    }
+    public function show($id){
+        $user = User::find($id);
+        return view('user.show',['user'=>$user]);
+    }
+    public function create(){
+        return view('user.create');
+    }
+
+    public function register(Request $request){
+        $user = new User();
+        $user->name = $request->name;
+        $user->name = $request->name;
+        $user->staff_id = $request->staff_id;
+        $user->position = $request->position;
+        $user->department = $request->department;
+        $user->user_level = $request->user_level;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        // $user->password_confirmation = $request->password_confirmation;
+        $user->save();
+        dd($request,$user);
+    }
+
+
+    public function store(Request $request,$id = null){
+        // dd($request);
+        if($id){
+            $user = User::find($id);
+            // $user->id = $request->id;
+            $user->name = $request->name;
+            $user->staff_id = $request->staff_id;
+            $user->department = $request->department;
+            $user->department_head = $request->department_head;
+            $user->position = $request->position;
+            $user->user_level = $request->user_level;
+            $user->status = $request->status?1:0;
+            $user->email = $request->email;
+
+
+            // $user->email_verified_at = $request->email_verified_at;
+            // if($request->password){
+                // dd($request->password);
+                // $user->forceFill([
+                //     'password' => Hash::make($request->password),
+                // ])->save();
+            // }
+            // $user->two_factor_secret = $request->two_factor_secret;
+            // $user->two_factor_recovery_codes = $request->two_factor_recovery_codes;
+            // $user->remember_token = $request->remember_token;
+            // $user->current_team_id = $request->current_team_id;
+            // $user->profile_photo_path = $request->profile_photo_path;
+            // $user->created_at = $request->created_at;
+            // $user->updated_at = $request->updated_at;
+
+            $user->save();
+
+
             // dd($user);
-        }else if($data->level!=null){
-            $user = $user->where('user_level',$data->level);
-        }else{
-            $user = User::all();
         }
-        // dd($user);
-        // alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');
-        return view('user.index',['users'=>$user,'data'=>$data]);
-    }
 
-    public function profile($uid){
-        $user = User::find($uid);
-        $userDepartmentHead = User::where('department',User::find($uid)->department)->get();
-        // alert()->error('Error Title', 'Error Message');
-        return view('user.profile',['user'=>$user,'dp'=>$userDepartmentHead]);
+        return redirect()->route('user.index');
     }
-
-    public function permission($user,request $data,){
-        // update permission of given user with option
-        // return dd($user,$data->permission,$data->allowance);
-        $selectUser = user::find($user);
-        // dd($selectUser->staff_id,$selectUser->userPermission);
-        // $selectUser->userPermission->
-        $allowance = $data->allowance==1?1:0;
-        $action = $allowance==1?'add':'removed';
-        // dd($data->allowance,$allowance );
+    public function permission(Request $request,$id = null){
+        $user = $id?User::find($id):Auth::User();
+        $allowance = $request->allowance==1?1:0;
+        // $user->permissions
+        // dd($request,$user);
         DB::table('user_permissions')->updateOrInsert([
-            'user_id' =>$user,
-            'permissions_type' => $data->permissions_type,
-            'parmission_name'=>$data->permission,
+            'user_id' =>$user->id,
+            'permissions_type' => $request->permissions_type,
+            'parmission_name'=>$request->permissions_name,
         ],['allowance'=>$allowance]);
-
-        Log::channel('user')->info(Auth::user()->name .' '.$action.' '.$data->permissions_type.' '.$data->permission.' of '. $selectUser->name);
-        return redirect(route('user.profile',$selectUser->id))->with('success', 'Permission update!');
+        return redirect()->route('user.show',$user);
     }
-    public function update(request $data,$user){
-        // dd($data, $user);
-        $selectUser = user::find($user);
-        switch ($data->update) {
-            case 'department_head':
-                $newDepartmentHead = user::where('staff_id',$data->suser)->first();
-                $selectUser->department_head = $newDepartmentHead->name;
-                $selectUser->save();
-                break;
-            case 'department':
-                $selectUser->department = $data->department;
-                $selectUser->save();
-                break;
-            case 'position':
-                $selectUser->position = $data->position;
-                $selectUser->save();
-                break;
-            case 'user_level':
-                $selectUser->user_level = $data->user_level;
-                $selectUser->save();
-                break;
-            case 'email':
-                $selectUser->email = $data->email;
-                $selectUser->save();
-                break;
-            default:
-                # code...
-                break;
-        }
-        Log::channel('user')->info(Auth::user()->name .' update '.$data->update.' of '. $selectUser->name);
-        return redirect(route('user.profile',$selectUser->id))->with('success', 'User update!');
-    }
-
-    public function changePassword(Request $request)
-    {
-
-         $request->validate([
-            'current_password' => ['required',new MatchOldPassword],
-            'new_password' => ['required'],
-            'new_confirm_password' => ['same:new_password'],
-        ],[
-
-            'current_password' => 'password missmatch',
-            'new_password' => 'password require',
-            'new_confirm_password' => 'new password missmatch',
-        ]
-        );
-
-        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
-        Log::channel('user')->info(Auth::user()->name .' update password');
-        return redirect(route('user.profile',User::find(auth()->user()->id)))->with('success', 'User update!');
-    }
-
 }

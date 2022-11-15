@@ -8,12 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class TrainingRequest extends Model
 {
     use HasFactory;
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-    public function training()
-    {
-        return $this->hasOne(Training::class ,'Doc_Code');
-    }
 }

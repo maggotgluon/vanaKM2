@@ -2,423 +2,268 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\TrainingRequest;
-use App\Models\training;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Models\User;
-use Illuminate\Support\Facades\Log;
-
 use Carbon\Carbon;
-use DragonCode\Support\Facades\Helpers\Arr;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NotifyMailTraining;
 
 class TrainingRequestController extends Controller
 {
-    private function InputToDate($Input)
-    {
-        if($Input!=null) {
-            $Date = new Carbon($Input);
-            $Date = date_format($Date,"d F Y");
-            }
-            else
-             $Date = "";
-            return  $Date;
-    }
     //
-    public function processTrainingRequest($trainings){
-        foreach ($trainings as $index => $training) {
-            # code...
-
-            $training->Doc_008 = json_decode($training->Doc_008);
-            $training->Doc_009 = json_decode($training->Doc_009);
-
-            if($training->Doc_DateApprove!=null){
-                $Doc_DateApprove = new Carbon($training->Doc_DateApprove);
-                $training->Doc_DateApproveC = $Doc_DateApprove;
-                $training->Doc_DateApproveT = $Doc_DateApprove->diffForHumans();
-                $training->User_Approve = User::find($training->User_Approve);
-
-            }
-            if($training->Doc_DateReview!=null){
-                $Doc_DateReview = new Carbon($training->Doc_DateReview);
-                $training->Doc_DateReviewC = $Doc_DateReview;
-                $training->Doc_DateReviewT = $Doc_DateReview->diffForHumans();
-                $training->User_Review = User::find($training->User_Review);
-            }
-
-            $created_at = new Carbon($training->created_at);
-            $training->created_atC = $created_at;
-            $training->created_atT = $created_at->diffForHumans();
-
-            $updated_at = new Carbon($training->updated_at);
-            $training->updated_atC = $updated_at;
-            $training->updated_atT = $updated_at->diffForHumans();
-
-
-            $training->user_id = User::find($training->user_id);
-        }
-        // dd($trainings);
-        return $trainings;
-    }
-    public function processTraining($training){
-        // dd($training->id);
-
-        $training->Doc_008 = json_decode($training->Doc_008);
-        $training->Doc_009 = json_decode($training->Doc_009);
-
-        if($training->Doc_DateApprove!=null){
-            $Doc_DateApprove = new Carbon($training->Doc_DateApprove);
-            $training->Doc_DateApproveC = $Doc_DateApprove;
-            $training->Doc_DateApproveT = $Doc_DateApprove->diffForHumans();
-            $training->User_Approve = User::find($training->User_Approve);
-
-        }
-        if($training->Doc_DateReview!=null){
-            $Doc_DateReview = new Carbon($training->Doc_DateReview);
-            $training->Doc_DateReviewC = $Doc_DateReview;
-            $training->Doc_DateReviewT = $Doc_DateReview->diffForHumans();
-            $training->User_Review = User::find($training->User_Review);
-        }
-
-        $created_at = new Carbon($training->created_at);
-        $training->created_atC = $created_at;
-        $training->created_atT = $created_at->diffForHumans();
-
-        $updated_at = new Carbon($training->updated_at);
-        $training->updated_atC = $updated_at;
-        $training->updated_atT = $updated_at->diffForHumans();
-
-
-        $training->user_id = User::find($training->user_id);
-
-        return $training;
-    }
-
-    public function all(){
-        // dd(Training::all());
-        $training = TrainingRequest::where('Doc_Status',2)->get();
-        $training = $this->processTrainingRequest($training);
-        return view('training.index', ['documents' => $training,]);
-    }
-    public function view($id){
-        // dd($id);
-        $training = TrainingRequest::where('Doc_Code',$id)->firstOrFail();
-        $training = $this->processTraining($training);
-
-        return view('training.show', [
-            'documents' => $training,
-        ]);
-    }
-
-      //
-    public function allReg($filter=null){
-
-        if($filter!=null){
-            $regDoc = TrainingRequest::where('Doc_Status',$filter)->get();
+    public function index($user=null){
+        if (! Gate::allows('review_trainDocument', Auth::user())) {
+            $trainings = Auth::user()->TrainingRequest;
+            // dd(Auth::user()->DocumentRequest);
         }else{
-            $regDoc = TrainingRequest::all();
+            if($user==null){
+                //no user pass in
+                $trainings = TrainingRequest::all();
+            }else{
+                $trainings = User::find($user)->DocumentRequest;
+            }
         }
 
-        $regDoc = $this->processTrainingRequest($regDoc);
-        return view('training.reg.index', ['documents' => $regDoc,'filter'=>$filter]);
-    }
-    public function allRegUser($filter=null){
-
-        if($filter!=null){
-            $regDoc = Auth::user()->TrainingRequest->where('Doc_Status',$filter);
-        }else{
-            $regDoc = Auth::user()->TrainingRequest;
+        if(request()->filter){
+            $trainings = $trainings->where('training_status',request()->filter);
+        }
+        if($trainings->count()>0){
+            $trainings = $trainings->toQuery()
+                ->orderBy('updated_at', 'desc')->get();
         }
 
-        $regDoc = $this->processTrainingRequest($regDoc);
-        return view('training.reg.indexMy', ['documents' => $regDoc,'filter'=>$filter]);
+
+        foreach ($trainings as $key => $training) {
+            $training = $this->tranformData($training);
+        }
+        // dd($data);
+
+        return view('trainingRequest.index',['trainings'=>$trainings->paginate(10)]);
 
     }
-    public function viewReg($id){
-        $training = TrainingRequest::where('Doc_Code',$id)->firstOrFail();
-        $training = $this->processTraining($training);
-        return view('training.reg.show', [
-            'documents' => $training,
-        ]);
+    public function create(){
+        return view('trainingRequest.create');
     }
+    public function store(Request $request ){
+        // dd($request);
+        $LDS008 = array(
+            'subject' => $request->subject,
+            'train_dateStart' => $request->dateStart,
+            'train_dateEnd' => $request->dateEnd,
+            'train_timeStart' => $request->timeStart,
+            'train_timeEnd' => $request->timeEnd,
+            'train_objective' => $request->objective,
+            'train_subjectDetails' => $request->subjectDetails_discription,
+            'train_subjectDuration' => $request->subjectDetails_duration,
+            // 'SubjectMaterial' => $request->SubjectMaterial,
+            // 'SubjectRemark' => $request->SubjectRemark,
+            'train_activityDetails' => $request->activity_discription,
+            'train_activityDuration' => $request->activity_duration,
+            // 'ActivityMaterial' => $request->ActivityMaterial,
+            // 'ActivityRemark' => $request->ActivityRemark,
+            'train_assessmentDetails' => $request->assessment_discription,
+            'train_assessmentDuration' => $request->assessment_duration,
+            // 'AssessmentMaterial' => $request->AssessmentMaterial,
+            'train_remark' => $request->remark,
 
-
-    public function form008($Doc_Code){
-        $d008 =TrainingRequest::where('Doc_Code',$Doc_Code)->firstOrFail() ;
-        $sub_d008 = json_decode($d008->Doc_008, TRUE);
-        $Doc_DateApprove =  $this->InputToDate($d008->Doc_DateApprove);
-        $Doc_DateReview =  $this->InputToDate($d008->Doc_DateReview);
-        $created_at =  $this->InputToDate($d008->created_at);
-        // dd( $Doc_DateReview );
-
-
-        $user=User::find($d008->user_id);
-        $Position_Approve=User::where('name',$d008->User_Approve)->firstOrFail();
-        $Position_Review=User::where('name',$d008->User_Review)->firstOrFail();
-
-
-        $positions = array (
-            'user_position'=>$user->position,
-            'Approve_position'=>$Position_Approve->position,
-            'Review_position'=> $Position_Review->position
         );
-        // dd($Position_Approve);
-        return view('training.reg.f-008', ['f008'=>$sub_d008],['created_at'=>$created_at,'Doc_DateReview'=>$Doc_DateReview,'Doc_DateApprove'=>$Doc_DateApprove,'D008'=>$d008,'user'=>$user,'positions'=>$positions]);
+        $LDS009 = array(
+            'subject' => $request->subject,
+            'assessment_process' => $request->assessmentProcess,
+            'assessment_tools' => $request->assessmentTools,
+            'assessment_pass' => $request->assessmentCriteriament_pass,
+            'assessment_fail' => $request->assessmentCriteriament_fail,
+        );
+
+        $LDS008 = json_encode($LDS008);
+        $LDS009 = json_encode($LDS009);
+
+        $name = $request->doc_code.'-'.$request->doc_name;
+        // $request->doc_ver = TrainingRequest::where('doc_name',$request->doc_name)->count();
+        // $ver = Document::where('doc_name',$request->doc_name)->count();
+
+        $req_code = $this->getNewRequestCode();
+
+        $newTrainingRequest = new TrainingRequest();
+
+        $newTrainingRequest->training_code = $req_code;
+        $newTrainingRequest->insructor = $request->insructor;
+        $newTrainingRequest->training_008 = $LDS008;
+        $newTrainingRequest->training_009 = $LDS009;
+        // $newTrainingRequest->training_dateApprove =
+        // $newTrainingRequest->user_approve =
+        // $newTrainingRequest->training_dateReview =
+        // $newTrainingRequest->user_review =
+        // $newTrainingRequest->access_lv =
+
+        $newTrainingRequest->pdf_location = $request->file('pdf_file')?$this->storeFile($request->pdf_file,$request,$req_code):null;
+        $newTrainingRequest->training_status = 0;
+        $newTrainingRequest->user_id = Auth::user()->id;
+        // $newTrainingRequest->remark = ;
+        // dd($newTrainingRequest);
+        $newTrainingRequest->save();
+
+
+        return redirect()->route('training.request.all');
 
     }
-    public function form009($Doc_Code){
-        $d009 =TrainingRequest::where('Doc_Code',$Doc_Code)->firstOrFail() ;
-        $d009 = json_decode($d009->Doc_009, TRUE);
-        //  dd($d009);
-        return view('training.reg.f-009', ['f009'=>$d009]);
-    }
+    public static function getNewRequestCode(){
 
-    public function createView(){
-        // dd('create');
         $currentYear = date("Y");
         $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
         $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
 
         $count = TrainingRequest::whereBetween('created_at',[$startYear,$endYear])->count();
+        $TrainingCode = 'TRAIN'.date('Y').str_pad( $count+1 ,4,'0',STR_PAD_LEFT);
 
-        return view('training.reg.create',['count_train_code'=>$count,]);
+        return $TrainingCode;
     }
 
-    public function create(request $request){
-        //  dd($request);
+    private function storeFile(UploadedFile $file,$request,$training_code){
+        $now = new Carbon();
 
-        //  Cover Dte formate
-        // $dd =$this->InputToDate($request->starttraindate);
-        // dd($dd);
+        $ext = $file->getClientOriginalExtension();
 
+        $filename = $training_code.'-'.$request->subject.'-'.$now->timestamp;
 
+        $upload_location = '/TrainPDF/'.$request->subject.'/';
+        $full_path = $upload_location.$filename.'.'.$ext;
 
-        // INPUT DATA IN OBJECT
-        $d008 = array(
-            'SUBJECT' => $request->SUBJECT,
-            'starttraindate' => $this->InputToDate($request->starttraindate),
-            'endtraindate' => $this->InputToDate($request->endtraindate),
-            'starttraintime' => $request->starttraintime,
-            'endtraintime' => $request->endtraintime,
-            'Objective' => $request->Objective,
-            'SubjectDetails' => $request->SubjectDetails,
-            'SubjectTime' => $request->SubjectTime,
-            // 'SubjectMaterial' => $request->SubjectMaterial,
-            // 'SubjectRemark' => $request->SubjectRemark,
-            'ActivityDetails' => $request->ActivityDetails,
-            'ActivityTime' => $request->ActivityTime,
-            // 'ActivityMaterial' => $request->ActivityMaterial,
-            // 'ActivityRemark' => $request->ActivityRemark,
-            'AssessmentDetails' => $request->AssessmentDetails,
-            'AssessmentTime' => $request->AssessmentTime,
-            // 'AssessmentMaterial' => $request->AssessmentMaterial,
-            'Remark008' => $request->Remark008,
-        );
+        Storage::putFileAs($upload_location,$file,$filename.'.'.$ext);
 
-        $d009 = array(
-            'SUBJECT' => $request->SUBJECT,
-            'checkbox' => $request->checkbox,
-            '009Testing' => $request->Testing009,
-            'pass' => $request->pass,
-            'nopass' => $request->nopass,
-        );
+        Storage::getVisibility($full_path);
 
-        //json_encode
-        $d008 = json_encode($d008);
-        $d009 = json_encode($d009);
-
-        $currentYear = date("Y");
-        $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
-        $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
-
-        $countID = TrainingRequest::whereBetween('created_at',[$startYear,$endYear])->count();
-        // $docID = 'TRAIN'. date('Y').str_pad($countID+1,4,'0',STR_PAD_LEFT);
-        // dd($docID,$request->DocCode);
-        //Version File
-        $file = $request->file('file');
-
-        $extension = $file->getClientOriginalExtension();
-
-        $docver = TrainingRequest::where('Doc_Code', $request->DocCode)->count();
-
-        $timestamp = Carbon::now()->getTimestamp();
-        $docname = 'TRAIN'. date('Y').str_pad($countID+1,4,'0',STR_PAD_LEFT);
-        $NameFile = $docname . '-' . $docver.'-'.$request->SUBJECT.'.'.$extension;
-        // dd($file);
-        //Location File
-        $upload_location = '/TrainPDF/'.$request->SUBJECT.'/';
-        $full_path = $upload_location . $NameFile;
-
-        //  dd( $full_path);
-        // dd(json_encode($d008));
-
-          //ตรวจสอบข้อมูล
-        $request->validate(
-            [
-                'SUBJECT'=>'required',
-                'starttraindate'=>'required',
-                'endtraindate'=>'required',
-                'starttraintime'=>'required',
-                'endtraintime'=>'required',
-                'Objective'=>'required',
-                'SubjectDetails'=>'required',
-                'SubjectTime'=>'required',
-                // 'SubjectMaterial'=>'required',
-                'ActivityDetails'=>'required',
-                'ActivityTime'=>'required',
-                // 'ActivityMaterial'=>'required',
-               'AssessmentDetails'=>'required',
-               'AssessmentTime'=>'required',
-                // 'AssessmentMaterial'=>'required',
-                'checkbox'=> 'required',
-                'Testing009'=>'required',
-                'pass'=>'required',
-                'nopass'=>'required',
-                'file'=>'required'
-
-                // 'info'=>'required',
-                // // 'usedate'=>'required',
-                // // 'Year'=>'required',
-                // 'file'=>'required|mimes:pdf|size:10mb',
-
-            ],
-            [
-
-                'SUBJECT.required' => "กรุณาป้อนชื่อเอกสาร",
-                'starttraindate.required' => "กรุณาป้อนข้อมูล",
-                'endtraindate.required' => "กรุณาป้อนข้อมูล",
-                'starttraintime.required' => "กรุณาป้อนข้อมูล",
-                'endtraintime.required' => "กรุณาป้อนข้อมูล",
-                'Objective.required' => "กรุณาป้อนข้อมูล",
-                'SubjectDetails.required' => "กรุณาป้อนข้อมูล",
-                'SubjectTime.required'=>"กรุณาป้อนข้อมูล",
-                // 'SubjectMaterial.required'=>"กรุณาป้อนข้อมูล",
-                'ActivityDetails.required'=>"กรุณาป้อนข้อมูล",
-                'ActivityTime.required'=>"กรุณาป้อนข้อมูล",
-                // 'ActivityMaterial.required'=>"กรุณาป้อนข้อมูล",
-                'AssessmentDetails.required'=>"กรุณาป้อนข้อมูล",
-                'AssessmentTime.required'=>"กรุณาป้อนข้อมูล",
-                // 'AssessmentMaterial.required'=>"กรุณาป้อนข้อมูล",
-                'Testing009.required'=>"กรุณาป้อนข้อมูล",
-                'pass.required'=>"กรุณาป้อนข้อมูล",
-                'nopass.required'=>"กรุณาป้อนข้อมูล",
-                // 'file.required'=>"กรุณาป้อนข้อมูล",
-                // 'file.mimes' => "กรุณาเลือกไฟล์ PDF เท่านั้น",
-                // 'file.size' => "กรุณาเลือกไฟล์ PDF ขนาดไม่เกิน 10 MB",
-                'checkbox.required'=>"กรุณาเลือกอย่างน้อยหนึ่งข้อ",
-
-            ]
-        );
-
-        // // loc / upload file / rename to
-        // dd($upload_location,$file,$docname,$docver);
-        Storage::putFileAs($upload_location, $file, $NameFile);
-        // Storage::putFileAs($upload_location,$file,doc_name.'-'.ver);
-        $visibility = Storage::getVisibility($upload_location);
-        // dd($visibility);
-
-        // dd($request->DocCode);
-        // dd($d008,$d009,Auth::user()->id);
-
-        // //บันทึกข้อมูล
-        $doc_train = new TrainingRequest;
-        $doc_train->Doc_Code = $docname;
-        $doc_train->Doc_008 = $d008;
-        $doc_train->Doc_009 = $d009;
-        $doc_train->user_id = Auth::user()->id;
-        // $doc_train->Doc_Location = '0';
-        $doc_train->Doc_Location = $full_path;
-        $doc_train->Doc_Status = '0';
-
-
-
-        $doc_train->save();
-        Log::channel('training')->info( $doc_train->Doc_Code . 'requested by user '. User::find($doc_train->user_id)->name);
-
-        return redirect()->route('regTraining.create')->with('success', 'Document added!');
-
+        return $full_path;
     }
 
+    public static function tranformData($data){
+        $tranformData = $data;
+        $tranformData->created_at_C = new Carbon($data->created_at);
+        $tranformData->updated_at_C = new Carbon($data->created_at);
+        // $tranformData->training_008->train_dateStart = $data->doc_startDate?new Carbon($data->training_008->train_dateStart):null;
+        $tranformData->training_dateReview = $data->training_dateReview?new Carbon($data->training_dateReview):null;
+        $tranformData->training_dateApprove = $data->training_dateApprove?new Carbon($data->training_dateApprove):null;
+        $tranformData->training_review_obj = $data->user_review?User::find($data->user_review):null;
+        $tranformData->user_approve_obj = $data->user_approve_obj?User::find($data->user_approve):null;
+        $tranformData->user_id_obj = $data->user_id_obj?User::find($data->user_id):null;
 
-    public function approve(request $request){
-        // dd($request);
-        $id = $request->regID;
-        $approve = $request->manage;
-        $reg_doc = TrainingRequest::find($id);
+        $tranformData->training_008 = json_decode($tranformData->training_008);
+        $tranformData->training_008->train_dateStart = new Carbon($tranformData->training_008->train_dateStart);
+        $tranformData->training_008->train_dateEnd= new Carbon($tranformData->training_008->train_dateEnd);
+        $tranformData->training_009 = json_decode($tranformData->training_009);
+        // dd($tranformData);
 
-        $toastType = 'success';
-        $toastMsg = 'Training Approved!';
-        if($approve === 'approved'){
-            $reg_doc->Doc_Status = 2;
-            // dd($reg_doc);
-            // $documents = Training::updateOrCreate(
-            //     [
-            //         'Doc_Name' => $reg_doc->Doc_Name
-            //     ],
-            //     [
-            //         'Doc_Name' => $reg_doc->Doc_Name,
-            //         'Doc_Code' => $reg_doc->Doc_Code,
-            //         'Doc_Type' => $reg_doc->Doc_Type,
-            //         'Doc_Life' => $reg_doc->Doc_Life,
-            //         'Doc_ver' => $reg_doc->Doc_ver,
-            //         'Doc_DateApprove' => now()
-            //     ]
-            // );
-
-            // DB::table('users')
-            // ->updateOrInsert(
-            //     ['email' => 'john@example.com', 'name' => 'John'],
-            //     ['votes' => '2']
-            // );
-
-            // dd($documents);
-            // $documents->save();
-
-            $reg_doc->Doc_DateApprove = now();
-            $reg_doc->User_Approve = Auth::user()->id;
-            echo 'approved';
-        }else if($approve === 'review'){
-            $toastMsg = 'Training Review!';
-
-            $reg_doc->Doc_DateReview = now();
-            $reg_doc->User_Review = Auth::user()->id;
-            $reg_doc->Doc_Status = 1;
-        }else{
-            $reg_doc->Doc_DateReview = now();
-            $reg_doc->User_Review = Auth::user()->id;
-
-            $reg_doc->Doc_Status = -1;
-            $reg_doc->Remark = $request->remark;
-
-            $toastMsg = 'Training rejected!';
-            echo 'rejected';
+        switch ($data->training_status) {
+            case '2':
+                $tranformData->training_status_text = 'Approved';
+                break;
+            case '1':
+                $tranformData->training_status_text = 'Reviewed';
+                break;
+            case '0':
+                $tranformData->training_status_text = 'Pedding';
+                break;
+            case '-1':
+                $tranformData->training_status_text = 'Rejected';
+                break;
+            default:
+                $tranformData->training_status_text = 'Null';
+                break;
         }
+        return $tranformData;
+    }
+    public function updateStatus(Request $request){
+        // dd($request);
+        $trainingRequest = TrainingRequest::find($request->id);
+        $trainingRequest->training_status = $request->status;
+        $trainingRequest->remark = $request->remark;
+        $now = new Carbon();
+        // dd($now->toDateTime());
+        switch ($request->status) {
+            case '1':
+                $trainingRequest->training_dateReview = $now->toDateTime();
+                $trainingRequest->user_review = Auth::user()->id;
+                break;
+            case '2':
+                $TCC = Auth::user();//User::find($trainingRequest->user_id);
+                $ACC = Auth::user();//User::where('user_level',3)->where('department',Auth::user()->department)->get();
+                // dd($TCC,$ACC);
+                Mail::to($TCC)
+                    ->cc($ACC)
+                    ->send(new NotifyMailTraining($trainingRequest));
 
-        $reg_doc->save();
-        // dd($reg_doc->Doc_Name);
-        $message = $request->manage;
-        // echo $add->manage;
-        // dd($add->id);
+                $trainingRequest->training_dateApprove = $now->toDateTime();
+                $trainingRequest->user_approve = Auth::user()->id;
+                break;
+            case '-1':
+                $TCC = Auth::user();//User::find($trainingRequest->user_id);
+                $ACC = Auth::user();//User::where('user_level',3)->where('department',Auth::user()->department)->get();
+                // dd($TCC,$ACC);
+                Mail::to($TCC)
+                    ->cc($ACC)
+                    ->send(new NotifyMailTraining($trainingRequest));
+                $trainingRequest->training_dateReview = $now->toDateTime();
+                $trainingRequest->remark = $request->remark;
+                break;
+            default:
+                dd(Auth::user());
+                break;
+            }
+            // dd($trainingRequest);
+        $trainingRequest->save();
+        return redirect()->route('training.request.all');
 
-        // dd(document_request::find($add->id));
+    }
 
-        Log::channel('training')->info($reg_doc->Doc_Code.' '.$approve . ' by '. Auth::user()->name);
+    public function published(){
+        $trainings = TrainingRequest::where('training_status',2)->get();
 
-        //disible mail service during test
+        foreach ($trainings as $key => $training) {
+            $training = $this->tranformData($training);
+        }
+        return view('training.index',['trainings'=>$trainings->paginate(9)]);
+    }
 
-        // Mail::send(['text'=>'mail'], array('name'=>"Virat Gandhi"), function($message) {
-        //     $message->to('maggotgluon@gmail.com', 'Tutorials Point')->subject('Laravel Basic Testing Mail');
-        //     $message->from('ruttaphong.w@vananava.com','KM Service');
-        //     // $message->body('test');
-        //     // dd($message);
-        //  });
+    public function show($id){
+        $training = TrainingRequest::find($id);
+        $training = $this->tranformData($training);
 
-        // dd(route::class,'regisManage');
-        // return view('document.regis',[
-        //     'documents'=>document_request::all(),
-        // ]);
-        // dd($message);
-        return redirect()->route('regTraining.all')->with($toastType, $toastMsg);
+        return view('trainingRequest.show',['training'=>$training]);
+    }
+
+    public function showPublished($id){
+        $training = TrainingRequest::find($id);
+
+        $training = $this->tranformData($training);
+        return view('training.show',['training'=>$training]);
+    }
+
+    public function show_LDS008($id){
+        $training = TrainingRequest::find($id);
+
+        // $data->training_008 = json_decode($data->training_008);
+        // $data->training_009 = json_decode($data->training_009);
+
+        $training = $this->tranformData($training);
+        return view('trainingRequest.print_008',['training'=>$training]);
+    }
+    public function show_LDS009($id){
+        $training = TrainingRequest::find($id);
+
+        // $data->training_008 = json_decode($data->training_008);
+        // $data->training_009 = json_decode($data->training_009);
+        $training = $this->tranformData($training);
+        return view('trainingRequest.print_009',['training'=>$training]);
+    }
+
+    public function download($id){
+        $request = TrainingRequest::find($id);
+        $requestFile = $request->pdf_location;
+        return Storage::download($requestFile );
     }
 }

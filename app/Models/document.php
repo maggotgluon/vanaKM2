@@ -9,18 +9,25 @@ class Document extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
     protected $fillable = [
-        'Doc_Code',
-        'Doc_Name',
-        'Doc_Type',
-        'Doc_Life',
-        'Doc_ver',
-        'Doc_Location',
-        'Doc_StartDate',
-        'Doc_DateApprove',
+        'req_code',
+        'doc_code',
+        'doc_name',
+        'doc_type',
+        'doc_startDate',
+        'doc_life',
+        'doc_ver',
+        'pdf_location',
+        'doc_dateApprove',
     ];
+
     public function DocumentRequest()
     {
-        return $this->belongsTo(DocumentRequest::class, 'Doc_Code');
+        return $this->belongsTo(DocumentRequest::class, 'req_id');
     }
 }

@@ -63,27 +63,6 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
         ],
 
-        'login' => [
-            'driver' => 'single',
-            'path' => storage_path('logs/login.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
-        ],
-        'document' => [
-            'driver' => 'single',
-            'path' => storage_path('logs/document.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
-        ],
-        'training' => [
-            'driver' => 'single',
-            'path' => storage_path('logs/training.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
-        ],
-        'user' => [
-            'driver' => 'single',
-            'path' => storage_path('logs/user.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
-        ],
-
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
@@ -137,6 +116,29 @@ return [
 
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
+        ],
+
+
+        // custom log
+        'login' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/login.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+        'document' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/document.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+        'training' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/training.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+        'user' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/user.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
         ],
     ],
 

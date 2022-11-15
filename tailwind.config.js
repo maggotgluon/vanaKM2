@@ -2,18 +2,24 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+    presets: [
+        require('./vendor/wireui/wireui/tailwind.config.js')
+    ],
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './vendor/laravel/jetstream/**/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
-        './vendor/usernotnull/tall-toasts/config/**/*.php',
-        './vendor/usernotnull/tall-toasts/resources/views/**/*.blade.php',
+
+        './vendor/wireui/wireui/resources/**/*.blade.php',
+        './vendor/wireui/wireui/ts/**/*.ts',
+        './vendor/wireui/wireui/src/View/**/*.php'
     ],
 
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Noto Sans Thai', ...defaultTheme.fontFamily.sans],
+                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
             colors:{
                 brand_blue:'#0082A1',
@@ -25,8 +31,7 @@ module.exports = {
     },
 
     plugins: [
-        require('@tailwindcss/typography'),
-        require('@tailwindcss/aspect-ratio'),
         require('@tailwindcss/forms'),
+        require('@tailwindcss/typography')
     ],
 };

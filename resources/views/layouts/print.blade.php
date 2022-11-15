@@ -63,7 +63,7 @@
     <body class="font-sans antialiased">
 
         <div class="w-full text-right p-4 print:hidden">
-            <x-primary-button onclick="window.print();" class="py-1">print</x-primary-button>
+            <x-button icon="printer" onclick="window.print();" class="py-1">print</x-button>
 
         </div>
         <div id="htmlPDF">

@@ -16,18 +16,20 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
 
             $table->uuid('staff_id')->unique(); //VNxxx
-
             $table->string('department')->nullable(); //department name
             $table->string('department_head')->nullable(); //hod name list
             $table->string('position')->nullable(); //department name
             $table->string('user_level')->nullable(); // staff,super,assi,manager,director,MD
+            $table->boolean('status')->nullable(); // staff,super,assi,manager,director,MD
 
+            $table->string('email')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
             $table->rememberToken();
+            $table->foreignId('current_team_id')->nullable();
+            $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
     }

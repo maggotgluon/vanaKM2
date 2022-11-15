@@ -2,205 +2,97 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Mail\NotifyMail;
 use App\Models\DocumentRequest;
-
 use App\Models\Document;
 use App\Models\User;
 
-
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-// use Mail;
-use App\Mail\NotifyMail;
+use Illuminate\Support\Str;
 
 class DocumentRequestController extends Controller
 {
-
-    private function InputToDate($Input)
-    {
-        if($Input!=null) {
-        $Date = new Carbon($Input);
-        $Date = date_format($Date,"d F Y");
-        }
-        else
-         $Date = "";
-        return  $Date;
-    }
-
-    public function processDocumensRequest($documents){
-        foreach ($documents as $index => $document) {
-            # code...
-            // dd($document);
-            if($document->Doc_DateApprove!=null){
-                $Doc_DateApprove = new Carbon($document->Doc_DateApprove);
-                $document->Doc_DateApproveT = $Doc_DateApprove->diffForHumans();
-            }
-            if($document->Doc_DateMRApprove!=null){
-                $Doc_DateMRApprove = new Carbon($document->Doc_DateMRApprove);
-                $document->Doc_DateMRApproveT = $Doc_DateMRApprove->diffForHumans();
-            }
-
-
-            $Doc_StartDate = new Carbon($document->Doc_StartDate);
-            $document->Doc_StartDateT = $Doc_StartDate->diffForHumans();
-            $created_at = new Carbon($document->created_at);
-            $document->created_atT = $created_at->diffForHumans();
-            $updated_at = new Carbon($document->updated_at);
-            $document->updated_atT = $updated_at->diffForHumans();
-
-            $document->User_Approve = $document->User_Approve==null?null:User::find($document->User_Approve);
-            $document->User_MRApprove = $document->User_MRApprove==null?null:User::find($document->User_MRApprove);
-        }
-        return $documents;
-
-    }
-    public function processDocumen($document){
-            # code...
-        // dd($document);
-        if($document->Doc_DateApprove!=null){
-            $Doc_DateApprove = new Carbon($document->Doc_DateApprove);
-            $document->Doc_DateApproveT = $Doc_DateApprove->diffForHumans();
-        }
-        if($document->Doc_DateMRApprove!=null){
-            $Doc_DateMRApprove = new Carbon($document->Doc_DateMRApprove);
-            $document->Doc_DateMRApproveT = $Doc_DateMRApprove->diffForHumans();
-        }
-
-
-        $Doc_StartDate = new Carbon($document->Doc_StartDate);
-        $document->Doc_StartDateT = $Doc_StartDate->diffForHumans();
-        $created_at = new Carbon($document->created_at);
-        $document->created_atT = $created_at->diffForHumans();
-        $updated_at = new Carbon($document->updated_at);
-        $document->updated_atT = $updated_at->diffForHumans();
-
-        $document->user_id = $document->user_id==null?null:User::find($document->user_id);
-        $document->User_Approve = $document->User_Approve==null?null:User::find($document->User_Approve);
-        $document->User_MRApprove = $document->User_MRApprove==null?null:User::find($document->User_MRApprove);
-
-        return $document;
-
-    }
-
-    public function all($filter=0){
-        // dd($filter);
-        // Gate::authorize('manage_document');
-        if($filter!=null){
-            $documents = DocumentRequest::where('Doc_Status',$filter)->get();
-            // dd($documents->count());
+    //
+    public function index($user=null){
+        // dd($documentRequests,User::find($user),User::find($user)->DocumentRequest);
+        if (! Gate::allows('review_document', Auth::user())) {
+            $documentRequests = Auth::user()->DocumentRequest;
+            // dd(Auth::user()->DocumentRequest);
         }else{
-            $documents = DocumentRequest::all();
+            if($user==null){
+                //no user pass in
+                $documentRequests = DocumentRequest::all();
+            }else{
+                $documentRequests = User::find($user)->DocumentRequest;
+            }
         }
-        $pdocuments = $this->processDocumensRequest($documents);
-        // dd($pdocuments);
-        return view('document.reg.index',['documents'=>$pdocuments,'filter'=>$filter]);
-    }
-    public function allUser($filter=null){
-
-        if($filter!=null){
-            $documents = Auth::user()->DocumentRequest->where('Doc_Status',$filter);
-        }else{
-            $documents = Auth::user()->DocumentRequest;
+        // dd($user,$documentRequests,User::find($user)->DocumentRequest);
+        // dd(User::find($user)->DocumentRequest->where('req_status',request()->filter));
+        if(request()->filter){
+            $documentRequests = $documentRequests->where('req_status',request()->filter);
         }
-        $pdocuments = $this->processDocumensRequest($documents);
-        return view('document.reg.indexMy',['documents'=>$pdocuments]);
-    }
-    public function allMR($filter=null){
-        $documents = DocumentRequest::where('Doc_Status',1)->get();
-        $pdocuments = $this->processDocumensRequest($documents);
-        return view('document.reg.indexMR',['documents'=>$pdocuments]);
-    }
-    public function allFilter($filter ,$user=null){
+        if($documentRequests->count()>0){
+            $documentRequests = $documentRequests->toQuery()
+                ->orderBy('updated_at', 'desc')->get();
+        }
 
-    }
-    public function view($Doc_Code){
-        // dd('reg view');
-        $regDoc = DocumentRequest::where('Doc_Code',$Doc_Code)->firstOrFail();
+        foreach ($documentRequests as $key => $documentRequest) {
+            $documentRequest = $this->tranformData($documentRequest);
+        }
 
-        // $regDoc->user_id= User::find($regDoc->user_id);
-        // dd($regDoc);
-        $pdocuments = $this->processDocumen($regDoc);
-
-        return view('document.reg.show',['documents'=>$pdocuments]);
-    }
-    public function DarForm($Doc_Code){
-        // dd('reg DarForm');
-        $DarForm = DocumentRequest::where('Doc_Code',$Doc_Code)->firstOrFail();
-        // dd(User::find(id)->DocumentRequest->where('Doc_Name','ITD-001'));
-
-
-
-        $created_at =  $this->InputToDate($DarForm->created_at);
-        $updated_at =  $this->InputToDate($DarForm->updated_at);
-        $Doc_DateApprove =  $this->InputToDate($DarForm->Doc_DateApprove);
-        $Doc_DateMRApprove =  $this->InputToDate($DarForm->Doc_DateMRApprove);
-        // dd($Doc_DateMRApprove);
-        $DarForm->Doc_StartDate =  $this->InputToDate($DarForm->Doc_StartDate);
-        $date = array(
-
-            'created_at'=>$created_at,
-            'updated_at'=>$updated_at,
-            'Doc_DateMRApprove'=>$Doc_DateMRApprove,
-            'Doc_DateApprove'=>$Doc_DateApprove
-
-        );
-        // dd($date);
-        $user=User::find($DarForm->user_id);
-        // dd($user);
-        // dd($date);
-        // $DarReq = $this->hasone(User::class,'id',$id);
-
-        return view('document.reg.p-dar',['DarForm'=>$DarForm],['date'=>$date,'user'=>$user]
-        // ,['DarReq'=>$DarReq]
-
-        );
+        // req_code
+        // dd($documentRequests);
+        // dd(request()->filter,$documentRequests,$documentRequests->where('req_status',request()->filter));
+        return view('documentRequest.index',['user'=>$user,'documentRequests'=>$documentRequests->paginate(10)]);
     }
 
-    public function createView(){
-        // dd('create');
-        $currentYear = date("Y");
-        $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
-        $endYear = date("Y-m-d",mktime(0,0,0,12,31,$currentYear));
+    public function search(Request $key){
+        // dd($key->search);
+        // dd($key->fullUrlWithQuery(['department'=>'department']));
 
-        $count = DocumentRequest::whereBetween('created_at',[$startYear,$endYear])->count();
+        $users = DocumentRequest::where('name','like','%'.$key->search.'%')
+                ->orWhere('staff_id', 'like','%'.$key->search.'%')
+                ->orWhere('email', 'like','%'.$key->search.'%')
+                ->orWhere('position', 'like','%'.$key->search.'%')
+                ->orWhere('department', 'like','%'.$key->search.'%')
+                    ->get();
 
-        return view('document.reg.create',['count_doc_code'=>$count,]);
+        return view('user.index',['users'=>$users->paginate(15)]);
     }
-    public function create(request $request){
-        //dd($request);
-        //ตรวจสอบข้อมูล
-        $request->validate(
-            [
-                // 'Doc_Name'=>'required|max:10|unique:document_requests',
-                'objective'=>'required',
-                'info'=>'required',
-                'usedate'=>'required',
-                'Year'=>'required',
-                // 'file'=>'required|mimes:pdf', //|size:10mb',
+    public function show($id){
+        $documentRequests = DocumentRequest::find($id);
 
-            ],
-            [
-                'Doc_Name.required' => "กรุณาป้อนชื่อเอกสาร",
-                'Doc_Name.max' => "กรุณาป้อนชื่อเอกสาร 10 ตัวอักษร",
-                'Doc_Name.unique' => "ชื่อเอกสารนี้ถูกใช้ไปแล้ว",
-                'objective.required' => "กรุณาเลือกจุดประสงค์",
-                'info.required' => "กรุณาป้อนรายละเอียด",
-                // 'usedate.required' => "กรุณาป้อนรายละเอียด",
-                // 'Year.required' => "กรุณาป้อนรายละเอียด",
-                'file.required' => "กรุณาเลือกไฟล์",
-                'file.mimes' => "กรุณาเลือกไฟล์ PDF เท่านั้น",
-                'file.size' => "กรุณาเลือกไฟล์ PDF ขนาดไม่เกิน 10 MB",
-                // 'file'=>'',
-            ]
-        );
-        // generate new doccode
+        // $this->tranformData($documentRequests);
+
+        return view('documentRequest.show',[
+            'documentRequest'=> $this->tranformData($documentRequests)
+        ]);
+
+    }
+    public function showDar($id){
+        $documentRequests = DocumentRequest::find($id);
+
+        // $this->tranformData($documentRequests);
+
+        return view('documentRequest.print_dar',[
+            'documentRequest'=> $this->tranformData($documentRequests)
+        ]);
+
+    }
+
+    public function create(){
+        return view('documentRequest.create');
+    }
+
+    public static function getNewRequestCode(){
 
         $currentYear = date("Y");
         $startYear = date("Y-m-d",mktime(0,0,0,1,1,$currentYear));
@@ -209,164 +101,224 @@ class DocumentRequestController extends Controller
         $count = DocumentRequest::whereBetween('created_at',[$startYear,$endYear])->count();
         $DocCode = 'DAR'.date('Y').str_pad( $count+1 ,4,'0',STR_PAD_LEFT);
 
-        // dd($code,$request->DocCode);
-        //Version File
-        $file = $request->file('file');
-        $extension = $file->getClientOriginalExtension();
-
-
-        $docver = Document::where('Doc_Name',$request->Doc_Name)->count();
-        $docname = $request->Doc_Name;
-        $timestamp = Carbon::now()->getTimestamp();
-        $NameFile = $DocCode.'-'.$docname.'-'.$docver.'.'.$extension;
-
-        $fileRAW = $request->file('fileRAW');
-        $extensionRAW = $file->getClientOriginalExtension();
-        $NameFileRAW = $DocCode.'-'.$docname.'-'.$docver.'.'.$extensionRAW;
-        // dd(Carbon::now()->locale('th_TH')->toDateString());
-        // dd($NameFile);
-
-        $upload_location = '/FilePDF/'.$docname.'/';
-        $full_path = $upload_location.$NameFile;
-        // dd($full_path);
-
-
-        // //บันทึกข้อมูล
-        $documents = new DocumentRequest;
-        $documents->Doc_Code = $DocCode;
-        $documents->Doc_Name = $request->Doc_Name;
-        $documents->Doc_FullName = $request->Doc_FullName;
-        $documents->User_id = Auth::user()->id;
-        $documents->Doc_Type = $request->type;
-        $documents->Doc_Obj = $request->objective;
-        $documents->Doc_Description = $request->info;
-        $documents->Doc_Life = $request->Year;
-        // dd($request->Doc_Name);
-        $documents->Doc_ver = $docver;
-        $documents->Doc_StartDate = $request->usedate;
-        $documents->Doc_Location = $full_path;
-
-        $documents->Doc_Status ='0';
-
-        // loc / upload file / rename to
-        Storage::putFileAs($upload_location,$file,$NameFile);
-        Storage::putFileAs($upload_location,$fileRAW,$NameFileRAW);
-        // Storage::putFileAs($upload_location,$file,doc_name.'-'.ver);
-
-        $visibility = Storage::getVisibility($upload_location);
-        // dd($visibility);
-
-
-        // gettype($request);
-
-        // dd( Storage::disk('local') );
-        // $request->file($NameFile)->store($upload_location);
-
-        // dd($documents);
-        $documents->save();
-
-        $details = [
-            'title'=>$DocCode.'has been request',
-            'body'=>'please visit KM system form more infomation'
-        ];
-        // Mail::to('ruttaphong.w@vananava.com')->send(new NotifyMail($details));
-
-        Log::channel('document')->info($documents->Doc_Code .' Create Request by '. User::find($documents->User_id)->name);
-
-        return redirect()->route('regDoc.create')->with('success', 'Document added!');
-        // return view('document.reg.create',['users'=>Auth::user()]);
+        return $DocCode;
     }
 
-    public function approve(request $request){
-        // dd($request);
-        $id = $request->regID;
-        $approve = $request->manage;
-        $reg_doc = DocumentRequest::find($id);
+    private static function storeFile(UploadedFile $file,$request,$req_code){
+        $now = new Carbon();
+        dd($file->getClientOriginalExtension());
+        $ext = $file->getClientOriginalExtension();
 
-        $toastType = 'success';
-        $toastMsg = 'Document '.$reg_doc->Doc_Name.' Approved!';
-        if($approve === 'mrapproved'){
-            $reg_doc->Doc_Status = '2';
+        $filename = $req_code.'-'.$request->doc_code.'-'.$request->doc_name.'-'.$request->doc_ver.'-'.$now->timestamp;
 
-            // $files = Storage::get($reg_doc->Doc_Location);
-            $ver = Document::where('Doc_Name',$reg_doc->Doc_Name)->count()!=0?Document::where('Doc_Name',$reg_doc->Doc_Name)->firstOrFail()->Doc_ver+1:0;
-            $newPath = '/FilePDF/master/'.$reg_doc->Doc_Name.'-rev-'.$ver.'.pdf';
+        $upload_location = '/FilePDF/'.$request->doc_type.'/'.$request->doc_code.'/';
+        $full_path = $upload_location.$filename.'.'.$ext;
 
-            // dd($ver);
-            // dd($reg_doc->Doc_StartDate);
+        Storage::putFileAs($upload_location,$file,$filename.'.'.$ext);
 
-            $documents = Document::updateOrCreate(
-                [
-                    'Doc_Name' => $reg_doc->Doc_Name
-                ],
-                [
-                    'Doc_Name' => $reg_doc->Doc_Name,
-                    'Doc_Code' => $reg_doc->Doc_Code,
-                    'Doc_Type' => $reg_doc->Doc_Type,
-                    'Doc_Life' => $reg_doc->Doc_Life,
-                    'Doc_StartDate' => $reg_doc->Doc_StartDate,
-                    'Doc_ver' => $ver,
-                    'Doc_Location' => $newPath,
-                    'Doc_DateApprove' => now()
-                ]
-            );
-            // $documents->Doc_Location = 'public/'.$reg_doc->Doc_Name.'.pdf';
-            Storage::copy($reg_doc->Doc_Location, $newPath);
-            $size = Storage::size($newPath);
-            // dd($size);
-            $documents->save();
-            $reg_doc->Doc_DateMRApprove = now();
-            $reg_doc->User_MRApprove = Auth::user()->id;
-            $toastMsg = 'MR Approved!';
-        }else if($approve === 'approved'){
-            $reg_doc->Doc_Status = '1';
-            $reg_doc->Doc_DateApprove = now();
-            $reg_doc->User_Approve = Auth::user()->id;
-        }else{
-            $toastType = 'warning';
-            $reg_doc->User_Approve = Auth::user()->id;
-            // dd($request);
-            $reg_doc->Remark = $request->remark;
-            $toastMsg = 'Document '.$reg_doc->Doc_Name.' Reject!';
-            $reg_doc->Doc_Status = '-1';
-            // echo 'rejected';
+        Storage::getVisibility($full_path);
+
+        return $full_path;
+    }
+
+    private function isNull($var,$fallback){
+        return $var?$fallback:null;
+    }
+    public static function tranformData($data){
+        $tranformData = $data;
+        $tranformData->created_at_C = new Carbon($data->created_at);
+        $tranformData->updated_at_C = new Carbon($data->created_at);
+        $tranformData->doc_startDate = $data->doc_startDate?new Carbon($data->doc_startDate):null;
+        $tranformData->req_dateReview = $data->req_dateReview?new Carbon($data->req_dateReview):null;
+        $tranformData->req_dateApprove = $data->req_dateApprove?new Carbon($data->req_dateApprove):null;
+        $tranformData->user_review_obj = $data->user_review?User::find($data->user_review):null;
+        $tranformData->user_approve_obj = $data->user_approve_obj?User::find($data->user_approve):null;
+        $tranformData->user_id_obj = $data->user_id_obj?User::find($data->user_id):null;
+        switch ($data->req_status) {
+            case '2':
+                $tranformData->req_status_text = __('Approved');
+                break;
+            case '1':
+                $tranformData->req_status_text = __('Reviewed');
+                break;
+            case '0':
+                $tranformData->req_status_text = __('Pending');
+                break;
+            case '-1':
+                $tranformData->req_status_text = __('Rejected');
+                break;
+            default:
+                $tranformData->req_status_text = __('Null');
+                break;
         }
-        // dd($reg_doc);
-        $reg_doc->save();
-        // dd($reg_doc->Doc_Name);
-        $message = $request->manage;
-        // echo $add->manage;
-        // dd($add->id);
-        $details = [
-            'title'=>'test email',
-            'body'=>'infomation'
-        ];
-        // Mail::to('ruttaphong.w@vananava.com')->send(new NotifyMail($details));
 
-        // dd($details);
-
-
-
-        Log::channel('document')->info($reg_doc->Doc_Code.' update '.$approve.' by '.User::find($reg_doc->User_Approve)->name.' '.$reg_doc->Remark);
-        //disible mail service during test
-
-        // Mail::send(['text'=>'mail'], array('name'=>"Virat Gandhi"), function($message) {
-        //     $message->to('maggotgluon@gmail.com', 'Tutorials Point')->subject('Laravel Basic Testing Mail');
-        //     $message->from('ruttaphong.w@vananava.com','KM Service');
-        //     // $message->body('test');
-        //     // dd($message);
-        //  });
-
-        // dd(route::class,'regisManage');
-        // return view('document.regis',[
-        //     'documents'=>document_request::all(),
-        // ]);
-        // dd($message);
-        return back()->with($toastType, $toastMsg);
-        return redirect()->route('regDoc.all')->with($toastType, $toastMsg);
-
-
-
+        // dd($tranformData);
+        return $tranformData;
     }
 
+    public static function storeWire($request){
+        // $request=$request->all();
+        // dd($request['doc_code'],DocumentRequestController::getNewRequestCode());
+
+        $name = $request['doc_code'].'-'.$request['doc_name'];
+        $request['doc_ver'] = Document::where('doc_name',$request['doc_code'])->count();
+        // $ver = Document::where('doc_name',$request->doc_name)->count();
+
+        $req_code = DocumentRequestController::getNewRequestCode();
+
+        $newDocumentRequest = new DocumentRequest();
+        $newDocumentRequest->user_id = Auth::user()->id;
+        $newDocumentRequest->req_code = $req_code;
+        $newDocumentRequest->req_obj = $request['req_obj'];
+        $newDocumentRequest->req_description = $request['req_description'];
+        $newDocumentRequest->req_status ='0';
+        $newDocumentRequest->doc_code = $request['doc_code'];
+        $newDocumentRequest->doc_name = $request['doc_name'];
+        $newDocumentRequest->doc_type = $request['doc_type'];
+        $newDocumentRequest->doc_startDate = new Carbon($request['doc_startDate']);
+        $newDocumentRequest->doc_life = $request['doc_life'];
+        $newDocumentRequest->doc_ver = $request['doc_ver'];
+        $newDocumentRequest->pdf_location = $request['pdf_file'];
+        $newDocumentRequest->doc_location = $request['doc_file'];
+        // $newDocumentRequest->pdf_location = $request['pdf_file']?DocumentRequestController::storeFile($request['pdf_file'],$request,$req_code):null;
+        // $newDocumentRequest->doc_location = $request['doc_file']?DocumentRequestController::storeFile($request['doc_file'],$request,$req_code):null;
+        // dd($newDocumentRequest);
+        $newDocumentRequest->save();
+
+        // return redirect()->route('document.request.all');
+    }
+    public function store(Request $request){
+        // dd($request);
+        dd($request['doc_code'],$this->getNewRequestCode());
+        $request->validate([
+            'doc_code'=> 'required',
+            'doc_name'=> 'required',
+            'doc_type'=> 'required',
+            'req_obj'=> 'required',
+            'req_description'=> 'required',
+            'doc_startDate'=> 'required',
+            'doc_life'=> 'required',
+            // 'pdf_file'=> 'required',
+            // 'doc_file'=> 'required'
+        ],[
+            'doc_code'=> 'required',
+            'doc_name'=> 'required',
+            'doc_type'=> 'required',
+            'req_obj'=> 'required',
+            'req_description'=> 'required',
+            'doc_startDate'=> 'required',
+            'doc_life'=> 'required',
+            // 'pdf_file'=> 'required',
+            // 'doc_file'=> 'required'
+        ]);
+        $name = $request->doc_code.'-'.$request->doc_name;
+        $request->doc_ver = Document::where('doc_name',$request->doc_name)->count();
+        // $ver = Document::where('doc_name',$request->doc_name)->count();
+
+        $req_code = $this->getNewRequestCode();
+
+        $newDocumentRequest = new DocumentRequest();
+        $newDocumentRequest->user_id = Auth::user()->id;
+        $newDocumentRequest->req_code = $req_code;
+        $newDocumentRequest->req_obj = $request->req_obj;
+        $newDocumentRequest->req_description = $request->req_description;
+        $newDocumentRequest->req_status ='0';
+        $newDocumentRequest->doc_code = $request->doc_code;
+        $newDocumentRequest->doc_name = $request->doc_name;
+        $newDocumentRequest->doc_type = $request->doc_type;
+        $newDocumentRequest->doc_startDate = new Carbon($request->doc_startDate);
+        $newDocumentRequest->doc_life = $request->doc_life;
+        $newDocumentRequest->doc_ver = $request->doc_ver;
+        $newDocumentRequest->pdf_location = $request->file('pdf_file')?$this->storeFile($request->pdf_file,$request,$req_code):null;
+        $newDocumentRequest->doc_location = $request->file('doc_file')?$this->storeFile($request->doc_file,$request,$req_code):null;
+        $newDocumentRequest->save();
+        // dd($newDocumentRequest);
+
+        Mail::to('ruttaphong.w@vananava.com')->send(new NotifyMail($newDocumentRequest));
+
+        return redirect()->route('document.request.all');
+    }
+    public function updateStatus(Request $request){
+        // dd($request);
+        $documentRequest = DocumentRequest::find($request->id);
+        $documentRequest->req_status = $request->status;
+        $documentRequest->req_remark = $request->remark;
+        $now = new Carbon();
+        switch ($request->status) {
+            case '1':
+                $documentRequest->req_dateReview = $now;
+                $documentRequest->user_review = Auth::user()->id;
+                break;
+            case '2':
+                $documentRequest->req_dateApprove = $now;
+                $documentRequest->user_approve = Auth::user()->id;
+
+                $newDocument = new Document();
+
+                $newDocument->req_code=$documentRequest->req_code;
+                $newDocument->req_id=$documentRequest->id;
+                $newDocument->doc_code=$documentRequest->doc_code;
+                $newDocument->doc_name=$documentRequest->doc_name;
+                $newDocument->doc_type=$documentRequest->doc_type;
+                $newDocument->doc_startDate=$documentRequest->doc_startDate;
+                $newDocument->doc_life=$documentRequest->doc_life;
+                $newDocument->doc_ver=Document::where('doc_code',$documentRequest->doc_code)->count(); // find new ver
+                $newDocument->doc_dateApprove=$now->toDateTimeString();
+
+                // dd($newDocument);
+                $location= '/FilePDF/master/'.$documentRequest->doc_type.'/'.$documentRequest->doc_code.'/';
+                $filename = $documentRequest->req_code.'-'.$documentRequest->doc_code.'-'.$documentRequest->doc_name.'-'.$newDocument->doc_ver.'.pdf';
+                $newPath = $location.$filename;
+
+                // dd(Storage::allFiles($location));
+                foreach (Storage::allFiles($location) as $key => $file) {
+                    // $oldFiles = collect();
+                    // // $oldFiles->oldLocation = $file;
+                    // $oldFiles->newLocation = $location.'achived/'.Str::afterLast($file,'/');
+
+                    Document::where('pdf_location','/'.$file)
+                        ->update(['pdf_location' => $location.'achived/'.Str::afterLast($file,'/')]);
+
+                    // $record->pdf_location = $location.'achived/'.Str::afterLast($file,'/');
+                    Storage::move($file, $location.'achived/'.Str::afterLast($file,'/'));
+                    // $record->save();
+                    // dd($file,$location,$filename);
+                }
+                // dd($documentRequest->pdf_location);
+                Storage::copy($documentRequest->pdf_location,$newPath);
+                // dd($old,$oldFiles);
+                // dd(Storage::allFiles($location),$documentRequest->pdf_location);
+
+
+                $newDocument->pdf_location=$newPath;
+                $newDocument->save();
+
+                Mail::to('ruttaphong.w@vananava.com')->send(new NotifyMail($documentRequest));
+                break;
+            case '-1':
+                // dd($request->remark);
+                Mail::to('ruttaphong.w@vananava.com')->send(new NotifyMail($documentRequest));
+                $documentRequest->req_dateReview = $now;
+                $documentRequest->req_remark = $request->remark;
+                break;
+            default:
+                dd(Auth::user());
+                break;
+        }
+
+        $documentRequest->save();
+        return redirect()->route('document.request.all');
+    }
+    public function update(){}
+    public function download($id){
+        $request = DocumentRequest::find($id);
+        if(Str::afterLast(request()->file,'.')!=='pdf'){
+            $requestFile = $request->doc_location;
+        }else{
+            $requestFile = $request->pdf_location;
+        }
+        // dd($id,$request,$requestFile,Storage::download($requestFile ));
+        return Storage::download($requestFile );
+    }
+    public function dar(){}
 }
