@@ -31,6 +31,8 @@ class DocumentRequestController extends Controller
             }else{
                 $documentRequests = User::find($user)->DocumentRequest;
             }
+        }else{
+            $documentRequests = Auth::user()->DocumentRequest;
         }
         // dd($user,$documentRequests,User::find($user)->DocumentRequest);
         // dd(User::find($user)->DocumentRequest->where('req_status',request()->filter));
