@@ -23,16 +23,16 @@ class DocumentRequestController extends Controller
     //
     public function index($user=null){
         // dd($documentRequests,User::find($user),User::find($user)->DocumentRequest);
-        if (! Gate::allows('review_document', Auth::user())) {
-            $documentRequests = Auth::user()->DocumentRequest;
+        if (Gate::allows('review_document', Auth::user()) || Gate::allows('publish_document', Auth::user())) {
             // dd(Auth::user()->DocumentRequest);
-        }else{
             if($user==null){
                 //no user pass in
                 $documentRequests = DocumentRequest::all();
             }else{
                 $documentRequests = User::find($user)->DocumentRequest;
             }
+        }else{
+            $documentRequests = Auth::user()->DocumentRequest;
         }
         // dd($user,$documentRequests,User::find($user)->DocumentRequest);
         // dd(User::find($user)->DocumentRequest->where('req_status',request()->filter));
