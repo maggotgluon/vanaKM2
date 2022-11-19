@@ -250,7 +250,7 @@ class DocumentRequestController extends Controller
                 $documentRequest->user_review = Auth::user()->id;
                 $TCC = User::find($documentRequest->user_id);
                 $ACC = User::where('user_level',3)->where('department',$TCC->department)->get();
-                dd($TCC,$ACC);
+                //dd($TCC,$ACC);
                 break;
             case '2':
                 $documentRequest->req_dateApprove = $now;
@@ -299,7 +299,7 @@ class DocumentRequestController extends Controller
 
                 $TCC = User::find($documentRequest->user_id);
                 $ACC = User::where('user_level',3)->where('department',$TCC->department)->get();
-                dd($TCC,$ACC);
+                //dd($TCC,$ACC);
                 Mail::to($TCC)
                     ->cc($ACC)
                     ->send(new NotifyMail($documentRequest));
@@ -309,7 +309,7 @@ class DocumentRequestController extends Controller
                 
                 $TCC = User::find($documentRequest->user_id);
                 $ACC = User::where('user_level',3)->where('department',$TCC->department)->get();
-                 dd($TCC,$ACC);
+                //dd($TCC,$ACC);
                 Mail::to($TCC)
                     ->cc($ACC)
                     ->send(new NotifyMail($documentRequest));
