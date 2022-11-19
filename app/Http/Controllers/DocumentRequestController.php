@@ -23,10 +23,8 @@ class DocumentRequestController extends Controller
     //
     public function index($user=null){
         // dd($documentRequests,User::find($user),User::find($user)->DocumentRequest);
-        if (! Gate::allows('review_document', Auth::user())) {
-            $documentRequests = Auth::user()->DocumentRequest;
+        if (Gate::allows('review_document', Auth::user()) || Gate::allows('publish_document', Auth::user())) {
             // dd(Auth::user()->DocumentRequest);
-        }else{
             if($user==null){
                 //no user pass in
                 $documentRequests = DocumentRequest::all();
@@ -248,6 +246,9 @@ class DocumentRequestController extends Controller
             case '1':
                 $documentRequest->req_dateReview = $now;
                 $documentRequest->user_review = Auth::user()->id;
+                $TCC = User::find($documentRequest->user_id);
+                $ACC = User::where('user_level',3)->where('department',$TCC->department)->get();
+                dd($TCC,$ACC);
                 break;
             case '2':
                 $documentRequest->req_dateApprove = $now;
@@ -294,18 +295,19 @@ class DocumentRequestController extends Controller
                 $newDocument->save();
 
 
-                $TCC = User::find($documentRequest->staff_id);
-                $ACC = User::where('user_level',3)->where('department',Auth::user()->department)->get();
-                // dd($TCC,$ACC);
+                $TCC = User::find($documentRequest->user_id);
+                $ACC = User::where('user_level',3)->where('department',$TCC->department)->get();
+                dd($TCC,$ACC);
                 Mail::to($TCC)
                     ->cc($ACC)
                     ->send(new NotifyMail($documentRequest));
                 break;
             case '-1':
                 // dd($request->remark);
-                $TCC = User::find($documentRequest->staff_id);
-                $ACC = User::where('user_level',3)->where('department',Auth::user()->department)->get();
-                // dd($TCC,$ACC);
+                
+                $TCC = User::find($documentRequest->user_id);
+                $ACC = User::where('user_level',3)->where('department',$TCC->department)->get();
+                 dd($TCC,$ACC);
                 Mail::to($TCC)
                     ->cc($ACC)
                     ->send(new NotifyMail($documentRequest));

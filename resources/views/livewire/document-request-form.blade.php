@@ -96,13 +96,13 @@
                          $doc_type == 'SP'||
                          $doc_type == 'DS')
 
-                        <x-jet-label for="doc_life" value="{{ __('Doc_life') }}" />
+                        <x-jet-label for="doc_life" value="{{ __('Document life') }}" />
 
                         <x-input readonly value="{{__('Until Change')}}"/>
                         <x-jet-input hidden wire:model="doc_life" value="-1"/>
                     @else
                     <x-input wire:model="doc_life" type="number" min="0"
-                    name="doc_life" label="{{ __('Doc_life') }}"
+                    name="doc_life" label="{{ __('Document life') }}"
                     />
 
                     @endif
