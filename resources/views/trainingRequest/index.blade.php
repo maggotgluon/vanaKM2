@@ -143,9 +143,10 @@
                                     <div id="{{$training->training_code}}_detail" class="hidden">
                                     <x-card shadow="none">
                                             {{__('Instructor')}} : {{App\Models\User::find($training->instructor)->name}}<br>
-                                            <x-badge outline label="{{__('Date Strat')}} {{$training->training_008->train_dateStart}} - {{$training->training_008->train_dateEnd}}" />
+                                            <x-badge outline label="{{__('Date Strat')}} {{$training->training_008->train_dateStart->isoFormat('Do MMM YYYY') }} - {{$training->training_008->train_dateEnd->isoFormat('Do MMM YYYY') }}" />
                                             <x-badge outline label="{{__('Time Strat')}} {{$training->training_008->train_timeStart}} - {{$training->training_008->train_timeEnd}}" />
                                             <x-slot name="footer">
+                                                <x-button info href="{{route('training.request.show',['id'=>$training->id])}}" icon="eye" label="{{__('View')}}"/>
                                             @if ($training->pdf_location)
                                                 <x-button icon="download" href="{{route('training.request.download',['file'=>$training->pdf_location,'id'=>$training->id])}}" label="Download PDF"/>
                                             @endif
