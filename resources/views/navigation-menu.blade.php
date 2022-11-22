@@ -218,6 +218,12 @@
                                 {{ __('Profile') }}
                             </x-jet-dropdown-link>
 
+                            @can('view_log')
+                            <x-jet-dropdown-link href="{{ url('log-viewer') }}">
+                                {{ __('View Log') }}
+                            </x-jet-dropdown-link>
+                            @endcan
+
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                             <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
                                 {{ __('API Tokens') }}
