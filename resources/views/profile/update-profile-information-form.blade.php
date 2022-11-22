@@ -112,6 +112,10 @@
                 <option value="Park Service">Park Service</option>
                 <option value="Retail">Retail</option>
                 <option value="Sales">Sales</option>
+
+                <option value="Event">Event</option>
+                <option value="Training">Training</option>
+                <option value="Purchasing">Purchasing</option>
             </select>
 
             <x-jet-input-error for="department" class="mt-2" />

@@ -45,6 +45,10 @@
                                 <option value="Park Service" {{ $user->department=="Park Service"?'selected':"" }}>Park Service</option>
                                 <option value="Retail" {{ $user->department=="Retail"?'selected':"" }}>Retail</option>
                                 <option value="Sales" {{ $user->department=="Sales"?'selected':"" }}>Sales</option>
+
+                                <option value="Event" {{ $user->department=="Event"?'selected':"" }}>Event</option>
+                                <option value="Training" {{ $user->department=="Training"?'selected':"" }}>Training</option>
+                                <option value="Purchasing" {{ $user->department=="Purchasing"?'selected':"" }}>Purchasing</option>
                             </x-native-select>
                         </div>
                         <div class="col-span-6 sm:col-span-6">

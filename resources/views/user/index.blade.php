@@ -121,7 +121,13 @@
                         @foreach ($users as $user)
                         <tr class="bg-white odd:bg-gray-100">
                             <td class="md:text-center block md:table-cell p-2">{{$user->staff_id}}</td>
-                            <td class="block md:table-cell p-2">{{$user->name}} <span class="block text-xs">{{$user->position}}</span></td>
+                            <td class="block md:table-cell p-2">{{$user->name}}<br>
+                            <x-badge label="{{$user->position}}" />
+                            @if ($user->email)
+                                <br>
+                                    <x-badge icon="mail" positive label="{{$user->email}}" />
+                                @endif
+                            </td>
                             <td class="md:text-center block md:table-cell p-2">
 
                                 <x-button flat href="{{route('user.index',['department'=>$user->department])}}"
