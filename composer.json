@@ -12,7 +12,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.5",
-        "opcodesio/log-viewer": "^1.6",
+        "opcodesio/log-viewer": "^1.7",
         "spatie/laravel-collection-macros": "^7.12",
         "wireui/wireui": "^1.17"
     },

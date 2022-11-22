@@ -14,6 +14,8 @@ use App\Mail\NotifyMail;
 use App\Mail\NotifyMailTraining;
 use App\Models\User;
 
+use Illuminate\Support\Facades\Log;
+
 class TrainingRequestForm extends Component
 {
     use WithFileUploads;
@@ -105,6 +107,7 @@ class TrainingRequestForm extends Component
         $path = '/TrainPDF/doc/' . $this->subject;
         $pdf_file_path = $this->pdf_location->storeAs($path, $filename . '.' . $this->pdf_location->getClientOriginalExtension());
 
+        Log::channel('training')->info($pdf_file_path.' added to store by '.auth()->user()->name);
         $name = $this->subject;
         // $doc_ver = TrainingRequest::where('doc_name',$this->doc_code)->count();
 
@@ -163,23 +166,26 @@ class TrainingRequestForm extends Component
         $save = $newTrainingRequest->save();
 
         if ($save) {
+            Log::channel('training')->info($newTrainingRequest->training_code.' added by '.auth()->user()->name .' data : '.$newTrainingRequest);
             $TCC = User::where('user_level',4)->get();
             // $ACC = User::where('user_level',3)->where('department',Auth::user()->department)->get();
             // dd($TCC,$ACC);
             Mail::to($TCC)
                 // ->cc($ACC)
                 ->send(new NotifyMailTraining($newTrainingRequest));
+            Log::channel('email')->info('email send to '.$TCC.' data '.$newTrainingRequest);
             $this->notification()->send([
-                'title'       => $req_code . ' ' . $name . ' has beem request.',
+                'title'       => $req_code . ' ' . $name . ' has been request.',
                 'description' => 'Please wait for response',
                 'icon'        => 'success',
 
             ]);
             $this->clear();
         } else {
+            Log::channel('training')->error($newTrainingRequest->req_code.' added by '.auth()->user()->name .' data : '.$newTrainingRequest);
             $this->notification()->send([
                 'title'       => 'Error !!!',
-                'description' => 'Document request unsucessfull,please try again',
+                'description' => 'Training request unsucessfull,please try again',
                 'icon'        => 'error',
             ]);
         }

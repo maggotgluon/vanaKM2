@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
+use Illuminate\Support\Facades\Log;
+
 class DocumentRequestController extends Controller
 {
     //
@@ -71,7 +73,7 @@ class DocumentRequestController extends Controller
         $documentRequests = DocumentRequest::find($id);
 
         // $this->tranformData($documentRequests);
-
+        Log::channel('document')->info($documentRequests->req_code.' view by '.Auth::user()->name);
         return view('documentRequest.show',[
             'documentRequest'=> $this->tranformData($documentRequests)
         ]);
@@ -81,6 +83,8 @@ class DocumentRequestController extends Controller
         $documentRequests = DocumentRequest::find($id);
 
         // $this->tranformData($documentRequests);
+
+        Log::channel('document')->info($documentRequests->req_code.' view DAR by '.Auth::user()->name);
 
         return view('documentRequest.print_dar',[
             'documentRequest'=> $this->tranformData($documentRequests)
@@ -106,7 +110,7 @@ class DocumentRequestController extends Controller
 
     private static function storeFile(UploadedFile $file,$request,$req_code){
         $now = new Carbon();
-        dd($file->getClientOriginalExtension());
+        // dd($file->getClientOriginalExtension());
         $ext = $file->getClientOriginalExtension();
 
         $filename = $req_code.'-'.$request->doc_code.'-'.$request->doc_name.'-'.$request->doc_ver.'-'.$now->timestamp;
@@ -118,6 +122,7 @@ class DocumentRequestController extends Controller
 
         Storage::getVisibility($full_path);
 
+        // Log::channel('document')->info($documentRequests->req_code.' view DAR by '.Auth::user()->name);
         return $full_path;
     }
 
@@ -234,7 +239,7 @@ class DocumentRequestController extends Controller
         $newDocumentRequest->save();
         // dd($newDocumentRequest);
 
-        Mail::to('ruttaphong.w@vananava.com')->send(new NotifyMail($newDocumentRequest));
+        // Mail::to('ruttaphong.w@vananava.com')->send(new NotifyMail($newDocumentRequest));
 
         return redirect()->route('document.request.all');
     }
@@ -251,10 +256,12 @@ class DocumentRequestController extends Controller
                 $TCC = User::find($documentRequest->user_id);
                 $ACC = User::where('user_level',3)->where('department',$TCC->department)->get();
                 //dd($TCC,$ACC);
+                Log::channel('document')->info($documentRequest->req_code.' update by '.Auth::user()->name .' status to review data : '.$request);
                 break;
             case '2':
                 $documentRequest->req_dateApprove = $now;
                 $documentRequest->user_approve = Auth::user()->id;
+                Log::channel('document')->info($documentRequest->req_code.' update by '.Auth::user()->name .' status to approved data : '.$request);
 
                 $newDocument = new Document();
 
@@ -280,8 +287,9 @@ class DocumentRequestController extends Controller
                     // $oldFiles->newLocation = $location.'achived/'.Str::afterLast($file,'/');
 
                     Document::where('pdf_location','/'.$file)
-                        ->update(['pdf_location' => $location.'achived/'.Str::afterLast($file,'/')]);
+                    ->update(['pdf_location' => $location.'achived/'.Str::afterLast($file,'/')]);
 
+                    Log::channel('document')->info($file.' achived. Moved file to '. $location.'achived/'.Str::afterLast($file,'/'));
                     // $record->pdf_location = $location.'achived/'.Str::afterLast($file,'/');
                     Storage::move($file, $location.'achived/'.Str::afterLast($file,'/'));
                     // $record->save();
@@ -289,12 +297,14 @@ class DocumentRequestController extends Controller
                 }
                 // dd($documentRequest->pdf_location);
                 Storage::copy($documentRequest->pdf_location,$newPath);
+                Log::channel('document')->info($documentRequest->pdf_location.' copy to '. $newPath);
                 // dd($old,$oldFiles);
                 // dd(Storage::allFiles($location),$documentRequest->pdf_location);
 
 
                 $newDocument->pdf_location=$newPath;
                 $newDocument->save();
+                Log::channel('document')->info($documentRequest->req_code.' approved by '.Auth::user()->name .' data : '.$newDocument);
 
 
                 $TCC = User::find($documentRequest->user_id);
@@ -303,23 +313,31 @@ class DocumentRequestController extends Controller
                 Mail::to($TCC)
                     ->cc($ACC)
                     ->send(new NotifyMail($documentRequest));
+
+                Log::channel('email')->info('email send to '.$TCC.' cc to '.$ACC.' data '.$documentRequest);
+
                 break;
             case '-1':
                 // dd($request->remark);
-                
+
                 $TCC = User::find($documentRequest->user_id);
                 $ACC = User::where('user_level',3)->where('department',$TCC->department)->get();
                 //dd($TCC,$ACC);
                 Mail::to($TCC)
                     ->cc($ACC)
                     ->send(new NotifyMail($documentRequest));
+
+                Log::channel('email')->info('email send to '.$TCC.' cc to '.$ACC.' data '.$documentRequest);
+
                 $documentRequest->req_dateReview = $now;
                 $documentRequest->req_remark = $request->remark;
+                Log::channel('document')->info($documentRequest->req_code.' update by '.Auth::user()->name .' status to reject remark '. $documentRequest->req_remark .' data : '.$request);
                 break;
             default:
                 dd(Auth::user());
                 break;
         }
+
 
         $documentRequest->save();
         return redirect()->route('document.request.all');
@@ -333,6 +351,7 @@ class DocumentRequestController extends Controller
             $requestFile = $request->pdf_location;
         }
         // dd($id,$request,$requestFile,Storage::download($requestFile ));
+        Log::channel('document')->info($request->req_code.' download by '.Auth::user()->name .' file '.$requestFile);
         return Storage::download($requestFile );
     }
     public function dar(){}

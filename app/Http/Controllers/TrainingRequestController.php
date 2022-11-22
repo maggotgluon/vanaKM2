@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotifyMailTraining;
+use Illuminate\Support\Facades\Log;
 
 class TrainingRequestController extends Controller
 {
@@ -188,16 +189,18 @@ class TrainingRequestController extends Controller
             case '1':
                 $trainingRequest->training_dateReview = $now->toDateTime();
                 $trainingRequest->user_review = Auth::user()->id;
+                Log::channel('training')->info($trainingRequest->training_code.' update by '.Auth::user()->name .' status to review data : '.$request);
                 break;
             case '2':
 
+                Log::channel('training')->info($trainingRequest->training_code.' update by '.Auth::user()->name .' status to approved data : '.$request);
                 $TCC = User::find($trainingRequest->staff_id);
                 $ACC = User::where('user_level',3)->where('department',Auth::user()->department)->get();
                 // dd($TCC,$ACC);
                 Mail::to($TCC)
                     ->cc($ACC)
                     ->send(new NotifyMailTraining($trainingRequest));
-
+                Log::channel('email')->info('email send to '.$TCC.' cc to '.$ACC.' data '.$trainingRequest);
                 $trainingRequest->training_dateApprove = $now->toDateTime();
                 $trainingRequest->user_approve = Auth::user()->id;
                 break;
@@ -210,9 +213,10 @@ class TrainingRequestController extends Controller
                 Mail::to($TCC)
                     ->cc($ACC)
                     ->send(new NotifyMailTraining($trainingRequest));
-
+                Log::channel('email')->info('email send to '.$TCC.' cc to '.$ACC.' data '.$trainingRequest);
                 $trainingRequest->training_dateReview = $now->toDateTime();
                 $trainingRequest->remark = $request->remark;
+                Log::channel('training')->info($trainingRequest->training_code.' update by '.Auth::user()->name .' status to reject remark  '. $trainingRequest->remark .' data : '.$request);
                 break;
             default:
                 dd(Auth::user());
@@ -236,13 +240,13 @@ class TrainingRequestController extends Controller
     public function show($id){
         $training = TrainingRequest::find($id);
         $training = $this->tranformData($training);
-
+        Log::channel('training')->info($training->req_code.' view by '.Auth::user()->name);
         return view('trainingRequest.show',['training'=>$training]);
     }
 
     public function showPublished($id){
         $training = TrainingRequest::find($id);
-
+        Log::channel('training')->info($training->req_code.' view by '.Auth::user()->name);
         $training = $this->tranformData($training);
         return view('training.show',['training'=>$training]);
     }
@@ -254,6 +258,7 @@ class TrainingRequestController extends Controller
         // $data->training_009 = json_decode($data->training_009);
 
         $training = $this->tranformData($training);
+        Log::channel('training')->info($training->req_code.' view LDS008 by '.Auth::user()->name);
         return view('trainingRequest.print_008',['training'=>$training]);
     }
     public function show_LDS009($id){
@@ -262,12 +267,14 @@ class TrainingRequestController extends Controller
         // $data->training_008 = json_decode($data->training_008);
         // $data->training_009 = json_decode($data->training_009);
         $training = $this->tranformData($training);
+        Log::channel('training')->info($training->req_code.' view LDS009 by '.Auth::user()->name);
         return view('trainingRequest.print_009',['training'=>$training]);
     }
 
     public function download($id){
         $request = TrainingRequest::find($id);
         $requestFile = $request->pdf_location;
+        Log::channel('training')->info($request->training_code.' download by '.Auth::user()->name .' file '.$requestFile);
         return Storage::download($requestFile );
     }
 }

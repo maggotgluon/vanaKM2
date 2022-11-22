@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 
+use Illuminate\Support\Facades\Log;
+
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
     /**
@@ -48,6 +50,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'user_level' => $input['user_level'],
             ])->save();
         }
+        Log::channel('user')->info(auth()->user()->name.' update there profile : '.$input);
     }
 
     /**

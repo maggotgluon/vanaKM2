@@ -14,6 +14,8 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 
+use Illuminate\Support\Facades\Log;
+
 class DocumentRequestForm extends Component
 {
     use WithFileUploads;
@@ -78,8 +80,11 @@ class DocumentRequestForm extends Component
         $path = '/FilePDF/doc/'.$this->doc_code;
         $pdf_file_path=$this->pdf_file->storeAs($path,$filename.'.'.$this->pdf_file->getClientOriginalExtension());
 
+        Log::channel('document')->info($pdf_file_path.' added to store by '.auth()->user()->name);
+
         $doc_file_path=$this->doc_file->storeAs($path,$filename.'.'.$this->doc_file->getClientOriginalExtension());
 
+        Log::channel('document')->info($doc_file_path.' added to store by '.auth()->user()->name);
 
         $name = $this->doc_code.'-'. $this->doc_name;
         $doc_ver = Document::where('doc_name',$this->doc_code)->count();
@@ -106,21 +111,25 @@ class DocumentRequestForm extends Component
         $save = $newDocumentRequest->save();
 
         if($save){
-
+            Log::channel('document')->info($newDocumentRequest->req_code.' added by '.auth()->user()->name .' data : '.$newDocumentRequest);
             $TCC = User::where('user_level',6)->get();
             // $ACC = User::where('user_level',3)->where('department',Auth::user()->department)->get();
             // dd($TCC,$ACC);
             Mail::to($TCC)
                 // ->cc($ACC)
                 ->send(new NotifyMail($newDocumentRequest));
+            Log::channel('email')->info('email send to '.$TCC.' data '.$newDocumentRequest);
+
             $this->notification()->send([
-                'title'       => $req_code.' '.$name.' has beem request.',
+                'title'       => $req_code.' '.$name.' has been request.',
                 'description' => 'Please wait for response',
                 'icon'        => 'success',
 
             ]);
             $this->clear();
         }else{
+
+            Log::channel('document')->error($newDocumentRequest->req_code.' added by '.auth()->user()->name .' data : '.$newDocumentRequest);
             $this->notification()->send([
                 'title'       => 'Error !!!',
                 'description' => 'Document request unsucessfull,please try again',

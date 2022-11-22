@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Log;
 class UserController extends Controller
 {
     //
@@ -41,6 +43,7 @@ class UserController extends Controller
     }
     public function show($id){
         $user = User::find($id);
+        Log::channel('user')->info(auth()->user()->name.' view user : '.$user->name);
         return view('user.show',['user'=>$user]);
     }
     public function create(){
@@ -59,7 +62,8 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         // $user->password_confirmation = $request->password_confirmation;
         $user->save();
-        dd($request,$user);
+        Log::channel('user')->info('new user created'.$user.' action by '.auth()->user()->name.' data : '.$user);
+        // dd($request,$user);
     }
 
 
@@ -95,7 +99,7 @@ class UserController extends Controller
 
             $user->save();
 
-
+            Log::channel('user')->info('update user created'.$user.' action by '.auth()->user()->name.' data : '.$user);
             // dd($user);
         }
 
@@ -111,6 +115,7 @@ class UserController extends Controller
             'permissions_type' => $request->permissions_type,
             'parmission_name'=>$request->permissions_name,
         ],['allowance'=>$allowance]);
+        Log::channel('user')->info('update user '. $user->name .' '.$request->permissions_type.':'.$request->permissions_name.' update to '.$allowance.' action by '.auth()->user()->name.' data : '.$request);
         return redirect()->route('user.show',$user);
     }
 }
