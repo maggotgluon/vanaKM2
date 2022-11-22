@@ -167,7 +167,7 @@
                             <td class="p-2">
                                 <div class="flex gap-2 px-2 justify-end">
 
-                                    @can('publish_document')
+                                    @can('publish_trainDocument')
                                     @if ($training->training_status==1)
                                     <form action=" {{ route('training.request.updateStatus') }} " method="post">
                                         @csrf
@@ -181,7 +181,7 @@
                                     @endif
                                     @endcan
 
-                                    @can('review_document')
+                                    @can('review_trainDocument')
                                     @if ($training->training_status!==2)
                                     @if ($training->training_status==0)
                                     <form action=" {{ route('training.request.updateStatus') }} " method="post">
@@ -197,7 +197,7 @@
                                     @endif
                                     @endcan
 
-                                    @can('reject_document')
+                                    @can('reject_training')
                                     @if ($training->training_status!==-1 && $training->training_status!==2)
 
                                     <x-button.circle icon="x" negative spinner onclick="document.querySelector('#{{$training->training_code}}').showModal()">

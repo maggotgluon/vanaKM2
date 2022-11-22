@@ -17,16 +17,17 @@ class TrainingRequestController extends Controller
 {
     //
     public function index($user=null){
-        if (! Gate::allows('review_trainDocument', Auth::user())) {
-            $trainings = Auth::user()->TrainingRequest;
-            // dd(Auth::user()->DocumentRequest);
-        }else{
+        if (Gate::allows('review_trainDocument', Auth::user()) || Gate::allows('publish_trainDocument', Auth::user())) {
             if($user==null){
                 //no user pass in
                 $trainings = TrainingRequest::all();
             }else{
                 $trainings = User::find($user)->DocumentRequest;
             }
+            // dd($trainings);
+        }else{
+            $trainings = Auth::user()->TrainingRequest;
+            // dd(Auth::user()->DocumentRequest);
         }
 
         if(request()->filter){
@@ -41,7 +42,6 @@ class TrainingRequestController extends Controller
         foreach ($trainings as $key => $training) {
             $training = $this->tranformData($training);
         }
-        // dd($data);
 
         return view('trainingRequest.index',['trainings'=>$trainings->paginate(10)]);
 

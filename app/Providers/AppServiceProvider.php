@@ -179,7 +179,17 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('reject_document', function(User $user){
             boo:$can=false;
-            $can = $user->user_level == 4 || $user->user_level == 6 || $user->user_level == 99|| $user->permissions->where('allowance',1)->contains('parmission_name','admin');
+            $can = $user->user_level == 99
+                || $user->user_level == 5 || $user->user_level == 7
+                || $user->permissions->where('allowance',1)->contains('parmission_name','admin');
+            return $can;
+        });
+
+        Gate::define('reject_training', function(User $user){
+            boo:$can=false;
+            $can = $user->user_level == 4 || $user->user_level == 6 || $user->user_level == 99
+                || $user->user_level == 5 || $user->user_level == 7
+                || $user->permissions->where('allowance',1)->contains('parmission_name','admin');
             return $can;
         });
 

@@ -208,40 +208,8 @@
                                     @endif
                                     @endcan
 
-                                    
-                                    @can('publish_document')
-                                    @if ($documentRequest->req_status!==-1 && $documentRequest->req_status!==2)
 
-                                    <x-button.circle icon="x" negative spinner onclick="document.querySelector('#{{$documentRequest->req_code}}').showModal()">
-                                        {{ __('Reject') }}
-                                    </x-button>
-                                        <dialog id="{{$documentRequest->req_code}}"
-                                            class="rounded-lg max-w-lg w-full overflow-visible">
-
-                                            <x-button.circle icon="x" red type="reset"
-                                                onclick="document.querySelector('#{{$documentRequest->req_code}}').close()"
-                                                class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2"/>
-
-                                            <p>Reject reason for {{$documentRequest->req_code}}</p>
-                                            <form action=" {{ route('document.request.updateStatus') }}" method="post">
-                                                @csrf
-                                                <input hidden name='id' value="{{$documentRequest->id}}">
-                                                <input hidden name='status' value="-1">
-                                                <textarea required name="remark" class="w-full form-input rounded-md rounded-br-none"> </textarea>
-                                                <div class="flex gap-4 p-2 py-4">
-                                                    <x-button positive icon="" label="{{ __('Save') }}" type="submit" />
-
-                                                    <x-button negative icon="" label="{{__('Dismiss')}}" type="reset" onclick="document.querySelector('#{{$documentRequest->req_code}}').close()" class="py-1"/>
-
-                                                </div>
-                                            </form>
-
-                                        </dialog>
-                                    @endif
-                                    @endcan
-
-                                    
-                                    @can('review_document')
+                                    @can('reject_document')
                                     @if ($documentRequest->req_status!==-1 && $documentRequest->req_status!==2)
 
                                     <x-button.circle icon="x" negative spinner onclick="document.querySelector('#{{$documentRequest->req_code}}').showModal()">

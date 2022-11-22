@@ -8,76 +8,65 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            @can('review_document')
-            <div class="flex gap-4 p-4">
-                @if ($training->req_status!==2)
 
-                @can('publish_document')
-                @if ($training->req_status==1)
-                <form action=" {{ route('document.request.updateStatus') }} " method="post">
+            <div class="flex gap-4 p-4">
+                @can('publish_trainDocument')
+                @if ($training->training_status==1)
+                <form action=" {{ route('training.request.updateStatus') }} " method="post">
                     @csrf
                     <input hidden name='id' value="{{$training->id}}">
                     <input hidden name='status' value="2">
 
-                    <x-jet-button>
-                        {{ __('Approve') }}
-                    </x-jet-button>
+                    <x-button primary icon="check" type="submit" class="max-w-full w-full">
+                        {{ __('Approved') }}
+                        </x-button>
                 </form>
                 @endif
                 @endcan
 
-                @can('review_document')
-                @if ($training->req_status!==2)
-                @if ($training->req_status==0)
-                <form action=" {{ route('document.request.updateStatus') }} " method="post">
+                @can('review_trainDocument')
+                @if ($training->training_status!==2)
+                @if ($training->training_status==0)
+                <form action=" {{ route('training.request.updateStatus') }} " method="post">
                     @csrf
                     <input hidden name='id' value="{{$training->id}}">
                     <input hidden name='status' value="1">
 
-                    <x-jet-button>
+                    <x-button positive type="submit" icon="check">
                         {{ __('Review') }}
-                    </x-jet-button>
+                        </x-button>
                 </form>
                 @endif
                 @endif
                 @endcan
 
-                @can('reject_document')
-                @if ($training->req_status!==-1 && $training->req_status!==2)
+                @can('reject_training')
+                @if ($training->training_status!==-1 && $training->training_status!==2)
 
-                <x-jet-button onclick="document.querySelector('#{{$training->req_code}}').showModal()">
+                <x-button icon="x" negative spinner onclick="document.querySelector('#{{$training->training_code}}').showModal()">
                     {{ __('Reject') }}
-                </x-jet-button>
-                <dialog id="{{$training->req_code}}" class="rounded-lg max-w-lg w-full overflow-visible">
+                    </x-button>
+                    <dialog id="{{$training->training_code}}" class="rounded-lg max-w-lg w-full overflow-visible">
 
-                    <x-jet-button type="reset" onclick="document.querySelector('#{{$training->req_code}}').close()" class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full px-2">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6 18L18 6M6 6L18 18" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg>
-                    </x-jet-button>
-                    <p>Reject reason for {{$training->req_code}}</p>
-                    <form action=" {{ route('document.request.updateStatus') }}" method="post">
-                        @csrf
-                        <input hidden name='id' value="{{$training->id}}">
-                        <input hidden name='status' value="-1">
-                        <textarea required name="remark" class="w-full form-input rounded-md rounded-br-none"> </textarea>
-                        <div class="flex gap-4 p-2 py-4">
-                            <x-jet-button>
-                                {{ __('Reject') }}
-                            </x-jet-button>
-                            <x-jet-button type="reset" onclick="document.querySelector('#{{$training->req_code}}').close()" class="py-1">
-                                {{__('Dismiss')}}
-                            </x-jet-button>
-                        </div>
-                    </form>
+                        <x-button.circle icon="x" red type="reset" onclick="document.querySelector('#{{$training->training_code}}').close()" class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2" />
 
-                </dialog>
-                @endif
-                @endcan
+                        <p>Reject reason for {{$training->training_code}}</p>
+                        <form action=" {{ route('training.request.updateStatus') }}" method="post">
+                            @csrf
+                            <input hidden name='id' value="{{$training->id}}">
+                            <input hidden name='status' value="-1">
+                            <textarea required name="remark" class="w-full form-input rounded-md rounded-br-none"> </textarea>
+                            <div class="flex gap-4 p-2 py-4">
 
-                @endif
+                                <x-button positive icon="" label="{{ __('Save') }}" type="submit" />
+                                <x-button negative icon="" label="{{__('Dismiss')}}" type="reset" onclick="document.querySelector('#{{$training->training_code}}').close()" class="py-1" />
+                        </form>
+
+                    </dialog>
+                    @endif
+                    @endcan
             </div>
-            @endcan
+
 
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4 flex gap-2 mb-2">
                 <a class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition" href="{{route('training.request.all')}}">Back</a>
@@ -100,7 +89,8 @@
                 <div class="m-4 p-2 round bg-gray-200 rounded-md">
                     {{__('Last Update')}} : {{Carbon\Carbon::parse($training->updated_at)->isoFormat('Do MMM YYYY H:M')}}
                     <hr>
-                    {{__('Request Status')}} : <x-request-status :status="$training->training_status" /><br>
+                    {{__('Request Status')}} :
+                    <x-request-status :status="$training->training_status" /><br>
                     @if ($training->req_remark)
                     {{__('Remark')}} : {{$training->req_remark}}
                     @endif
