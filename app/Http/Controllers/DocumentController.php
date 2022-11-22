@@ -18,7 +18,7 @@ class DocumentController extends Controller
         $now = new Carbon();
 
         $documentRequests = Document::where('doc_startDate','<=',$now->toDateString())->get();
-        $documentRequests = Document::all();
+        // $documentRequests = Document::all();
         if($documentRequests->count()>0){
 
             $documentRequests = $documentRequests->toQuery()
