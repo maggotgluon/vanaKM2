@@ -15,6 +15,12 @@ yarn-error.log
 /.idea
 /.vscode
 
+
+/public/FilePDF/
+/public/TrainPDF/
+/storage/app/FilePDF/
+/storage/app/TrainPDF/
+
 # Created by https://www.toptal.com/developers/gitignore/api/macos,windows,visualstudiocode,laravel,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,visualstudiocode,laravel,node
 
