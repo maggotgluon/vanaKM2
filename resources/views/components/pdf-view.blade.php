@@ -9,10 +9,13 @@
         <x-badge label="Page:" class="ml-auto"/><x-badge id="page_num"/> / <x-badge id="page_count"/>
     </div>
 
+    <!-- {{$pdf}} -->
     <canvas id="the-canvas"></canvas>
+    
 
-
-    <!-- <iframe id="pdf" src="$pdf" width="100%" height="auto" style="aspect-ratio:1/1.4142"></iframe> -->
+    <!-- <iframe id="pdf" src="{{$pdf}}#toolbar=0" data="toolbar=0" 
+    type="application/pdf"
+    width="100%" height="auto" style="aspect-ratio:1/1.4142"></iframe> -->
     <!-- <div class="bg-gray-300 p-4">
         <x-button onclick="savePdf(file)" class="w-max py-1 m-2">download</x-button>
         <x-button id="prev" class="w-max py-1 m-2">Previous</x-button>
@@ -28,7 +31,7 @@
 
 </div>
 
-<script>
+<script differ>
     // If absolute URL from the remote server is provided, configure the CORS
     // header on that server.
     var url = '{{$pdf}}';

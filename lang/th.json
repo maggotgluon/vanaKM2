@@ -54,7 +54,6 @@
     "Verify Email Address": "ยืนยันอีเมล",
     "Whoops!": "อุปส์!",
     "You are receiving this email because we received a password reset request for your account.": "คุณได้รับอีเมลสำหรับรีเซตรหัสผ่าน เนื่องจากเราได้รับคำร้องขอรีเซตรหัสผ่านสำหรับบัญชีของคุณ.",
-
     "Approved":"อนุมัติ",
     "Reviewed":"ดำเนินการตรวจสอบ",
     "Review":"ตรวจสอบ",
@@ -73,7 +72,6 @@
     "Staff ID":"รหัสพนักงาน",
     "Discription":"คำอธิบาย",
     "Instructor":"ผู้สอน",
-
     "Documents approved":"เอกสารขึ้นทะเบียน",
     "Requester Information":"ข้อมูลผู้เขียนคำร้อง",
     "Register new Document":"ขอขึ้นทะเบียนเอกสาร",
@@ -108,7 +106,6 @@
     "Remark":"หมายเหตุ",
     "Request Status":"สถานะเอกสาร",
     "Last Update":"แก้ไขล่าสุด",
-    
     "MR Requested Document":"อนุมัติเอกสารขึ้นทะเบียนโดยตัวแทนฝ่ายบริหาร",
     "Action":"ดำเนินการ",
     "File":"ไฟล์เอกสาร",
@@ -142,7 +139,6 @@
     "Level":"ระดับ",
     "Profile":"ข้อมูลส่วนตัว",
     "View Log":"ข้อมูลระบบ",
-
     "Update Password":"เปลี่ยนรหัสผ่าน",
     "Current Password":"รหัสผ่านปัจจุบัน",
     "New Password":"รหัสผ่านใหม่",
@@ -153,5 +149,4 @@
     "Date Used":"วันที่บังคับใช้",
     "Nothing here":"ไม่พบข้อมูล",
     "error":"เกิดข้อผิดพลาด"
-
 }

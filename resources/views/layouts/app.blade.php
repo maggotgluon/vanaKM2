@@ -21,6 +21,10 @@
         <x-jet-banner />
 
         <div class="min-h-screen bg-gray-100">
+            <!-- <div class="fixed top-1 left-1 hover:opacity-0">
+                <x-badge lg icon="exclamation" negative label="{{App::environment()}}" class="pointer-events-none"/>
+                <x-badge lg icon="exclamation" negative label="{{app()->getLocale()}}" class="pointer-events-none"/>
+            </div> -->
             @livewire('navigation-menu')
 
             <!-- Page Heading -->

@@ -33,6 +33,7 @@ class DocumentController extends Controller
 
     private function tranformData($data){
         $tranformData = $data;
+        // dd($data);
         $tranformData->created_at = new Carbon($data->created_at);
         $tranformData->doc_startDate = $data->doc_startDate?new Carbon($data->doc_startDate):null;
         $tranformData->req_dateReview = $data->req_dateReview?new Carbon($data->req_dateReview):null;
@@ -67,7 +68,7 @@ class DocumentController extends Controller
         // $this->tranformData($documentRequests);
 
         return view('document.show',[
-            'documentRequest'=> $this->tranformData($documentRequests)
+            'documentRequest'=> $documentRequests //$this->tranformData($documentRequests)
         ]);
 
     }
