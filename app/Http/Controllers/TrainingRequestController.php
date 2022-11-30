@@ -182,7 +182,7 @@ class TrainingRequestController extends Controller
         // dd($request);
         $trainingRequest = TrainingRequest::find($request->id);
         $trainingRequest->training_status = $request->status;
-        $trainingRequest->remark = $request->remark;
+        // $trainingRequest->remark = $request->remark;
         $now = new Carbon();
         // dd($now->toDateTime());
         switch ($request->status) {
@@ -222,7 +222,7 @@ class TrainingRequestController extends Controller
                 dd(Auth::user());
                 break;
             }
-            // dd($trainingRequest);
+            // dd($trainingRequest->training_status_text);
         $trainingRequest->save();
         return redirect()->route('training.request.all');
 
