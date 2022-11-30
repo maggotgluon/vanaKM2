@@ -179,51 +179,44 @@ class TrainingRequestController extends Controller
         return $tranformData;
     }
     public function updateStatus(Request $request){
-        // dd($request);
         $trainingRequest = TrainingRequest::find($request->id);
         $trainingRequest->training_status = $request->status;
         // $trainingRequest->remark = $request->remark;
         $now = new Carbon();
+
         // dd($now->toDateTime());
+        // dd(Auth::user()->id,$now->toDateTimestring());
         switch ($request->status) {
             case '1':
-                $trainingRequest->training_dateReview = $now->toDateTime();
+                $trainingRequest->training_dateReview = $now->toDateTimestring();
                 $trainingRequest->user_review = Auth::user()->id;
+
                 Log::channel('training')->info($trainingRequest->training_code.' update by '.Auth::user()->name .' status to review data : '.$request);
                 break;
             case '2':
-
                 Log::channel('training')->info($trainingRequest->training_code.' update by '.Auth::user()->name .' status to approved data : '.$request);
-                $TCC = User::find($trainingRequest->staff_id);
-                $ACC = User::where('user_level',3)->where('department',Auth::user()->department)->get();
-                // dd($TCC,$ACC);
-                Mail::to($TCC)
-                    ->cc($ACC)
-                    ->send(new NotifyMailTraining($trainingRequest));
-                Log::channel('email')->info('email send to '.$TCC.' cc to '.$ACC.' data '.$trainingRequest);
-                $trainingRequest->training_dateApprove = $now->toDateTime();
+                $trainingRequest->training_dateApprove = $now->toDateTimestring();
                 $trainingRequest->user_approve = Auth::user()->id;
                 break;
             case '-1':
-
-                // dd($request->remark);
+                Log::channel('training')->info($trainingRequest->training_code.' update by '.Auth::user()->name .' status to reject remark  '. $trainingRequest->remark .' data : '.$request);
+                $trainingRequest->training_dateReview = $now->toDateTimestring();
+                $trainingRequest->remark = $request->remark;
+                break;
+                default:
+                dd(Auth::user());
+                break;
+            }
+            // dd($trainingRequest);
+            $trainingRequest->save();
+            if($request->status == 2 || $request->status == -1){
                 $TCC = User::find($trainingRequest->staff_id);
                 $ACC = User::where('user_level',3)->where('department',Auth::user()->department)->get();
-                // dd($TCC,$ACC);
                 Mail::to($TCC)
                     ->cc($ACC)
                     ->send(new NotifyMailTraining($trainingRequest));
                 Log::channel('email')->info('email send to '.$TCC.' cc to '.$ACC.' data '.$trainingRequest);
-                $trainingRequest->training_dateReview = $now->toDateTime();
-                $trainingRequest->remark = $request->remark;
-                Log::channel('training')->info($trainingRequest->training_code.' update by '.Auth::user()->name .' status to reject remark  '. $trainingRequest->remark .' data : '.$request);
-                break;
-            default:
-                dd(Auth::user());
-                break;
             }
-            // dd($trainingRequest->training_status_text);
-        $trainingRequest->save();
         return redirect()->route('training.request.all');
 
     }
