@@ -29,11 +29,14 @@
         <section class="pb-4">
             <div class="border p-4 mt-2">
                 <strong> รูปแบบการประเมิน :</strong>
-                <!-- {{$training->training_009->assessment_process}} -->
-                @foreach ( $training->training_009->assessment_process as $assessmentProcess)
-                    $assessmentProcess}}
-                @endforeach
-
+                
+                @if(gettype($training->training_009->assessment_process)=="array")
+                    @foreach ( $training->training_009->assessment_process as $assessmentProcess)
+                        {{$assessmentProcess}}
+                    @endforeach
+                @else
+                    {{$training->training_009->assessment_process}}
+                @endif
 
                 <!-- <span class="px-2 mx-2">☐ ถาม-ตอบ</span><span class="px-2 mx-2">☐ แบบทดสอบ</span><span class="px-2 mx-2">☐ ทดลองปฏิบัติงานจริง</span> -->
             </div>
