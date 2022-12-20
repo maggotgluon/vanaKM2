@@ -191,6 +191,11 @@ class TrainingRequestController extends Controller
                 $trainingRequest->training_dateReview = $now->toDateTimestring();
                 $trainingRequest->user_review = Auth::user()->id;
 
+                $TCC = User::where('user_level',5)->get();
+                Mail::to($TCC)
+                    ->send(new NotifyMailTraining($trainingRequest));
+                Log::channel('email')->info('email send to '.$TCC.' data '.$trainingRequest);
+
                 Log::channel('training')->info($trainingRequest->training_code.' update by '.Auth::user()->name .' status to review data : '.$request);
                 break;
             case '2':
@@ -211,7 +216,12 @@ class TrainingRequestController extends Controller
             $trainingRequest->save();
             if($request->status == 2 || $request->status == -1){
                 $TCC = User::find($trainingRequest->staff_id);
-                $ACC = User::where('user_level',3)->where('department',Auth::user()->department)->get();
+                $ACC = User::where('department',Auth::user()->department)
+                        ->where(function($q){
+                            $q->where('user_level',3)
+                            ->orWhere('user_level',5);
+                        }
+                        )->get();
                 Mail::to($TCC)
                     ->cc($ACC)
                     ->send(new NotifyMailTraining($trainingRequest));
