@@ -71,7 +71,7 @@
 
         <header class="hidden print:block">
             <span class="float-left flex w-32">
-                <img src="{{asset('img/logo.jpeg')}}" alt="">
+                <img src="{{asset('img/logo.png')}}" alt="">
             </span>
 
             <span class="float-right text-right">

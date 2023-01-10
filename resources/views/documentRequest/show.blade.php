@@ -102,7 +102,7 @@
                 </div>
                 <div class="grid grid-cols-2  p-4  py-2 ">
                     <span>
-                        <span class=" font-bold">{{__('Name')}} :</span>
+                        <span class=" font-bold">{{__('Requester')}} :</span>
                         {{App\Models\User::find($documentRequest->user_id)->name}}
                     </span>
 
@@ -117,7 +117,7 @@
 
                     <span>
                         <span class=" font-bold">{{__('Department Head')}} : </span>
-                        {{App\Models\User::find($documentRequest->user_id)->department_head}}
+                        {{App\Models\User::find($documentRequest->user->department_head)->name}}
                     </span>
                 </div>
 
@@ -125,7 +125,7 @@
 
                 <div class=" p-4  py-2 ">
                     <span class="block py-2">
-                        <span class=" font-bold">{{__('Dar Number')}} :</span>
+                        <span class=" font-bold">{{__('Dar No.')}} :</span>
                         {{$documentRequest->req_code}}
                     </span>
                     <span class="block py-2">
@@ -143,7 +143,7 @@
                     </div>
                     <div class="w-1/4">
 
-                        <span class=" font-bold">{{__('Doc Code')}} : </span> {{$documentRequest->doc_code}}
+                        <span class=" font-bold">{{__('Document Code')}} : </span> {{$documentRequest->doc_code}}
 
                     </div>
 
@@ -160,26 +160,26 @@
 
                     <div class=" float-right ">
 
-                        <span class=" font-bold">{{__('Effctive_Date')}} : </span>{{$documentRequest->doc_startDate->isoFormat('Do MMM YYYY')}}
+                        <span class=" font-bold">{{__('Effective Date')}} : </span>{{$documentRequest->doc_startDate->isoFormat('Do MMM YYYY')}}
 
                     </div>
 
                     <div class=" float-right ">
 
-                        <span class=" font-bold">{{__('Doc Version')}} : </span>{{$documentRequest->doc_ver}}
+                        <span class=" font-bold">{{__('Revision No.')}} : </span> {{str_pad($documentRequest->doc_ver , 2,'0', STR_PAD_LEFT)}} 
                     </div>
 
                     <div class=" float-right ">
-                        <span class=" font-bold">{{__('DocumentAge')}} : </span>
+                        <span class=" font-bold">{{__('Shelf-life')}} : </span>
                         @if ($documentRequest->doc_life == -1)
                         {{__('Until Change')}}
                         @else
                         {{$documentRequest->doc_life}} YEAR
                         @endif
                     </div>
-                    <div class=" float-right ">
+                    <!-- <div class=" float-right ">
                         <span class=" font-bold">{{__('Attachment')}} : </span> {{$documentRequest->pdf_location ? "YES" :"N/A"}}
-                    </div>
+                    </div> -->
 
                 </div>
                 <div class="px-4 py-2">
@@ -198,8 +198,8 @@
                     <table class="md:table-auto border w-full mt-4 py-4">
                         <thead class="table-auto border">
                             <tr class="bg-gray-300">
-                                <th class="border w-1/2 p-2">DCC เจ้าหน้าที่ควบควมเอกสาร</th>
-                                <th class="border w-1/2 p-2">OMR/MR ตัวแทนฝ่ายบริหารพิจารณาอนุมัติ</th>
+                                <th class="border w-1/2 p-2">DCC เจ้าหน้าที่ควบคุมเอกสาร</th>
+                                <th class="border w-1/2 p-2">QMR/MR ตัวแทนฝ่ายบริหารพิจารณาอนุมัติ</th>
 
                             </tr>
                         </thead>

@@ -183,7 +183,7 @@ class TrainingRequestController extends Controller
         $trainingRequest->training_status = $request->status;
         // $trainingRequest->remark = $request->remark;
         $now = new Carbon();
-
+        //dd($request->status);
         // dd($now->toDateTime());
         // dd(Auth::user()->id,$now->toDateTimestring());
         switch ($request->status) {
@@ -192,11 +192,11 @@ class TrainingRequestController extends Controller
                 $trainingRequest->user_review = Auth::user()->id;
 
                 $TCC = User::where('user_level',5)->get();
-                Mail::to($TCC)
-                    ->send(new NotifyMailTraining($trainingRequest));
-                Log::channel('email')->info('email send to '.$TCC.' data '.$trainingRequest);
+                // Mail::to($TCC)
+                //     ->send(new NotifyMailTraining($trainingRequest));
+                // Log::channel('email')->info('email send to '.$TCC.' data '.$trainingRequest);
 
-                Log::channel('training')->info($trainingRequest->training_code.' update by '.Auth::user()->name .' status to review data : '.$request);
+                // Log::channel('training')->info($trainingRequest->training_code.' update by '.Auth::user()->name .' status to review data : '.$request);
                 break;
             case '2':
                 Log::channel('training')->info($trainingRequest->training_code.' update by '.Auth::user()->name .' status to approved data : '.$request);
@@ -213,20 +213,20 @@ class TrainingRequestController extends Controller
                 break;
             }
             // dd($trainingRequest);
-            $trainingRequest->save();
-            if($request->status == 2 || $request->status == -1){
-                $TCC = User::find($trainingRequest->staff_id);
-                $ACC = User::where('department',Auth::user()->department)
-                        ->where(function($q){
-                            $q->where('user_level',3)
-                            ->orWhere('user_level',5);
-                        }
-                        )->get();
-                Mail::to($TCC)
-                    ->cc($ACC)
-                    ->send(new NotifyMailTraining($trainingRequest));
-                Log::channel('email')->info('email send to '.$TCC.' cc to '.$ACC.' data '.$trainingRequest);
-            }
+        $trainingRequest->save();
+        if($request->status == 2 || $request->status == -1){
+            $TCC = User::find($trainingRequest->staff_id);
+            $ACC = User::where('department',Auth::user()->department)
+                    ->where(function($q){
+                        $q->where('user_level',3)
+                        ->orWhere('user_level',5);
+                    }
+                    )->get();
+            Mail::to($TCC)
+                ->cc($ACC)
+                ->send(new NotifyMailTraining($trainingRequest));
+            Log::channel('email')->info('email send to '.$TCC.' cc to '.$ACC.' data '.$trainingRequest);
+        }
         return redirect()->route('training.request.all');
 
     }

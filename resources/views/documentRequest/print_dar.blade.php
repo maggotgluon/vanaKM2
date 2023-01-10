@@ -8,6 +8,9 @@
     <div id="FM-LDS-009" class="text-sm max-w-3xl m-auto p-2 shadow-lg print:shadow-none">
 
         <!-- <img class="h-16 w-full object-contain pb-4" src="{{asset('/img/logo.jpeg') }}"> -->
+        <span class="float-left flex w-32 print:hidden">
+                <img src="{{asset('img/logo.png')}}" alt="">
+            </span>
         <section class="pb-4">
             <h2 class="text-xl mb-2  font-bold text-center">
                 DOCUMENT ACTION REQUEST</h2>
@@ -18,16 +21,16 @@
         <section class="pb-4">
             <div class="grid grid-cols-2">
                 <span>
-                    <strong>{{__('Name')}} :</strong> {{$documentRequest->user->name}}
+                    <strong>{{__('Requester')}} : </strong> {{$documentRequest->user->name}}
                 </span>
                 <span>
-                    <strong>{{__('Department')}} :</strong> {{$documentRequest->user->department}}
+                    <strong>{{__('Department')}} : </strong> {{$documentRequest->user->department}}
                 </span>
                 <span>
-                    <strong>{{__('Date Request')}} :</strong> {{$documentRequest->created_at->isoFormat('Do MMM YYYY')}}
+                    <strong>{{__('Date Request')}} : </strong> {{$documentRequest->created_at->isoFormat('Do MMM YYYY')}}
                 </span>
                 <span>
-                    <strong>{{__('Department Head')}} :</strong> {{App\Models\User::find($documentRequest->user->department_head)->name}}
+                    <strong>{{__('Department Head')}} : </strong> {{App\Models\User::find($documentRequest->user->department_head)->name}}
                 </span>
             </div>
             <x-jet-section-border />
@@ -35,13 +38,13 @@
 
         <section class="pb-4">
             <div>
-                <strong>{{__('Dar Number')}} :</strong>{{$documentRequest->req_code}}
+                <strong>{{__('Dar No.')}} : </strong>{{$documentRequest->req_code}}
             </div>
             <div>
-                <strong>{{__('Objective')}} :</strong>{{$documentRequest->req_obj}}
+                <strong>{{__('Objective')}} : </strong>{{$documentRequest->req_obj}}
             </div>
             <div>
-            <strong>{{__('Discription')}} :</strong>{{$documentRequest->req_description}}
+            <strong>{{__('Discription')}} : </strong>{{$documentRequest->req_description}}
             </div>
             <x-jet-section-border />
         </section>
@@ -49,23 +52,23 @@
         <section class="pb-4">
             <div class="grid grid-cols-4">
                 <div>
-                    <strong>{{__('Document Type')}} :</strong>{{$documentRequest->doc_type}}
+                    <strong>{{__('Document Type')}} : </strong>{{$documentRequest->doc_type}}
                 </div>
                 <div>
-                    <strong>{{__('Doc Code')}} :</strong>{{$documentRequest->doc_code}}
+                    <strong>{{__('Document Code')}} : </strong>{{$documentRequest->doc_code}}
                 </div>
                 <div class="col-span-2">
-                    <strong>{{__('Document Name')}} :</strong>{{$documentRequest->doc_name}}
+                    <strong>{{__('Document Name')}} : </strong>{{$documentRequest->doc_name}}
                 </div>
 
                 <div>
-                    <strong>{{__('Effctive_Date')}} :</strong>{{$documentRequest->doc_startDate->isoFormat('Do MMM YYYY')}}
+                    <strong>{{__('Effective Date')}} : </strong>{{$documentRequest->doc_startDate->isoFormat('Do MMM YYYY')}}
                 </div>
                 <div>
-                    <strong>{{__('Doc Version')}} :</strong>{{$documentRequest->doc_ver}}
+                    <strong>{{__('Revision No.')}} : </strong> {{str_pad($documentRequest->doc_ver , 2,'0', STR_PAD_LEFT)}}
                 </div>
                 <div>
-                    <strong>{{__('DocumentAge')}} :</strong>
+                    <strong>{{__('Shelf-life')}} : </strong>
                     @if ($documentRequest->doc_life == -1)
                     {{__('Until Change')}}
                     @else
@@ -73,9 +76,9 @@
                     @endif
                 </div>
 
-                <div>
+                <!-- <div>
                     <strong>{{__('Attachment')}} : </strong>{{$documentRequest->pdf_location ? __('YES') :"N/A"}}
-                </div>
+                </div> -->
 
             </div>
             <x-jet-section-border />
@@ -86,7 +89,7 @@
                 <x-card shadow="none" class="border">
                     <x-slot name="header">
                         <div class="text-center bg-gray-300 p-4">
-                            DCC เจ้าหน้าที่ควบควมเอกสาร
+                            DCC เจ้าหน้าที่ควบคุมเอกสาร
                         </div>
                     </x-slot>
                     <strong>{{__('Name')}} : </strong>{{$documentRequest->user_review?App\Models\User::find($documentRequest->user_review)->name :'-'}}<br>
@@ -96,7 +99,7 @@
                 <x-card shadow="none" class="border">
                     <x-slot name="header">
                         <div class="text-center bg-gray-300 p-4">
-                            OMR/MR ตัวแทนฝ่ายบริหารพิจารณาอนุมัติ
+                            QMR/MR ตัวแทนฝ่ายบริหารพิจารณาอนุมัติ
                         </div>
                     </x-slot>
                     <strong>{{__('Name')}} : </strong>{{$documentRequest->user_approve?App\Models\User::find($documentRequest->user_approve)->name :'-'}}<br>
