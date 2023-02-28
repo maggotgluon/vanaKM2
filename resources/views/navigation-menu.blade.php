@@ -314,11 +314,11 @@
                             {{ __('Register new Training') }}
                         </x-jet-responsive-nav-link>
 
-                        @can('review_document')
+                        @can('review_trainDocument')
                         <x-jet-responsive-nav-link href="{{ route('training.request.all',['filter'=>0]) }}" :active="request()->routeIs('training.request.all')">
                             {{ __('Training Review') }}
                         </x-jet-responsive-nav-link>
-                        @elsecan('publish_document')
+                        @elsecan('publish_trainDocument')
                         <x-jet-responsive-nav-link href="{{ route('training.request.all',['filter'=>1]) }}" :active="request()->routeIs('training.request.all')">
                             {{ __('Training Approve') }}
                         </x-jet-responsive-nav-link>
